@@ -1,0 +1,22 @@
+<!-- Page Content -->
+<div class="page-wrapper text-center">
+
+  <!-- <div *ngIf="chyba" class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Při přihlášení nastala chyba</h4>
+    <p *ngIf="textChyby" style="margin-bottom: 10px;">{{textChyby}}</p>
+    <p style="margin-bottom: 5px;" class="small">Opakujte požadavek později</p>
+  </div> -->
+
+  <!-- <div *ngIf="!chyba" class="alert alert-success" role="alert">
+    Přihlášení přes SSO dokončeno
+  </div> -->
+
+  <!-- <div class="alert alert-success" role="alert">
+    Byly jste automaticky odhlášeni
+  </div> -->
+  {{ 'NORESPONSE.TEXT' | translate }}
+  <div class="d-grid gap-2">
+    <button routerLink="/" type="button" class="btn btn-sm btn-link mt-4">{{ 'NORESPONSE.UVOD_BUTTON' | translate }}</button>
+  </div>
+</div>
+<!-- /#page-wrapper -->

@@ -1,0 +1,25 @@
+<!-- <div class="container"> -->
+  <app-breadcrumb></app-breadcrumb>
+
+  <nav class="seznam-menu navbar navbar-expand navbar-light bg-light">
+    <div class="container-fluid p-0">
+      <div>
+        <button (click)="showNovyDetail();" type="button" class="btn btn-sm btn-outline-primary"><i class="far fa-file"></i>
+          {{ 'TOPMENU.NEW' | translate }}</button>
+      </div>
+      <div>
+        <button (click)="zmenaNacistAktivita()" type="button" class="btn btn-sm btn-outline-primary"><i
+        class="fa-solid fa-rotate"></i>
+        {{ (aktivita ? 'TOPMENU.NACIST_ODSTRANENE' : 'TOPMENU.NACIST_AKTIVNI') | translate }}</button>
+      </div>
+    </div>
+  </nav>
+
+  <app-seznam-component [seznamDataObservable$]="zakazky$" [rows]="rows" [cols]="cols"
+    [selectedColumns]="selectedColumns" (vychoziNastavenitabulkyEmitter)="vychoziNastaveniTabulky($any($event))"
+    [podminkaRadekFunction]="podminkaRadek"
+    (showDetailDialogEmitter)="showDetailDialog($any($event))" [klicNastaveni]="'table-seznam-zakazky'">
+  </app-seznam-component>
+
+  <app-detail-zakazka [refreshSeznamToken$]="refreshToken$"></app-detail-zakazka>
+<!-- </div> -->

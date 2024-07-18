@@ -1,0 +1,144 @@
+<p-dialog [(visible)]="displayDetail" class="detailOkno" [baseZIndex]="1010" position="center"
+  (visibleChange)="visibleChange()" [modal]="true" [style]="{width: '700px'}">
+  <p-header>
+    <i class="fas fa-user"></i> {{ 'UZIVATEL.NAZEV_DETAIL' | translate }}
+  </p-header>
+
+  <form *ngIf="detail" #formDetail="ngForm" (ngSubmit)="ulozit(formDetail)" novalidate>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid justify-content-start">
+        <!-- <button (click)="novyDetail();" *ngIf="rezimDetailu == RezimDetailuEnum.Detail" type="button"
+          class="btn btn-sm btn-outline-primary"><i class="far fa-file"></i> {{ 'TOPMENU.NEW' | translate }}</button> -->
+        <button (click)="editaceDetail()" *ngIf="rezimDetailu == RezimDetailuEnum.Detail" type="button"
+          class="btn btn-sm btn-outline-primary"><i class="fas fa-pencil-alt"></i>
+          {{ 'TOPMENU.EDIT' | translate }}</button>
+        <button type="submit" *ngIf="rezimDetailu != RezimDetailuEnum.Detail" class="btn btn-sm btn-outline-primary"><i
+            class="far fa-save"></i>
+          {{ 'TOPMENU.SAVE' | translate }}</button>
+        <button type="button" class="btn btn-sm btn-outline-primary"
+          *ngIf="rezimDetailu != RezimDetailuEnum.Detail && this.idZaznamu" (click)="zrusitEditaceDetail()">
+          <i class="fas fa-times"></i> {{ 'TOPMENU.CANCEL' | translate }}</button>
+        <span class="separator">|</span>
+        <button (click)="zavritDetail()" type="button" class="btn btn-sm btn-outline-primary"><i
+            class="fas fa-sign-out-alt"></i> {{ 'TOPMENU.CLOSE' | translate }}</button>
+      </div>
+    </nav>
+
+    <div class="row m-0">
+      <!-- Kód -->
+      <div class="col-sm-6 p-0 pe-sm-2">
+        <span class="p-float-label">
+          <input pInputText type="text" required autocomplete="off" [value]="detail!.id" id="kod" name="kod"
+            [readOnly]="true" />
+          <label for="kod">{{ 'UZIVATEL.KOD' | translate }}</label>
+        </span>
+      </div>
+
+      <!-- ID zakázky SAP -->
+      <div class="col-sm-6 p-0 ps-sm-2">
+        <span class="p-float-label">
+          <input pInputText type="text" required autocomplete="off" [value]="detail!.sapId" id="sapId"
+            name="sapId" [readOnly]="true" />
+          <label for="sapId">{{ 'UZIVATEL.SAP_ID' | translate }}</label>
+        </span>
+      </div>
+    </div>
+
+    <!-- Název -->
+    <div>
+      <span class="p-float-label">
+        <input pInputText type="text" required autocomplete="off" [value]="detail!.nazev" id="nazev" name="nazev"
+          [readOnly]="true" />
+        <label for="nazev">{{ 'UZIVATEL.NAZEV' | translate }}</label>
+      </span>
+    </div>
+
+    <div class="row m-0">
+      <!-- Datum OD -->
+      <div class="col-sm-6 p-0 pe-sm-2">
+        <span class="p-float-label">
+          <input pInputText type="text" id="datumOd" name="datumOd"
+            [value]="detail!.datumOd | date: 'dd.MM.yyyy'" [readonly]="true">
+          <label htmlFor="datumOd">{{ 'UZIVATEL.DATUM_OD' | translate }}</label>
+        </span>
+      </div>
+
+      <!-- Datum DO -->
+      <div class="col-sm-6 p-0 ps-sm-2">
+        <span class="p-float-label">
+          <input pInputText type="text" id="datumDo" name="datumDo"
+            [value]="detail!.datumDo | date: 'dd.MM.yyyy'" [readonly]="true">
+          <label htmlFor="datumDo">{{ 'UZIVATEL.DATUM_DO' | translate }}</label>
+        </span>
+      </div>
+    </div>
+
+    <div class="row m-0">
+      <!-- Čip 1 -->
+      <div class="col-sm-6 p-0 pe-sm-2">
+        <span class="p-float-label">
+          <input pInputText type="text" id="rfid1" name="rfid1"
+            [value]="detail!.rfid1 ? detail!.rfid1 : ''" [readonly]="true">
+          <label htmlFor="rfid1">{{ 'UZIVATEL.KARTA_1' | translate }}</label>
+        </span>
+      </div>
+
+      <!-- Čip 2 -->
+      <div class="col-sm-6 p-0 ps-sm-2">
+        <span class="p-float-label">
+          <input pInputText type="text" id="rfid2" name="rfid2"
+            [value]="detail!.rfid2 ? detail!.rfid2 : ''" [readonly]="true">
+          <label htmlFor="rfid2">{{ 'UZIVATEL.KARTA_2' | translate }}</label>
+        </span>
+      </div>
+    </div>
+
+    <!-- Zavod -->
+    <div>
+      <span class="p-float-label">
+        <input pInputText type="text" required autocomplete="off" [value]="detail!.zavod?.sapId + ' - ' + detail!.zavod?.nazev" id="zavod" name="zavod"
+          [readOnly]="true" />
+        <label for="zavod">{{ 'UZIVATEL.ZAVOD' | translate }}</label>
+      </span>
+    </div>
+
+    <!-- Aktivita -->
+    <div class="form-label-group ps-2">
+      <div class="p-field-checkbox">
+        <p-checkbox inputId="aktivita" name="aktivita" [disabled]="rezimDetailu == RezimDetailuEnum.Detail"
+          [(ngModel)]="detail!.aktivita" [binary]="true"></p-checkbox>
+        <label class="checkbox-label-group" for="aktivita">{{ 'UZIVATEL.AKTIVITA' | translate }}</label>
+      </div>
+    </div>
+
+    <!-- Závody -->
+    <p-dataView class="polozky-pod-sebou" *ngIf="rezimDetailu == RezimDetailuEnum.Detail"
+      [value]="detail.ostatniZavody!" emptyMessage="{{ 'UZIVATEL.NENI_PRIRAZEN_ZAVOD' | translate }}">
+      <p-header>
+        {{ 'UZIVATEL.ZAVODY' | translate }}
+      </p-header>
+      <ng-template let-zavody pTemplate="list">
+        <div *ngFor="let zavod of zavody">
+          <span class="fas fa-check"></span>
+          {{zavod.sapId}} - {{zavod.nazev}}
+        </div>
+      </ng-template>
+    </p-dataView>
+    <p-listbox *ngIf="rezimDetailu != RezimDetailuEnum.Detail" id="seznamZavody" name="seznamZavody"
+      [options]="zavodyValuesObservable | async" [metaKeySelection]="false" [(ngModel)]="detail!.ostatniZavody" dataKey="id"
+      [checkbox]="true" [multiple]="true" optionLabel="nazev" [showToggleAll]="false">
+      <p-header>
+        <span *ngIf="!nacitaniDatZavody">{{ 'UZIVATEL.ZAVODY' | translate }}</span>
+        <span *ngIf="nacitaniDatZavody"> <i class="fas fa-spinner fa-spin"></i>
+          {{ 'UZIVATEL.NACITANI_ZAVODY' | translate }}</span>
+      </p-header>
+      <ng-template let-zavod pTemplate="item">
+        <div>
+          <div>{{zavod.sapId}} - {{zavod.nazev}}</div>
+        </div>
+      </ng-template>
+    </p-listbox>
+
+  </form>
+
+</p-dialog>

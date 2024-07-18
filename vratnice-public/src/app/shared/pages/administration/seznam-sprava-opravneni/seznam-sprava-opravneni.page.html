@@ -1,0 +1,49 @@
+<!-- <div class="container"> -->
+
+<app-breadcrumb></app-breadcrumb>
+
+<nav class="seznam-menu navbar navbar-expand navbar-light bg-light mb-0">
+    <div class="container-fluid p-0">
+        <div>
+          <button (click)="showNovyDetail();" type="button" class="btn btn-sm btn-outline-primary"><i class="far fa-file"></i>
+          {{ 'TOPMENU.NEW' | translate }}</button>
+        </div>
+        <div>
+          <button (click)="zmenaNacistAktivita()" type="button" class="btn btn-sm btn-outline-primary"><i
+          class="fa-solid fa-rotate"></i>
+          {{ (aktivita ? 'TOPMENU.NACIST_ODSTRANENE' : 'TOPMENU.NACIST_AKTIVNI') | translate }}</button>
+        </div>
+    </div>
+</nav>
+
+<div class="row m-0">
+    <div class="col-sm-6 p-0 mb-2 pe-sm-2">
+        <app-dropdown class="app-dropdown" idDropdown="zavod" (onChangeEvent)="filtrZavodOnChange($any($event))" id="zavod"
+            name="zavod" [showClear]="true" labelText="SPRAVA_OPRAVNENI.ZAVOD"
+            placeholderText="SPRAVA_OPRAVNENI.ZAVOD_NENASTAVEN" [nacitani]="nacitaniZavody" dataKey="id"
+            [selectedTemplate]="selectedItemZavodTemplate" [itemTemplate]="itemZavodTemplate"
+            [valuesObservable]="zavodValuesObservable" [(ngModel)]="filtrZavod" optionLabel="nazev"></app-dropdown>
+        <ng-template #selectedItemZavodTemplate let-value="value">
+            {{value ? (value.sapId + ' - ' + value.nazev) : ''}}
+        </ng-template>
+        <ng-template #itemZavodTemplate let-value="value">
+            {{value.sapId}} - {{value.nazev}}
+        </ng-template>
+    </div>
+</div>
+
+<app-seznam-component [seznamDataObservable$]="spravaOpravneni$" [rows]="rows" [cols]="cols"
+  [selectedColumns]="selectedColumns" (vychoziNastavenitabulkyEmitter)="vychoziNastaveniTabulky($any($event))"
+  [podminkaRadekFunction]="podminkaRadek" [globalFilterFields]="sloupceGlobalFilterFields"
+  (showDetailDialogEmitter)="showDetailDialog($any($event))" [klicNastaveni]="'table-seznam-sprava-opravneni'">
+</app-seznam-component>
+
+<!-- <ng-template #colZavodyTemplate let-rowData="rowData">
+  <div *ngFor="let zavod of rowData.zavody">
+    {{zavod?.sapId}} - {{zavod?.nazev}}
+  </div>
+</ng-template> -->
+
+<app-detail-sprava-opravneni [refreshSeznamToken$]="refreshToken$"></app-detail-sprava-opravneni>
+
+<!-- </div> -->

@@ -1,0 +1,280 @@
+<div class="mt-4">
+  <app-input-float-label></app-input-float-label>
+</div>
+
+<div>
+  <span class="p-float-label">
+    <input pInputText id="username" [(ngModel)]="value" />
+    <label htmlFor="username">Username</label>
+  </span>
+</div>
+
+<div>
+  <span class="p-float-label">
+    <input pInputText class="ng-invalid ng-dirty" id="username" [(ngModel)]="value" />
+    <label htmlFor="username">Username</label>
+  </span>
+</div>
+
+<div>
+  <span class="p-float-label">
+    <input pInputText id="username" [readOnly]="true" [(ngModel)]="value" />
+    <label htmlFor="username">Username</label>
+  </span>
+</div>
+
+<div>
+  <span class="p-float-label">
+    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" [showClear]="true" placeholder="Select a City" optionLabel="name"
+      inputId="float-label"></p-dropdown>
+    <label for="float-label">Select a City</label>
+  </span>
+</div>
+
+<div>
+  <span class="p-float-label">
+    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name"
+      appendTo="body" [filter]="true" filterBy="name" inputId="float-label"></p-dropdown>
+    <label for="float-label">Select a City</label>
+  </span>
+</div>
+
+<div class="p-inputgroup">
+  <span class="p-float-label">
+    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name"
+      appendTo="body" [filter]="true" [filterFields]="['name']" inputId="float-label"></p-dropdown>
+    <label for="float-label">Select a or add City</label>
+  </span>
+  <button class="btn btn-outline-secondary" type="button"><i [class]="'fas fa-plus'"></i></button>
+</div>
+
+<div class="p-inputgroup">
+  <span class="p-float-label">
+    <p-dropdown [options]="countries" [(ngModel)]="selectedCountry" optionLabel="name" [filter]="true"
+      [filterFields]="['name','code']" [showClear]="true" placeholder="Select a Country">
+      <ng-template pTemplate="selectedItem">
+        <div class="flex align-items-center gap-2" *ngIf="selectedCountry">
+          <div>{{ selectedCountry.name }} - {{ selectedCountry.code }}</div>
+        </div>
+      </ng-template>
+      <ng-template let-country pTemplate="item">
+        <div class="flex align-items-center gap-2">
+          <div>{{ country.name }} - {{ country.code }}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
+    <label for="float-label">Select country</label>
+  </span>
+</div>
+
+<div>
+  <span class="p-float-label">
+    <p-multiSelect id="multiSelect" name="multiSelect" scrollHeight="300px" display="chip" [options]="cities"
+      [maxSelectedLabels]="10" dataKey="code" [(ngModel)]="selectedCities" optionLabel="name"
+      [overlayOptions]="{baseZIndex: 1010, appendTo: 'body'}">
+    </p-multiSelect>
+    <label htmlFor="multiSelect">Select cities</label>
+  </span>
+</div>
+
+<div>
+  <span class="p-float-label">
+    <p-multiSelect id="multiSelect" name="multiSelect" scrollHeight="300px" [options]="cities" dataKey="code"
+      [maxSelectedLabels]="10" [(ngModel)]="selectedCities" optionLabel="name"
+      [overlayOptions]="{baseZIndex: 1010, appendTo: 'body'}">
+    </p-multiSelect>
+    <label htmlFor="multiSelect">Select cities</label>
+  </span>
+</div>
+
+<div>
+  <span class="p-float-label">
+    <p-multiSelect id="multiSelect" name="multiSelect" scrollHeight="300px" display="chip" [disabled]="true"
+      [maxSelectedLabels]="10" [options]="cities" dataKey="code" [(ngModel)]="selectedCities" optionLabel="name"
+      [overlayOptions]="{baseZIndex: 1010, appendTo: 'body'}">
+    </p-multiSelect>
+    <label htmlFor="multiSelect">Select cities</label>
+  </span>
+</div>
+<span class="p-float-label">
+  <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions!" (completeMethod)="search($event)"
+    inputId="float-label"></p-autoComplete>
+  <label for="float-label">Float Label</label>
+</span>
+
+<span class="p-float-label">
+  <p-autoComplete [(ngModel)]="selectedItems" [forceSelection]="true" [suggestions]="suggestions!" (completeMethod)="search($event)"
+    [multiple]="true" inputId="float-label" [overlayOptions]="{baseZIndex: 1010, appendTo: 'body'}"></p-autoComplete>
+  <label for="float-label">Float Label</label>
+</span>
+
+<span class="p-float-label">
+  <p-autoComplete [(ngModel)]="selectedItems" [forceSelection]="true" [dropdown]="true" scrollHeight="300px" [suggestions]="suggestions!" (completeMethod)="search($event)"
+    [multiple]="true" inputId="float-label" [overlayOptions]="{baseZIndex: 1010, appendTo: 'body'}"></p-autoComplete>
+  <label for="float-label">Float Label with dropdown</label>
+</span>
+
+<span class="p-float-label">
+  <p-autoComplete [(ngModel)]="selectedItems" [forceSelection]="true" [dropdown]="true" [virtualScroll]="true" [virtualScrollItemSize]="37" scrollHeight="300px" [suggestions]="suggestions!" (completeMethod)="search($event)"
+    [multiple]="true" inputId="float-label" [overlayOptions]="{baseZIndex: 1010, appendTo: 'body'}"></p-autoComplete>
+  <label for="float-label">Float Label with dropdown virtual scroll</label>
+</span>
+
+<span class="p-float-label">
+  <p-autoComplete [(ngModel)]="selectedItems" [readonly]="true" [suggestions]="suggestions!" (completeMethod)="search($event)"
+    [multiple]="true" inputId="float-label"></p-autoComplete>
+  <label for="float-label">Float Label</label>
+</span>
+
+<div class="row m-0">
+  <div class="col-sm-6 p-0 pe-sm-2">
+    <span class="p-float-label">
+      <input pInputText id="username" [(ngModel)]="value" />
+      <label htmlFor="username">Username</label>
+    </span>
+  </div>
+</div>
+
+<div>
+  <span class="p-float-label">
+    <textarea pInputTextarea rows="5" [(ngModel)]="value" id="poznamka" name="poznamka"></textarea>
+    <label for="poznamka">{{ 'VOZIDLO.POZNAMKA' | translate }}</label>
+  </span>
+</div>
+
+
+<div>
+  <span class="p-float-label">
+    <textarea pInputTextarea rows="5" [(ngModel)]="value" id="poznamka" name="poznamka" [readOnly]="true"></textarea>
+    <label for="poznamka">{{ 'TOPMENU.NEW' | translate }}</label>
+  </span>
+</div>
+
+<div class="row m-0">
+  <div class="col-sm-6 p-0 pe-sm-2">
+    <span class="p-float-label">
+      <p-calendar [baseZIndex]="1010" [showButtonBar]="true" id="datumOd" name="datumOd" appendTo="body">
+      </p-calendar>
+      <label for="datumOd">Datum</label>
+    </span>
+  </div>
+</div>
+
+<div class="row m-0">
+  <div class="col-sm-6 p-0 pe-sm-2">
+    <span class="p-float-label">
+      <p-calendar [baseZIndex]="1010" [showButtonBar]="true" id="datumOd" name="datumOd" appendTo="body">
+      </p-calendar>
+      <label htmlFor="datumOd">Datum</label>
+    </span>
+  </div>
+  <div class="col-sm-6 p-0 ps-sm-2">
+    <span class="p-float-label">
+      <p-calendar [baseZIndex]="1010" [showButtonBar]="true" [showTime]="true" id="datumOd" name="datumOd"
+        appendTo="body">
+      </p-calendar>
+      <label htmlFor="datumOd">Datum</label>
+    </span>
+  </div>
+</div>
+
+<form #formDetail="ngForm" novalidate>
+  <div class="row m-0">
+    <div class="col-sm-6 p-0 pe-sm-2">
+      <app-calendar class="app-calendar" idCalendar="datum" id="datum" name="datum" labelText="ZADOST.DATUM_DO"
+        validatorMessageText="ZADOST.DATUM_DO_VALIDATOR" [form]="formDetail" [showSvatky]="true" [readonly]="false"
+        [(ngModel)]="datum" [required]="true"></app-calendar>
+    </div>
+    <div class="col-sm-6 p-0 ps-sm-2">
+      <app-calendar class="app-calendar" idCalendar="datumCas" id="datumCas" name="datumCas" labelText="ZADOST.DATUM_DO"
+        validatorMessageText="ZADOST.DATUM_DO_VALIDATOR" [form]="formDetail" [showTime]="true" [showSvatky]="true"
+        [readonly]="false" [(ngModel)]="datum" [required]="true"></app-calendar>
+    </div>
+  </div>
+
+  <div class="row m-0">
+    <div class="col-sm-6 p-0 pe-sm-2">
+      <app-calendar class="app-calendar" idCalendar="datumReadOnly" id="datumReadOnly" name="datumReadOnly"
+        labelText="ZADOST.DATUM_DO" validatorMessageText="ZADOST.DATUM_DO_VALIDATOR" [form]="formDetail"
+        [showSvatky]="true" [readonly]="true" [(ngModel)]="datum" [required]="true"></app-calendar>
+    </div>
+    <div class="col-sm-6 p-0 ps-sm-2">
+      <app-calendar class="app-calendar" idCalendar="datumCasReadOnly" id="datumCasReadOnly" name="datumCasReadOnly"
+        labelText="ZADOST.DATUM_DO" validatorMessageText="ZADOST.DATUM_DO_VALIDATOR" [form]="formDetail"
+        [showTime]="true" [showSvatky]="true" [readonly]="true" [(ngModel)]="datum" [required]="true"></app-calendar>
+    </div>
+  </div>
+
+</form>
+
+<div class="row m-0">
+  <div class="col-sm-6 p-0 pe-sm-2">
+    <span class="p-float-label">
+      <p-inputNumber [minFractionDigits]="2" [min]="0" [(ngModel)]="cislo" id="spotrebaPodleTp"
+        name="spotrebaPodleTp" />
+      <label for="spotrebaPodleTp">Number</label>
+    </span>
+  </div>
+
+  <div class="col-sm-6 p-0 ps-sm-2">
+    <span class="p-float-label">
+      <p-inputNumber [minFractionDigits]="2" [min]="0" [(ngModel)]="cislo" id="spotrebaPodleTp" name="spotrebaPodleTp"
+        [readonly]="true" />
+      <label for="spotrebaPodleTp">Number readonly</label>
+    </span>
+  </div>
+</div>
+
+Input text
+
+<div class="form-label-group">
+  <input pInputText type="text" autocomplete="off" [(ngModel)]="inputText" id="inputTextReadonly"
+    pTooltip="Tooltip without HTML" name="inputTextReadonly" class="form-control" [readOnly]="true" />
+  <label for="inputTextReadonly">Input text - readOnly</label>
+</div>
+
+<div class="row m-0">
+
+  <div class="col-sm-6 p-0 pe-sm-2 form-label-group">
+    <input pInputText type="text" autocomplete="off" [(ngModel)]="inputText" id="inputText" name="inputText"
+      pTooltip="<em>Tooltip</em> <u>with</u> <b>HTML</b>" [escape]="false" class="form-control" [readOnly]="false" />
+    <label for="inputText">Input text</label>
+  </div>
+
+  <div class="col-sm-6 p-0 ps-sm-2 form-label-group">
+    <input pInputText type="text" autocomplete="off" [(ngModel)]="inputText" id="inputTextPlaceholder"
+      pTooltip="Enter <b>your</b> username" [escape]="false" tooltipPosition="top" name="inputTextPlaceholder"
+      class="form-control" placeholder="Placeholder" [readOnly]="false" />
+    <label for="inputTextPlaceholder">Input text with placeholder</label>
+  </div>
+
+</div>
+
+<div id="main-content" class="container">
+
+  <div class="row">
+    <div class="col-md-6">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="connect">WebSocket connection:</label>
+          <button (click)="connect()" class="btn btn-default" type="submit">Connect</button>
+          <button (click)="disconnect()" class="btn btn-default" type="submit">Disconnect
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="name">What is your name?</label>
+          <input type="text" [(ngModel)]="name" class="form-control" name="name"> <br>
+        </div>
+        <button (click)="sendMessage()" class="btn btn-default" type="submit">Send</button>
+        <button (click)="volaniMetody()" class="btn btn-default" type="submit">volání metody</button>
+      </form>
+    </div>
+
+    <p> {{ greeting }}</p>
+  </div>
+
+</div>

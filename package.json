@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "primeicons": "^7.0.0",
+    "primeng": "^17.18.5"
+  }
+}

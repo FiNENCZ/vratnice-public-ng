@@ -1,0 +1,62 @@
+<div class="page-wrapper text-center">
+  <div class="container">
+
+    <!-- <div *ngIf="(konfiguraceLogo() | async)?.logo as logo" class="row">
+      <div class="col-lg-12" style="margin-bottom: 40px;">
+        <img src="data:{{logo.mimeType}};base64,{{logo.soubor}}" alt="" height="150px" />
+      </div>
+    </div> -->
+
+    <p-toast position="top-center"></p-toast>
+
+    <div class="row" *ngIf="(getKonfigurace() | async)?.demo">
+      <div class="col-lg-12">
+        <h1 class="h2 mb-3 fw-bold text-danger">TEST</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="h2 mb-3 fw-normal">{{celyNazevAplikace}}</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <form #form="ngForm" id="login-form" class="form-signin" (ngSubmit)="login(form.value, form.valid!)" novalidate>
+          <h1 class="h5 mb-3 fw-normal">{{ 'LOGIN.PRIHLASENI' | translate }}</h1>
+
+          <div class="form-label-group text-start">
+            <input class="form-control" placeholder="{{ 'LOGIN.USERNAME' | translate }}" required type="text" id="username" autocomplete="username"
+              name="username" ngModel autofocus>
+            <label for="username">{{ 'LOGIN.USERNAME' | translate }}</label>
+          </div>
+          <div class="form-label-group text-start">
+            <input class="form-control" placeholder="{{ 'LOGIN.PASSWORD' | translate }}" required type="password" autocomplete="current-password" id="heslo" name="heslo" ngModel>
+            <label for="heslo">{{ 'LOGIN.PASSWORD' | translate }}</label>
+          </div>
+
+          <!-- <input class="form-control" placeholder="Uživatelské jmeno" required type="text" name="username" ngModel />
+          <input class="form-control" placeholder="Heslo" required type="password" name="heslo" ngModel /> -->
+
+          <!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> -->
+
+          <div class="d-grid gap-2">
+
+            <button [disabled]="!form.valid" class="btn btn-lg btn-primary">{{ 'LOGIN.PRIHLASIT' | translate }}</button>
+
+            <!-- <button routerLink="/" type="button" class="btn btn-sm btn-link mt-4">Úvodní strana</button> -->
+
+            <button *ngIf="odkazZapomenuteHeslo" routerLink="/zapomenute-heslo" type="button"
+              class="btn btn-link">{{ 'LOGIN.LOST_PASSWORD' | translate }}</button>
+          </div>
+
+          <!-- <p class="mt-5 mb-3 text-muted">
+            GORDIC &copy; {{aktualniRok}}
+          </p> -->
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

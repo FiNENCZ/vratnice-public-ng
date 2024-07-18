@@ -1,0 +1,16 @@
+:host {
+  .container {
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
+  }
+
+  .footer {
+    border-top: 0;
+    background: white;
+    padding: 1.5rem;
+    text-align: right;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

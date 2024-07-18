@@ -1,0 +1,19 @@
+<form #formDetail="ngForm" novalidate>
+
+  <app-breadcrumb [polozkaMenuEnum]="PolozkaMenuEnum.OrgStrukturaLogovani"></app-breadcrumb>
+
+  <app-seznam-component [seznamDataObservable$]="orgStrukturaLogovani$" [rows]="rows" [cols]="cols"
+    [selectedColumns]="selectedColumns" [colTemplates]="[colJsonLogTemplate]"
+    (vychoziNastavenitabulkyEmitter)="vychoziNastaveniTabulky($any($event))" [sloupecDetail]="false"
+    klicNastaveni="table-org-struktura-logovani">
+  </app-seznam-component>
+
+
+  <ng-template #colJsonLogTemplate let-rowData="rowData" let-rowIndex="rowIndex">
+    <button *ngIf="rowData.jsonLog" type="button" (click)="showDetailJson(rowData)"
+      title="{{'ORG_STRUKTURA_LOGOVANI.ZOBRAZIT_JSON_LOG' | translate }}" class="btn btn-sm btn-primary">
+      <i class="fa-solid fa-list-ul"></i></button>
+  </ng-template>
+
+
+</form>

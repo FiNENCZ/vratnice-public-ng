@@ -1,0 +1,105 @@
+<p-dialog [(visible)]="displayDetail" class="detailOkno" [baseZIndex]="1010" position="center"
+  (visibleChange)="visibleChange()" [modal]="true" [style]="{width: '700px'}">
+  <p-header>
+    <i class="fa-solid fa-people-arrows"></i> {{ 'ZASTUPY.NAZEV_DETAIL' | translate }}
+  </p-header>
+
+  <form *ngIf="detail" #formDetail="ngForm" (ngSubmit)="ulozit(formDetail)" novalidate>
+    <nav class="sticky-menu-okno sticky-menu navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <div>
+          <button (click)="novyDetail();" *ngIf="rezimDetailu == RezimDetailuEnum.Detail" type="button"
+            class="btn btn-sm btn-outline-primary"><i class="far fa-file"></i> {{ 'TOPMENU.NEW' | translate }}</button>
+          <button (click)="editaceDetail()" *ngIf="rezimDetailu == RezimDetailuEnum.Detail" type="button"
+            class="btn btn-sm btn-outline-primary"><i class="fas fa-pencil-alt"></i>
+            {{ 'TOPMENU.EDIT' | translate }}</button>
+          <button type="submit" *ngIf="rezimDetailu != RezimDetailuEnum.Detail"
+            class="btn btn-sm btn-outline-primary"><i class="far fa-save"></i>
+            {{ 'TOPMENU.SAVE' | translate }}</button>
+          <button type="button" class="btn btn-sm btn-outline-primary"
+            *ngIf="rezimDetailu != RezimDetailuEnum.Detail && this.idZaznamu" (click)="zrusitEditaceDetail()">
+            <i class="fas fa-times"></i> {{ 'TOPMENU.CANCEL' | translate }}</button>
+          <span class="separator">|</span>
+          <button (click)="zavritDetail()" type="button" class="btn btn-sm btn-outline-primary"><i
+              class="fas fa-sign-out-alt"></i> {{ 'TOPMENU.CLOSE' | translate }}</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Zastupovaný -->
+    <app-dropdown class="app-dropdown" [readonly]="rezimDetailu != RezimDetailuEnum.Novy" idDropdown="uzivatel"
+      id="uzivatel" name="uzivatel" [virtualScroll]="true"
+      [readOnlyTxt]="detail.uzivatel ? (detail.uzivatel.nazev  + ' (' + detail.uzivatel.sapId + ')'): ''"
+      [required]="true" labelText="ZASTUPY.ZASTUPOVANY" validatorMessageText="ZASTUPY.ZASTUPOVANY_VALIDATOR"
+      [form]="formDetail" [nacitani]="nacitaniDatUzivatelu" dataKey="id" [valuesObservable]="uzivatelValuesObservable"
+      [(ngModel)]="detail.uzivatel" [filter]="true" filterBy="sapId,nazev"
+      [selectedTemplate]="selectedItemUzivatelTemplate" [itemTemplate]="itemUzivatelTemplate"
+      optionLabel="nazev"></app-dropdown>
+
+    <!-- Zástupce -->
+    <app-dropdown class="app-dropdown" [readonly]="rezimDetailu != RezimDetailuEnum.Novy" idDropdown="uzivatelZastupce"
+      id="uzivatelZastupce" name="uzivatelZastupce" [virtualScroll]="true"
+      [readOnlyTxt]="detail.uzivatelZastupce ? (detail.uzivatelZastupce.nazev  + ' (' + detail.uzivatelZastupce.sapId + ')'): ''"
+      [required]="true" labelText="ZASTUPY.ZASTUPCE" validatorMessageText="ZASTUPY.ZASTUPCE_VALIDATOR"
+      [form]="formDetail" [nacitani]="nacitaniDatUzivatelu" dataKey="id" [valuesObservable]="uzivatelValuesObservable"
+      [(ngModel)]="detail.uzivatelZastupce" [filter]="true" filterBy="sapId,nazev" [filterFields]="['sapId','nazev']"
+      [selectedTemplate]="selectedItemUzivatelTemplate" [itemTemplate]="itemUzivatelTemplate"
+      optionLabel="nazev"></app-dropdown>
+
+    <ng-template #selectedItemUzivatelTemplate let-value="value">
+      {{value ? (value.nazev + ' (' + value.sapId + ')') : ''}}
+    </ng-template>
+
+    <ng-template #itemUzivatelTemplate let-value="value">
+      {{value.nazev}} ({{value.sapId}})
+    </ng-template>
+
+
+    <div class="row m-0">
+      <!-- Platnost od -->
+      <div class="col-sm-6 p-0 pe-sm-2">
+        <app-calendar class="app-calendar" idCalendar="platnostOd" id="platnostOd" name="platnostOd"
+          labelText="ZASTUPY.PLATNOST_OD" validatorMessageText="ZASTUPY.PLATNOST_OD_VALIDATOR" [form]="formDetail"
+          (onBlurEvent)="nastavPlatnost(true)" [showSvatky]="false" (onSelectEvent)="nastavPlatnost(true)"
+          [readonly]="rezimDetailu == RezimDetailuEnum.Detail" [(ngModel)]="detail!.platnostOd"
+          [required]="true"></app-calendar>
+      </div>
+
+      <!-- Platnost do -->
+      <div class="col-sm-6 p-0 ps-sm-2">
+        <app-calendar class="app-calendar" idCalendar="platnostDo" id="platnostDo" name="platnostDo"
+          labelText="ZASTUPY.PLATNOST_DO" (onBlurEvent)="nastavPlatnost(false)" (onSelectEvent)="nastavPlatnost(false)"
+          validatorMessageText="ZASTUPY.PLATNOST_DO_VALIDATOR" [form]="formDetail" [showSvatky]="false"
+          [readonly]="rezimDetailu == RezimDetailuEnum.Detail" [(ngModel)]="detail!.platnostDo"
+          [required]="true"></app-calendar>
+      </div>
+    </div>
+
+    <!-- Aktivita -->
+    <div class="form-label-group ps-2 mt-1 mb-1">
+      <div class="p-field-checkbox">
+        <p-checkbox inputId="aktivita" name="aktivita" [disabled]="rezimDetailu == RezimDetailuEnum.Detail"
+          [(ngModel)]="detail!.aktivita" [binary]="true"></p-checkbox>
+        <label class="checkbox-label-group" for="aktivita">{{ 'ZASTUPY.AKTIVITA' | translate }}</label>
+      </div>
+    </div>
+
+    <!-- Distribuováno -->
+    <div *ngIf="rezimDetailu == RezimDetailuEnum.Detail" class="form-label-group ps-2 mt-0">
+      <div class="p-field-checkbox">
+        <p-checkbox inputId="distribuovano" name="distribuovano" [disabled]="true" [(ngModel)]="detail!.distribuovano"
+          [binary]="true"></p-checkbox>
+        <label class="checkbox-label-group" for="distribuovano">{{ 'ZASTUPY.DISTRIBUOVANO' | translate }}</label>
+      </div>
+    </div>
+
+    <!-- Chyba distribuce -->
+    <span *ngIf="rezimDetailu == RezimDetailuEnum.Detail && detail?.chybaDistribuce" class="p-float-label">
+      <textarea pInputTextarea rows="5" cols="30" [(ngModel)]="detail!.chybaDistribuce" id="chybaDistribuce"
+        name="chybaDistribuce" [readOnly]="true"></textarea>
+      <label for="chybaDistribuce">{{ 'ZASTUPY.CHYBA_DISTRIBUCE' | translate }}</label>
+    </span>
+
+  </form>
+
+</p-dialog>

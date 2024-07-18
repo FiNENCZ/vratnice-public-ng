@@ -1,0 +1,8 @@
+<!--  -->
+<a *ngIf="jeRole(polozkyMenu[polozkaMenu].roles) && (!polozkyMenu[polozkaMenu].roles2 || jeRole(polozkyMenu[polozkaMenu].roles2!))" [routerLink]="polozkyMenu[polozkaMenu].routerLink"
+  [queryParams]="polozkyMenu[polozkaMenu].queryParams ? polozkyMenu[polozkaMenu].queryParams : undefined"
+  [class]="polozkyMenu[polozkaMenu].menuClass ? menuClass(polozkyMenu[polozkaMenu]) : ''"
+  (click)="hideMenu()" [routerLinkActive]="polozkyMenu[polozkaMenu].menuClass ? '' : 'mm-active'">
+  <i class="metismenu-icon {{polozkyMenu[polozkaMenu].menuIcon}}"></i>
+  {{ polozkyMenu[polozkaMenu].menuText | translate }}
+</a>

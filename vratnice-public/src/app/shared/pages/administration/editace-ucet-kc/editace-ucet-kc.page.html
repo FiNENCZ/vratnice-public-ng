@@ -1,0 +1,45 @@
+<p-dialog [(visible)]="displayDetail" class="detailOkno" [baseZIndex]="1010" position="center" [modal]="true"
+  [style]="{width: '700px'}">
+  <p-header>
+    <i class="fa-solid fa-key"></i> {{
+    'EDITACE_UCET_KC.NAZEV_DETAIL' | translate }}
+  </p-header>
+
+  <form *ngIf="displayDetail && ucetKcDto" #formDetail="ngForm" (ngSubmit)="ulozit(formDetail)" novalidate>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid justify-content-start">
+        <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fas fa-save"></i>
+          {{ 'TOPMENU.SAVE' | translate }}</button>
+        <span class="separator">|</span>
+        <button (click)="displayDetail=false" type="button" class="btn btn-sm btn-outline-primary"><i
+            class="fas fa-sign-out-alt"></i> {{ 'TOPMENU.CLOSE' | translate }}</button>
+      </div>
+    </nav>
+
+    <!-- Fake username and password pro prevenci předplnění v Chromu -->
+    <input id="username" autocomplete="username" style="display:none" type="text" name="fakeusernameremembered" />
+    <input id="password" autocomplete="current-password" style="display:none" type="password"
+      name="fakepasswordremembered" />
+
+    <!-- Uživatelské jméno -->
+    <span class="p-float-label">
+      <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="ucetKcDto!.jmeno" id="jmeno"
+        name="jmeno" />
+      <label for="nazev">{{ 'EDITACE_UCET_KC.UZIVATELSKE_JMENO' | translate }} *</label>
+      <p-message class="validator-message" severity="danger"
+        text="{{ 'EDITACE_UCET_KC.UZIVATELSKE_JMENO_VALIDATOR' | translate }}"
+        *ngIf="!formDetail.controls['jmeno']?.valid && formDetail.controls['jmeno']?.dirty"></p-message>
+    </span>
+
+    <!-- Heslo -->
+    <span class="p-float-label">
+      <p-password id="heslo" name="heslo" [(ngModel)]="ucetKcDto!.heslo" [feedback]="false" [toggleMask]="true" [required]="true" autocomplete="off" />
+      <label for="heslo">{{ 'EDITACE_UCET_KC.HESLO' | translate }} *</label>
+      <p-message class="validator-message" severity="danger" text="{{ 'EDITACE_UCET_KC.HESLO_VALIDATOR' | translate }}"
+        *ngIf="!formDetail.controls['heslo']?.valid && formDetail.controls['heslo']?.dirty">
+      </p-message>
+    </span>
+
+  </form>
+
+</p-dialog>

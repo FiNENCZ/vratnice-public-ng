@@ -1,0 +1,116 @@
+<p-dialog [(visible)]="displayDetail" class="detailOkno" [baseZIndex]="1010" position="center"
+  (visibleChange)="visibleChange()" [modal]="true" [style]="{width: '700px'}">
+  <p-header>
+    <i class="fas fa-industry"></i> {{ 'ZAVOD.NAZEV_DETAIL' | translate }}
+  </p-header>
+
+  <form *ngIf="detail" #formDetail="ngForm" (ngSubmit)="ulozit(formDetail)" novalidate>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid justify-content-start">
+        <button (click)="novyDetail();" *ngIf="rezimDetailu == RezimDetailuEnum.Detail" type="button"
+          class="btn btn-sm btn-outline-primary"><i class="far fa-file"></i> {{ 'TOPMENU.NEW' | translate }}</button>
+        <button (click)="editaceDetail()" *ngIf="rezimDetailu == RezimDetailuEnum.Detail" type="button"
+          class="btn btn-sm btn-outline-primary"><i class="fas fa-pencil-alt"></i>
+          {{ 'TOPMENU.EDIT' | translate }}</button>
+        <button type="submit" *ngIf="rezimDetailu != RezimDetailuEnum.Detail" class="btn btn-sm btn-outline-primary"><i
+            class="far fa-save"></i>
+          {{ 'TOPMENU.SAVE' | translate }}</button>
+        <button type="button" class="btn btn-sm btn-outline-primary"
+          *ngIf="rezimDetailu != RezimDetailuEnum.Detail && this.idZaznamu" (click)="zrusitEditaceDetail()">
+          <i class="fas fa-times"></i> {{ 'TOPMENU.CANCEL' | translate }}</button>
+        <span class="separator">|</span>
+        <button (click)="zavritDetail()" type="button" class="btn btn-sm btn-outline-primary"><i
+            class="fas fa-sign-out-alt"></i> {{ 'TOPMENU.CLOSE' | translate }}</button>
+      </div>
+    </nav>
+
+    <div class="row m-0">
+      <!-- Kód -->
+      <div class="col-sm-6 p-0 pe-sm-2">
+        <span class="p-float-label">
+          <input pInputText type="text" required autocomplete="off" [(ngModel)]="detail!.id" id="kod" name="kod"
+            [readOnly]="rezimDetailu == RezimDetailuEnum.Detail" />
+          <label for="kod">{{ 'ZAVOD.KOD' | translate }} *</label>
+          <p-message class="validator-message" severity="danger" text="{{ 'ZAVOD.KOD_VALIDATOR' | translate }}"
+            *ngIf="!formDetail.controls['kod']?.valid && formDetail.controls['kod']?.dirty"></p-message>
+        </span>
+      </div>
+
+      <!-- ID zakázky SAP -->
+      <div class="col-sm-6 p-0 ps-sm-2">
+        <span class="p-float-label">
+          <input pInputText type="text" required autocomplete="off" [(ngModel)]="detail!.sapId" id="sapId"
+            name="sapId" [readOnly]="rezimDetailu == RezimDetailuEnum.Detail" />
+          <label for="sapId">{{ 'ZAVOD.SAP_ID' | translate }} *</label>
+          <p-message class="validator-message" severity="danger" text="{{ 'ZAVOD.SAP_ID_VALIDATOR' | translate }}"
+            *ngIf="!formDetail.controls['sapId']?.valid && formDetail.controls['sapId']?.dirty"></p-message>
+        </span>
+      </div>
+    </div>
+
+    <!-- Název -->
+    <div>
+      <span class="p-float-label">
+        <input pInputText type="text" required autocomplete="off" [(ngModel)]="detail!.nazev" id="nazev" name="nazev"
+          [readOnly]="rezimDetailu == RezimDetailuEnum.Detail" />
+        <label for="nazev">{{ 'ZAVOD.NAZEV' | translate }} *</label>
+        <p-message class="validator-message" severity="danger" text="{{ 'ZAVOD.NAZEV_VALIDATOR' | translate }}"
+          *ngIf="!formDetail.controls['nazev']?.valid && formDetail.controls['nazev']?.dirty"></p-message>
+      </span>
+    </div>
+
+    <div class="row m-0">
+      <!-- Barva pozadí -->
+      <div class="col-sm-6 p-0 pe-sm-2">
+        <div class="row m-0">
+          <div class="col-10 p-0 pe-2">
+            <span class="p-float-label">
+              <input pInputText type="text" autocomplete="off" [(ngModel)]="detail!.barvaPozadi" id="barvaPozadi"
+                name="barvaPozadi" [readOnly]="rezimDetailu == RezimDetailuEnum.Detail" />
+              <label for="barvaPozadi">{{ 'ZAVOD.BARVA_POZADI' | translate }}</label>
+            </span>
+          </div>
+          <div class="col-2 p-0 ps-2">
+            <span class="p-float-label">
+              <p-colorPicker id="barvaPozadiPicker" name="barvaPozadiPicker"
+                [disabled]="rezimDetailu == RezimDetailuEnum.Detail" [(ngModel)]="detail!.barvaPozadi"
+                [baseZIndex]="1010" appendTo="body">
+              </p-colorPicker>
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- Barva textu -->
+      <div class="col-sm-6 p-0 ps-sm-2">
+        <div class="row m-0">
+          <div class="col-10 p-0 pe-2">
+            <span class="p-float-label">
+              <input pInputText type="text" autocomplete="off" [(ngModel)]="detail!.barvaPisma" id="barvaPisma"
+                name="barvaPisma" [readOnly]="rezimDetailu == RezimDetailuEnum.Detail" />
+              <label for="barvaPisma">{{ 'ZAVOD.BARVA_PISMA' | translate }}</label>
+            </span>
+          </div>
+          <div class="col-2 p-0 ps-2">
+            <span class="p-float-label">
+              <p-colorPicker id="barvaPismaPicker" name="barvaPismaPicker"
+                [disabled]="rezimDetailu == RezimDetailuEnum.Detail" [(ngModel)]="detail!.barvaPisma"
+                [baseZIndex]="1010" appendTo="body">
+              </p-colorPicker>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aktivita -->
+    <div class="form-label-group ps-2">
+      <div class="p-field-checkbox">
+        <p-checkbox inputId="aktivita" name="aktivita" [disabled]="rezimDetailu == RezimDetailuEnum.Detail"
+          [(ngModel)]="detail!.aktivita" [binary]="true"></p-checkbox>
+        <label class="checkbox-label-group" for="aktivita">{{ 'ZAVOD.AKTIVITA' | translate }}</label>
+      </div>
+    </div>
+
+  </form>
+
+</p-dialog>
