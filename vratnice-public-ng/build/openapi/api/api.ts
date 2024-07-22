@@ -1,0 +1,13 @@
+export * from './lokalitaController.service';
+import { LokalitaControllerService } from './lokalitaController.service';
+export * from './povoleniVjezduVozidlaController.service';
+import { PovoleniVjezduVozidlaControllerService } from './povoleniVjezduVozidlaController.service';
+export * from './ridicController.service';
+import { RidicControllerService } from './ridicController.service';
+export * from './statController.service';
+import { StatControllerService } from './statController.service';
+export * from './vozidloTypController.service';
+import { VozidloTypControllerService } from './vozidloTypController.service';
+export * from './zavodController.service';
+import { ZavodControllerService } from './zavodController.service';
+export const APIS = [LokalitaControllerService, PovoleniVjezduVozidlaControllerService, RidicControllerService, StatControllerService, VozidloTypControllerService, ZavodControllerService];
