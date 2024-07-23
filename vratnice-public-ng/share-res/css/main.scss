@@ -1,0 +1,510 @@
+/************ Floating labels **********/
+.form-label-group {
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+
+body .form-label-group .p-dropdown.p-component .p-dropdown-label,
+body .form-label-group .p-multiselect.p-component .p-multiselect-label,
+body .form-group .p-component.p-inline-message,
+body .form-label-group .p-component {
+  font-size: 1rem;
+}
+
+body .form-label-group .p-multiselect.p-component .p-multiselect-label,
+body .form-label-group .p-dropdown.p-component .p-dropdown-label {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  // padding-top: 0.25rem;
+  padding-left: 0.75rem;
+  padding-top: 0.0625rem;
+}
+
+.form-label-group input,
+.form-label-group .p-dropdown,
+.form-label-group .p-multiselect,
+.form-label-group label:not(.col-form-label) {
+  height: 3.125rem;
+  padding: 0.75rem;
+}
+
+.form-label-group textarea {
+  padding: 0.75rem;
+}
+
+.form-label-group .p-multiselect,
+.form-label-group .p-dropdown {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+body .form-label-group .p-dropdown .p-dropdown-trigger,
+body .form-label-group .p-multiselect .p-multiselect-trigger {
+  margin-top: -8px;
+}
+
+.form-label-group label:not(.col-form-label) {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0; /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  pointer-events: none;
+  cursor: text; /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: all 0.1s ease-in-out;
+  opacity: 0.6;
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.form-label-group .p-calendar.form-control {
+  height: auto;
+}
+
+.form-label-group input:not(:focus)::-webkit-input-placeholder,
+.form-label-group input[readonly]::-webkit-input-placeholder,
+.form-label-group textarea:not(:focus)::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:focus)::-moz-placeholder,
+.form-label-group input[readonly]::-moz-placeholder,
+.form-label-group textarea:not(:focus)::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:focus):-ms-input-placeholder,
+.form-label-group input[readonly]:-ms-input-placeholder,
+.form-label-group textarea:not(:focus):-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:focus)::-ms-input-placeholder,
+.form-label-group input[readonly]::-ms-input-placeholder,
+.form-label-group textarea:not(:focus):-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:focus)::placeholder,
+.form-label-group input[readonly]::placeholder,
+.form-label-group textarea:not(:focus)::placeholder {
+  color: transparent;
+}
+
+.form-label-group input,
+.form-label-group .p-multiselect,
+.form-label-group .p-dropdown {
+  padding-top: 1.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.form-label-group textarea {
+  padding-top: 1.55rem;
+  padding-bottom: 0.5rem;
+}
+
+/*
+.form-label-group input:not(:-moz-placeholder-shown),
+.form-label-group .p-dropdown:not(:-moz-placeholder-shown) {
+	padding-top: 1.25rem;
+	padding-bottom: .25rem;
+}
+.form-label-group textarea:not(:-moz-placeholder-shown) {
+	padding-top: 1.55rem;
+	padding-bottom: .25rem;
+}
+
+.form-label-group input:not(:-ms-input-placeholder),
+.form-label-group .p-dropdown:not(:-ms-input-placeholder) {
+	padding-top: 1.25rem;
+	padding-bottom: .25rem;
+}
+.form-label-group textarea:not(:-ms-input-placeholder) {
+	padding-top: 1.55rem;
+	padding-bottom: .25rem;
+}
+
+.form-label-group input:not(:placeholder-shown),
+.form-label-group .p-dropdown:not(:placeholder-shown) {
+	padding-top: 1.25rem;
+	padding-bottom: .25rem;
+}
+.form-label-group textarea:not(:placeholder-shown) {
+	padding-top: 1.55rem;
+	padding-bottom: .25rem;
+}
+
+.form-label-group p-inputnumber.p-inputwrapper-focus input,
+.form-label-group p-inputnumber.p-inputwrapper-filled input {
+	padding-top: 1.25rem;
+	padding-bottom: .25rem;
+}
+*/
+
+.form-label-group input:not([readonly]):focus ~ label,
+.form-label-group input.p-filled ~ label,
+.form-label-group p-dropdown.p-inputwrapper-filled ~ label,
+.form-label-group p-multiselect.p-inputwrapper-filled ~ label,
+.form-label-group textarea:not([readonly]):focus ~ label,
+.form-label-group textarea.p-filled ~ label,
+.form-label-group p-calendar.p-inputwrapper-focus ~ label,
+.form-label-group p-calendar.p-inputwrapper-filled ~ label,
+.form-label-group p-inputnumber.p-inputwrapper-focus ~ label,
+.form-label-group p-inputnumber.p-inputwrapper-filled ~ label,
+.form-label-group p-password.p-inputwrapper-focus ~ label,
+.form-label-group p-password.p-inputwrapper-filled ~ label {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.75rem;
+  color: #777;
+  opacity: 1;
+  z-index: 3;
+}
+
+.form-label-group .input-group input:not([readonly]):focus ~ label, 
+.form-label-group .input-group input.p-filled ~ label {
+  z-index: 5;
+}
+
+.form-label-group p-dropdown:not(:-moz-placeholder-shown) ~ label,
+.form-label-group p-multiselect:not(:-moz-placeholder-shown) ~ label {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.75rem;
+  color: #777;
+  opacity: 1;
+}
+
+.form-label-group p-dropdown:not(:-ms-input-placeholder) ~ label,
+.form-label-group p-multiselect:not(:-ms-input-placeholder) ~ label {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.75rem;
+  color: #777;
+  opacity: 1;
+}
+
+.form-label-group p-dropdown:not(:placeholder-shown) ~ label,
+.form-label-group p-multiselect:not(:placeholder-shown) ~ label {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.75rem;
+  color: #777;
+  opacity: 1;
+}
+
+.form-label-group p-dropdown:-webkit-autofill ~ label,
+.form-label-group p-multiselect:-webkit-autofill ~ label {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.75rem;
+  color: #777;
+  opacity: 1;
+}
+
+.form-label-group .p-field-checkbox .checkbox-label-group {
+  opacity: 1;
+  pointer-events: all;
+  cursor: default;
+  display: inline;
+  padding: 0;
+  margin: 0;
+  margin-left: 0.5rem;
+  /*margin-top: -3px;*/
+  height: auto;
+  width: auto;
+  position: relative;
+  line-height: initial;
+  top: 2px;
+  font-size: 0.875rem;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+@supports (-ms-ime-align: auto) {
+  .form-label-group {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+  }
+
+  .form-label-group label {
+    position: static;
+  }
+
+  .form-label-group p-dropdown::-ms-input-placeholder,
+  .form-label-group p-multiselect::-ms-input-placeholder {
+    color: #777;
+    opacity: 1;
+  }
+}
+
+/* Toast */
+body .p-toast .p-toast-icon-close {
+  position: absolute;
+  right: 3px;
+  top: 3px;
+}
+body .p-toast .p-toast-message .p-toast-message-content {
+  padding: 0.5rem;
+}
+body .p-toast {
+  width: fit-content;
+  max-width: 99%;
+  /* width: 100%;
+	max-width: 25em; */
+}
+body .p-toast.p-toast-top-center {
+  margin-left: 0;
+  /* left: 0;
+	padding-left: 5px;
+	padding-right: 5px; */
+}
+/* @media ( min-width :25em) { */
+body .p-toast.p-toast-top-center {
+  left: 50%;
+  /* margin-left: -12.5em; */
+  padding-left: 0;
+  padding-right: 0;
+}
+/* } */
+
+.p-toast .p-toast-message.p-toast-message-error .p-toast-message-icon {
+  display: none;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-message-text {
+  margin: 0 0.2rem;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-detail {
+  word-break: break-word;
+}
+
+body .dropdown-item:focus,
+body .dropdown-item:hover,
+body .btn.dropdown-toggle:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+body .app-header .btn.dropdown-toggle:focus {
+  box-shadow: none;
+}
+
+body .drop-down-two-lines {
+  text-align: left;
+  display: flex;
+}
+
+body .dropdown-toggle.drop-down-two-lines::after {
+  margin-left: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+/* Navigator - breadcump*/
+body .breadcrumb {
+  /* font-size: 0.75rem; */
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 2px;
+  padding-bottom: 1px;
+  /* background-color: #fff; */
+  padding-left: 5px;
+  border-radius: 2px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">";
+}
+
+.logout-timer {
+    padding: 10px;
+    margin-top: 1px;
+    font-size: 1rem;
+    cursor: default;
+}
+
+.logout-timer p {
+  margin: 0;
+  font-size: 60%;
+}
+
+.detailOkno .p-dialog {
+  max-width: 99vw;
+  max-height: 99vh;
+}
+
+button.btn-sm.male-tlacitko {
+  padding: 0.1875rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+button.btn-sm.male-tlacitko i {
+  width: 0.625rem;
+  height: 0.625rem;
+  margin-left: -0.125rem;
+}
+
+.p-dialog hr {
+  margin: 0;
+  margin-bottom: 0.75rem;
+}
+
+.form-label-group .input-group label {
+  z-index: 5 !important;
+  margin-left: 0 !important;
+}
+
+.mensi-text button.btn,
+.mensi-text input.form-control {
+  font-size: 0.875rem;
+}
+
+@media (min-width: 991.98px) {
+  .closed-sidebar .app-sidebar:not(:hover) .nav-footer {
+    display: none;
+  }
+}
+
+.nav-footer .verze {
+  padding: 0.4rem 0.75rem 0.5rem;
+  color: #aaa;
+  font-size: 0.75rem;
+}
+
+/*Hover ikony smazat v hledání nad seznamem*/
+i.seznam-hledani-smazat:hover{
+  cursor: pointer;
+}
+
+/* Velikost ikona semafor */
+.size-ico-semafor {
+  font-size: 1.5em;
+}
+
+.size-ico-semafor-seznam {
+  font-size: 1.2em;
+}
+
+/* Sticky menu - alespoň trošku */
+.sticky-menu.navbar {
+	position: sticky;	
+	z-index: 4;
+}
+
+.sticky-menu-okno {
+	top: 0px;
+}
+
+.sticky-menu-seznam {
+  position: sticky;
+  padding-top: 0.4rem;
+  padding-bottom: 0.25rem;
+	top: 60px;
+  background-color: #fff;
+}
+
+.sticky-menu-seznam .seznam-menu.navbar {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.white-space-pre-wrap {
+  white-space: pre-wrap !important;
+}
+
+.overflow-wrap-break-word {
+  overflow-wrap: break-word;
+}
+
+.hide-filter,
+.vlastni-tlacitko {
+  cursor: pointer;
+}
+
+.pouze-mesic.p-datepicker .p-datepicker-group-container {
+  display: none;
+} 
+
+body .dropdown-menu li { position: relative; 	}
+body .nav-item .submenu { 
+  display: none;
+  position: absolute;
+  top: -7px;
+  right: 100%;
+  //top:30px;
+}
+body .dropdown-menu > li:hover > .submenu{ display: block; }
+body .nav-item .submenu.submenu-right {
+  left: 100%;
+  right: auto;
+}
+
+.form-control[readonly], .form-control[readonly]:focus {
+  background-color: #e9ecef;
+  opacity: 1;
+}
+
+button.btn:hover, a.btn:hover, button.btn:not(.btn-outline-secondary):focus, a.btn:focus, button.btn:active, button.btn:first-child:active, a.btn:active, a.btn:first-child:active, button.btn.show, a.btn.show {
+  border-color: transparent;
+}
+
+.input-group button.btn:focus, .input-group button.btn:active {
+  border-color: var(--bs-btn-border-color);
+}
+
+.dropdown-detail {
+  position: absolute;
+  right: 40px; 
+  top: 14px;
+}
+
+.p-dropdown-label.p-inputtext:has(+ timesicon.p-element.p-icon-wrapper) .dropdown-detail {
+  right: 65px; 
+}
+
+.icon-oblibene {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb-item.icon-oblibene:hover {
+  color: inherit;
+}
+
+.breadcrumb-item.active.icon-oblibene.aktivni {
+  color: var(--bs-link-color);  
+}
+
+.breadcrumb-item.active.icon-oblibene.aktivni:hover {
+  color: var(--bs-link-hover-color);  
+}
+
+.without-hamburger div.header__pane,
+.without-hamburger div.app-header__mobile-menu {
+  display: none;
+}
+
+/*
+.scroll-sloupce {  
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+*/

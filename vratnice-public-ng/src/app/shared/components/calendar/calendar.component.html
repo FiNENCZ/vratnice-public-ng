@@ -1,0 +1,17 @@
+<span class="p-float-label">
+  <input pInputText type="text" *ngIf="readonly" [value]="hodnota | date: (yearOnly ? 'yyyy' : timeOnly ? 'HH:mm' : showTime ? 'dd.MM.yyyy HH:mm' : 'dd.MM.yyyy')" [readonly]="true">
+  <p-calendar *ngIf="!readonly" [baseZIndex]="1010" [required]="required" [showButtonBar]="showButtonBar" id="{{idCalendar}}"
+    [view]="yearOnly ? 'year' : 'date'" [dateFormat]="yearOnly ? 'yy' : ''"
+    [defaultDate]="defaultDate" [minDate]="minDate!" [maxDate]="maxDate!"
+    [showTime]="showTime" [timeOnly]="timeOnly" (onBlur)="obBlur($event)" (onSelect)="onSelect($event)"
+    name="{{idCalendar}}" appendTo="body" [ngModel]="hodnota" (ngModelChange)="modelChange($event)">
+    <ng-template *ngIf="showSvatky" pTemplate="date" let-date>
+      <span [ngClass]="isSvatek(date.day, date.month, date.year) ? 'svatek' : ''">{{date.day}}</span>
+    </ng-template>
+  </p-calendar>
+  <label *ngIf="!hideLabel" for="{{idCalendar}}">{{ labelText | translate }} {{required ? '*' : ''}}</label>
+  <p-message class="validator-message" severity="danger"
+    text="{{ validatorMessageText ? (validatorMessageText | translate) : null}}"
+    *ngIf="required && form && !form.controls[idCalendar]?.valid && form.controls[idCalendar]?.dirty">
+  </p-message>
+</span>

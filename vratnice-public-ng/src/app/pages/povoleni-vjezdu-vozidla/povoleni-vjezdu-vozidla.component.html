@@ -1,28 +1,24 @@
-<form *ngIf="detail" #formDetail="ngForm" (ngSubmit)="ulozit(formDetail)" novalidate>
+<div class="main-container">
+  <form *ngIf="detail" #formDetail="ngForm" (ngSubmit)="ulozit(formDetail)" novalidate>
     <nav class="navbar navbar-light bg-light">
-      <!-- <div class="container-fluid justify-content-start">
-        <button (click)="novyDetail();" *ngIf="rezimDetailu == RezimDetailuEnum.Detail" type="button"
-          class="btn btn-sm btn-outline-primary"><i class="far fa-file"></i> {{ 'TOPMENU.NEW' }}</button>
-        <button (click)="editaceDetail()" *ngIf="rezimDetailu == RezimDetailuEnum.Detail" type="button"
-          class="btn btn-sm btn-outline-primary"><i class="fas fa-pencil-alt"></i>
-          {{ 'TOPMENU.EDIT' }}</button>
-        
-        <button type="submit" *ngIf="rezimDetailu != RezimDetailuEnum.Detail" class="btn btn-sm btn-outline-primary"><i
+      <div class="container-fluid justify-content-start">
+        <button (click)="novyDetail();" type="button"
+          class="btn btn-sm btn-outline-primary"><i class="far fa-file"></i> {{ 'TOPMENU.NEW' | translate }}</button>
+        <button type="submit" class="btn btn-sm btn-outline-primary ms-1"><i
             class="far fa-save"></i>
-          {{ 'TOPMENU.SAVE' }}</button>
-        <input #inputImportCSV id="inputImportCSV" type="file" style="display: none;" (change)="onCsvSelected($event)" data-button-id="btnImportCSV" accept=".csv">
-        <button id="btnImportCSV" (click)="importCSV();" type="button" class="btn btn-sm btn-outline-primary">
-          <i class="fa-solid fa-file-csv"></i> Načíst vozidla z CSV souboru
-        </button>
-        <button type="button" class="btn btn-sm btn-outline-primary"
-          *ngIf="rezimDetailu != RezimDetailuEnum.Detail && this.idZaznamu" (click)="zrusitEditaceDetail()">
-          <i class="fas fa-times"></i> {{ 'TOPMENU.CANCEL' }}</button>
-        <span class="separator">|</span>
-        <button (click)="zavritDetail()" type="button" class="btn btn-sm btn-outline-primary"><i
-            class="fas fa-sign-out-alt"></i> {{ 'TOPMENU.CLOSE' }}</button>
-        <button (click)="showCsvInfo()" type="button" class="btn btn-sm btn-outline-primary ms-auto "><i 
-          class="fa-solid fa-info me-1"></i> Manuál CSV </button>
-      </div> -->
+          {{ 'TOPMENU.SAVE' | translate }}</button>
+
+<!-- 
+        <span class="separator">|</span> -->
+        <div class="ms-auto">
+          <button (click)="showPovoleniVjezduVozidlaCsvDetail();" type="button" class="btn btn-sm btn-outline-primary ms-1"><i class="fa-solid fa-file-csv"></i>
+            {{ 'POVOLENI_VJEZDU_VOZIDLA.ULOZIT_POVOLENI_VJEZDU_VOZIDLA_CSV' | translate }}</button>
+          <button id="btnImportCSV" (click)="showTypRzVozidlaCsvDetail();" type="button" class="btn btn-sm btn-outline-primary ms-1">
+            <i class="fa-solid fa-file-csv"></i> Načíst vozidla z CSV souboru
+          </button>
+  
+        </div>
+      </div> 
     </nav>
 
     <p-dialog [(visible)]="showCsvInfoDialog" header="Dokumentace CSV" [modal]="true" [style]="{width: '50vw'}">
@@ -50,8 +46,8 @@
         <span class="p-float-label">
           <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="detail!.jmenoZadatele" id="jmenoZadatele"
             name="jmenoZadatele"/>
-          <label for="jmenoZadatele">{{ 'POVOLENI_VJEZDU_VOZIDLA.JMENO' }} *</label>
-          <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.JMENO_VALIDATOR' }}"
+          <label for="jmenoZadatele">{{ 'POVOLENI_VJEZDU_VOZIDLA.JMENO' | translate }} *</label>
+          <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.JMENO_VALIDATOR' | translate }}"
             *ngIf="!formDetail.controls['jmenoZadatele']?.valid && formDetail.controls['jmenoZadatele']?.dirty"></p-message>
         </span>
       </div>
@@ -62,8 +58,8 @@
         <span class="p-float-label">
           <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="detail!.prijmeniZadatele" id="prijmeniZadatele"
             name="prijmeniZadatele" />
-          <label for="prijmeniZadatele">{{ 'POVOLENI_VJEZDU_VOZIDLA.PRIJMENI' }} *</label>
-          <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.PRIJMENI_VALIDATOR' }}"
+          <label for="prijmeniZadatele">{{ 'POVOLENI_VJEZDU_VOZIDLA.PRIJMENI' | translate }} *</label>
+          <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.PRIJMENI_VALIDATOR' | translate }}"
             *ngIf="!formDetail.controls['prijmeniZadatele']?.valid && formDetail.controls['prijmeniZadatele']?.dirty"></p-message>
         </span>
       </div>
@@ -75,8 +71,8 @@
           <span class="p-float-label">
             <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="detail!.spolecnostZadatele" id="spolecnostZadatele"
               name="spolecnostZadatele" />
-            <label for="spolecnostZadatele" >{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST' }} *</label>
-            <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST_VALIDATOR' }}"
+            <label for="spolecnostZadatele" >{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST' | translate }} *</label>
+            <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST_VALIDATOR' | translate }}"
               *ngIf="!formDetail.controls['spolecnostZadatele']?.valid && formDetail.controls['spolecnostZadatele']?.dirty"></p-message>
           </span>
         </div>
@@ -87,7 +83,7 @@
           <span class="p-float-label">
             <input pInputText type="text" autocomplete="off" [(ngModel)]="detail!.icoZadatele" id="icoZadatele"
               name="icoZadatele"/>
-            <label for="icoZadatele">{{ 'POVOLENI_VJEZDU_VOZIDLA.ICO' }} *</label>
+            <label for="icoZadatele">{{ 'POVOLENI_VJEZDU_VOZIDLA.ICO' | translate }} *</label>
           </span>
         </div>
       </div>
@@ -96,9 +92,9 @@
       <div>
         <span class="p-float-label">
           <textarea pInputTextarea rows="5" [(ngModel)]="detail!.duvodZadosti" id="duvodZadosti" name="duvodZadosti" [required]="true"></textarea>
-          <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.DUVOD_VALIDATOR' }}"
+          <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.DUVOD_VALIDATOR' | translate }}"
           *ngIf="!formDetail.controls['duvodZadosti']?.valid && formDetail.controls['duvodZadosti']?.dirty"></p-message>
-          <label for="duvodZadosti">{{ 'ZADOST_KLIC.DUVOD' }}</label>
+          <label for="duvodZadosti">{{ 'POVOLENI_VJEZDU_VOZIDLA.DUVOD' | translate }}</label>
         </span>
       </div>
 
@@ -117,9 +113,9 @@
               <span class="p-float-label">
                 <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="detail!.rzVozidla[i]"
                   id="rzVozidla{{i}}" name="rzVozidla{{i}}" />
-                <label for="rzVozidla{{i}}">{{ 'POVOLENI_VJEZDU_VOZIDLA.RZ_VOZIDLA' }} *</label>
+                <label for="rzVozidla{{i}}">{{ 'POVOLENI_VJEZDU_VOZIDLA.RZ_VOZIDLA' | translate }} *</label>
                 <p-message class="validator-message" severity="danger"
-                  text="{{ 'POVOLENI_VJEZDU_VOZIDLA.RZ_VOZIDLA_VALIDATOR' }}"
+                  text="{{ 'POVOLENI_VJEZDU_VOZIDLA.RZ_VOZIDLA_VALIDATOR' | translate }}"
                   *ngIf="!formDetail.controls['rzVozidla{{i}}']?.valid && formDetail.controls['rzVozidla{{i}}']?.dirty">
                 </p-message>
               </span>
@@ -127,16 +123,14 @@
           
             <!-- Typ vozidla -->
             <div class="col-sm-5 p-0 ps-sm-1">
-              <!-- <app-dropdown class="app-dropdown" idDropdown="typVozidla{{i}}" id="typVozidla{{i}}"
+              <app-dropdown class="app-dropdown" idDropdown="typVozidla{{i}}" id="typVozidla{{i}}"
                 name="typVozidla{{i}}" [required]="true" [showClear]="true" labelText="{{ 'POVOLENI_VJEZDU_VOZIDLA.TYP_VOZIDLA' }}" 
-                [readOnly]="rezimDetailu == RezimDetailuEnum.Detail" 
-                [disabled]="rezimDetailu == RezimDetailuEnum.Detail" 
                 placeholderText="POVOLENI_VJEZDU_VOZIDLA.TYP_VOZIDLA"
                 validatorMessageText="POVOLENI_VJEZDU_VOZIDLA.TYP_VOZIDLA_VALIDATOR" [form]="formDetail"
                 [nacitani]="nacitaniDatVozidloTyp" dataKey="id"
                 [valuesObservable]="vozidloTypValuesObservable" 
                 [(ngModel)]="detail!.typVozidla[i]" optionLabel="nazev"
-               ></app-dropdown>  -->
+               ></app-dropdown> 
             </div>
           
             <!-- Tlačítko odstranit -->
@@ -152,16 +146,14 @@
       <div class="row m-0">
         <!-- Země registrace vozidla -->
         <div class="col-sm-6 p-0 pe-sm-1">
-          <!-- <app-dropdown class="app-dropdown" idDropdown="zemeRegistraceVozidla" id="zemeRegistraceVozidla"
+          <app-dropdown class="app-dropdown" idDropdown="zemeRegistraceVozidla" id="zemeRegistraceVozidla"
           name="zemeRegistraceVozidla" [required]="true" labelText="{{ 'POVOLENI_VJEZDU_VOZIDLA.ZEME_REGISTRACE_VOZIDLA' }}"
-          [readOnly]="rezimDetailu == RezimDetailuEnum.Detail" 
-          [disabled]="rezimDetailu == RezimDetailuEnum.Detail" 
           placeholderText="{{ 'POVOLENI_VJEZDU_VOZIDLA.ZEME_REGISTRACE_VOZIDLA' }}"
           validatorMessageText="{{ 'POVOLENI_VJEZDU_VOZIDLA.ZEME_REGISTRACE_VOZIDLA_VALIDATOR' }}" [form]="formDetail"
           [nacitani]="nacitaniDatStat" dataKey="id"
           [valuesObservable]="statValuesObservable"
           [(ngModel)]="detail!.zemeRegistraceVozidla"
-          optionLabel="nazev"></app-dropdown> -->
+          optionLabel="nazev"></app-dropdown> 
         </div>
   
   
@@ -170,8 +162,8 @@
           <span class="p-float-label">
             <input pInputText type="text" autocomplete="off" [(ngModel)]="detail!.spolecnostVozidla" id="spolecnostVozidla"
               name="spolecnostVozidla" />
-            <label for="spolecnostVozidla">{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST_VOZIDLA' }} *</label>
-            <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST_VOZIDLA_VALIDATOR' }}"
+            <label for="spolecnostVozidla">{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST_VOZIDLA' | translate }} *</label>
+            <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST_VOZIDLA_VALIDATOR' | translate }}"
               *ngIf="!formDetail.controls['spolecnostVozidla']?.valid && formDetail.controls['spolecnostVozidla']?.dirty"></p-message>
           </span>
         </div>
@@ -181,9 +173,9 @@
       
       <div class="d-flex" >
         <button *ngIf="!isRidicRequired" (click)="toggleRidicRequired();" type="button" class="btn btn-sm btn-outline-primary mt-2 ms-auto"><i class="far fa-file"></i>
-          {{ 'POVOLENI_VJEZDU_VOZIDLA.PRIDAT_RIDICE' }}</button>
+          {{ 'POVOLENI_VJEZDU_VOZIDLA.PRIDAT_RIDICE' | translate }}</button>
         <button *ngIf="isRidicRequired" (click)="smazatRidice();" type="button" class="btn btn-sm btn-outline-danger mt-2 ms-auto"><i class="far fa-file"></i>
-          {{ 'POVOLENI_VJEZDU_VOZIDLA.ODEBRAT_RIDICE' }}</button>
+          {{ 'POVOLENI_VJEZDU_VOZIDLA.ODEBRAT_RIDICE' | translate }}</button>
       </div>
 
       <fieldset *ngIf="isRidicRequired">
@@ -195,8 +187,8 @@
             <span class="p-float-label">
               <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="ridicJmeno" id="jmeno"
                 name="jmeno"/>
-              <label for="jmeno">{{ 'RIDIC.JMENO' }}  *</label>
-              <p-message class="validator-message" severity="danger" text="{{ 'RIDIC.JMENO_VALIDATOR' }}"
+              <label for="jmeno">{{ 'RIDIC.JMENO' | translate }}  *</label>
+              <p-message class="validator-message" severity="danger" text="{{ 'RIDIC.JMENO_VALIDATOR' | translate }}"
                 *ngIf="!formDetail.controls['jmeno']?.valid && formDetail.controls['jmeno']?.dirty"></p-message>
             </span>
           </div>
@@ -206,8 +198,8 @@
             <span class="p-float-label">
               <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="ridicPrijmeni" id="prijmeni"
                 name="prijmeni" />
-              <label for="prijmeni">{{ 'RIDIC.PRIJMENI' }} *</label>
-              <p-message class="validator-message" severity="danger" text="{{ 'RIDIC.PRIJMENI_VALIDATOR' }}"
+              <label for="prijmeni">{{ 'RIDIC.PRIJMENI' | translate }} *</label>
+              <p-message class="validator-message" severity="danger" text="{{ 'RIDIC.PRIJMENI_VALIDATOR' | translate }}"
                 *ngIf="!formDetail.controls['prijmeni']?.valid && formDetail.controls['prijmeni']?.dirty"></p-message>
             </span>
           </div>
@@ -219,8 +211,8 @@
             <span class="p-float-label">
               <input pInputText type="text" [required]="false" autocomplete="off" [(ngModel)]="ridicFirma" id="firma"
                 name="firma" />
-              <label for="firma">{{ 'RIDIC.FIRMA' }}</label>
-              <p-message class="validator-message" severity="danger" text="{{ 'RIDIC.FIRMA_VALIDATOR' }}"
+              <label for="firma">{{ 'RIDIC.FIRMA' | translate }}</label>
+              <p-message class="validator-message" severity="danger" text="{{ 'RIDIC.FIRMA_VALIDATOR' | translate }}"
                 *ngIf="!formDetail.controls['firma']?.valid && formDetail.controls['firma']?.dirty"></p-message>
             </span>
           </div>
@@ -230,8 +222,8 @@
             <span class="p-float-label">
               <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="ridicCisloOp" id="cisloOp"
                 name="cisloOp" (ngModelChange)="fillInRidicByCisloOp($event)" />
-              <label for="cisloOp">{{ 'RIDIC.CISLO_OP' }} *</label>
-              <p-message class="validator-message" severity="danger" text="{{ 'RIDIC.CISLO_OP_VALIDATOR' }}"
+              <label for="cisloOp">{{ 'RIDIC.CISLO_OP' | translate }} *</label>
+              <p-message class="validator-message" severity="danger" text="{{ 'RIDIC.CISLO_OP_VALIDATOR' | translate }}"
                 *ngIf="!formDetail.controls['cisloOp']?.valid && formDetail.controls['cisloOp']?.dirty"></p-message>
             </span>
           </div>
@@ -244,21 +236,21 @@
       <div class="row m-0">
         <!-- Datum od -->
         <div class="col-sm-6 p-0 pe-sm-1">
-          <!-- <app-calendar class="app-calendar" idCalendar="datumOd"  id="datumOd" name="datumOd" 
+          <app-calendar class="app-calendar" idCalendar="datumOd"  id="datumOd" name="datumOd" 
             labelText="POVOLENI_VJEZDU_VOZIDLA.DATUM_OD" (onBlurEvent)="nastavPlatnost(false)" (onSelectEvent)="nastavPlatnost(false)"
             [required]="true" validatorMessageText="POVOLENI_VJEZDU_VOZIDLA.DATUM_OD_VALIDATOR" [form]="formDetail" 
-            [showButtonBar]="true" [readonly]="rezimDetailu == RezimDetailuEnum.Detail" [(ngModel)]="detail.datumOd" >
-          </app-calendar> -->
+            [showButtonBar]="true" [(ngModel)]="detail.datumOd" >
+          </app-calendar> 
         </div>
   
   
         <!-- Datum do -->
         <div class="col-sm-6 p-0 ps-sm-1">
-            <!-- <app-calendar class="app-calendar" idCalendar="datumDo"  id="datumDo" name="datumDo" 
+            <app-calendar class="app-calendar" idCalendar="datumDo"  id="datumDo" name="datumDo" 
             labelText="POVOLENI_VJEZDU_VOZIDLA.DATUM_DO" (onBlurEvent)="nastavPlatnost(false)" (onSelectEvent)="nastavPlatnost(false)"
             [required]="true" validatorMessageText="POVOLENI_VJEZDU_VOZIDLA.DATUM_DO_VALIDATOR" [form]="formDetail" 
-            [showButtonBar]="true" [readonly]="rezimDetailu == RezimDetailuEnum.Detail" [(ngModel)]="detail.datumDo" > 
-          </app-calendar> -->
+            [showButtonBar]="true" [(ngModel)]="detail.datumDo" > 
+          </app-calendar> 
         </div>
       </div>
 
@@ -268,7 +260,7 @@
           [options]="zavodList" dataKey="id" [(ngModel)]="detail!.zavod" optionLabel="nazev"
             [overlayOptions]="{baseZIndex: 1010, appendTo: 'body'}">
         </p-multiSelect>
-        <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.LOKALITA_VALIDATOR' }}"
+        <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.LOKALITA_VALIDATOR' | translate }}"
           *ngIf="!formDetail.controls['zavod']?.valid && formDetail.controls['zavod']?.dirty"></p-message>
         <label htmlFor="multiSelect">Závod *</label>
       </span>
@@ -278,8 +270,11 @@
         <div class="p-field-checkbox">
           <p-checkbox inputId="opakovanyVjezd" name="opakovanyVjezd"
             [(ngModel)]="detail!.opakovanyVjezd" [binary]="true"></p-checkbox>
-          <label class="checkbox-label-group" for="opakovanyVjezd">{{ 'POVOLENI_VJEZDU_VOZIDLA.OPAKOVANY_VJEZD' }}</label>
+          <label class="checkbox-label-group" for="opakovanyVjezd">{{ 'POVOLENI_VJEZDU_VOZIDLA.OPAKOVANY_VJEZD' | translate }}</label>
         </div>
       </div>
-
   </form>
+</div>
+
+<app-detail-povoleni-vjezdu-vozidla-csv></app-detail-povoleni-vjezdu-vozidla-csv>
+<app-detail-povoleni-vjezdu-vozidla-typ-rz-csv (rzTypVozidla)="importRzTypVozidlaFromDialog($event)"></app-detail-povoleni-vjezdu-vozidla-typ-rz-csv>

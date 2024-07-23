@@ -25,19 +25,13 @@ import * as packageJson_ from 'package.json';
 import localeCs from '@angular/common/locales/cs';
 import { errorTxtFunction } from 'src/app/functions/error-txt.function';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
-registerLocaleData(localeCs);
-const packageJson = packageJson_;
-
-// AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpBackend) {
-  return new MultiTranslateHttpLoader(http, [
-    { prefix: "./app/i18n/", suffix: ".json?v=" + packageJson.version },
-    { prefix: "./app/shared/i18n/", suffix: ".json?v=" + packageJson.version },
-  ]);
-}
-
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CalendarComponent } from 'src/app/shared/components/calendar/calendar-standalone.component';
+import { DropdownComponent } from 'src/app/shared/components/dropdown/dropdown.component';
+import { DetailPovoleniVjezduVozidlaCsvPage } from '../detail-povoleni-vjezdu-vozidla-csv/detail-povoleni-vjezdu-vozidla-csv.page';
+import { DetailPovoleniVjezduVozidlaTypRzCsvPage } from '../detail-povoleni-vjezdu-vozidla-typ-rz-csv/detail-povoleni-vjezdu-vozidla-typ-rz-csv.page';
 
 
 @Component({
@@ -47,10 +41,18 @@ export function HttpLoaderFactory(http: HttpBackend) {
     CommonModule,
     DialogModule, 
     FormsModule,
+    InputTextModule,
+    InputTextareaModule,
     MultiSelectModule, 
+    TranslateModule,
     CheckboxModule, 
-    MessageModule],
-  providers: [ConfirmationService, MessageService, TranslateService],
+    MessageModule,
+    CalendarComponent,
+    DropdownComponent,
+    ToastModule,
+    DetailPovoleniVjezduVozidlaCsvPage,
+    DetailPovoleniVjezduVozidlaTypRzCsvPage],
+  providers: [ConfirmationService, TranslateService],
   templateUrl: './povoleni-vjezdu-vozidla.component.html',
   styleUrl: './povoleni-vjezdu-vozidla.component.css'
 })
@@ -58,6 +60,8 @@ export class PovoleniVjezduVozidlaComponent {
   @Input() refreshSeznamToken$: BehaviorSubject<undefined> | undefined = undefined;
   @ViewChild('formDetail') public formDetail: NgForm | undefined;
   @ViewChild('inputImportCSV') inputImportCSV?: ElementRef;
+  @ViewChild(DetailPovoleniVjezduVozidlaCsvPage) detailPovoleniVjezduVozidlaCsvPage?: DetailPovoleniVjezduVozidlaCsvPage;
+  @ViewChild(DetailPovoleniVjezduVozidlaTypRzCsvPage) detailPovoleniVjezduVozidlaTypRzCsvPage?: DetailPovoleniVjezduVozidlaTypRzCsvPage;
 
   detail?: PovoleniVjezduVozidlaDto = newPovoleniVjezduVozidlaDto();
   idZaznamu?: string;
@@ -82,6 +86,7 @@ export class PovoleniVjezduVozidlaComponent {
     //private readonly confirmationService: ConfirmationService,
     private readonly elementRef: ElementRef,
     private readonly messageService: MessageService,
+    private readonly translateService: TranslateService,
     //private readonly uiService: UiService,
     
     private readonly povoleniVjezduVozidlaControllerService: PovoleniVjezduVozidlaControllerService,
@@ -93,6 +98,7 @@ export class PovoleniVjezduVozidlaComponent {
   }
 
   ngOnInit() {
+    this.showNovyDetail()
     this.initializeRidicValues();
 
     this.zavodControllerService.listZavod(true).subscribe(
@@ -181,6 +187,8 @@ export class PovoleniVjezduVozidlaComponent {
   }
 
   ulozit(form: NgForm) {
+    this.messageService.add({ severity: 'error', summary: "test", detail: "Success Service Message"});
+    
     if (form.pending) {
       return;
     }
@@ -205,12 +213,15 @@ export class PovoleniVjezduVozidlaComponent {
       .subscribe({
         next: (vysledek: PovoleniVjezduVozidlaDto) => {
           //this.uiService.stopSpinner();
+          console.log(vysledek)
           this.formDetail?.form.markAsPristine();
           this.refreshSeznamToken$?.next(undefined);
         },
         error: error => {
           //this.uiService.stopSpinner();
-          this.messageService.add({ severity: 'error', summary: error.error?.message ? error.error.message : (error.error ? errorTxtFunction(error.error) : errorTxtFunction(error)) });
+          console.log(error);
+          console.log(error.error);
+          this.messageService.add({ severity: 'error', summary: this.getErrorMessage(error) });
         }
       });
   }
@@ -233,7 +244,7 @@ export class PovoleniVjezduVozidlaComponent {
           }),
           catchError(
             error => {
-              this.messageService.add({ severity: 'error', summary: error.error?.message ? error.error.message : (error.error ? errorTxtFunction(error.error) : errorTxtFunction(error)) });
+              this.messageService.add({ severity: 'error', summary: this.getErrorMessage(error) });
               //this.uiService.stopSpinner();
               return of(undefined);
             }
@@ -294,7 +305,7 @@ export class PovoleniVjezduVozidlaComponent {
           },
           error => {
             //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'error', summary: error.error?.message ? error.error.message : (error.error ? errorTxtFunction(error.error) : errorTxtFunction(error)) });
+            this.messageService.add({ severity: 'error', summary: this.getErrorMessage(error) });
           }
       );
     }
@@ -376,5 +387,35 @@ export class PovoleniVjezduVozidlaComponent {
       }
     }
   }
+
+  public printZavodList() {
+    console.log(this.zavodList);
+  }
+
+  private getErrorMessage(error: any): string{
+    const keys = Object.keys(error.error);
+    if (keys.length > 0) {
+      const firstKey = keys[0];
+      const value = error.error[firstKey];
+      return value
+    } else {
+      return "Vznikla nezmapovaná chyba na serveru. Akci opakujte později."
+    }
+  }
   
+  showPovoleniVjezduVozidlaCsvDetail() {
+    this.detailPovoleniVjezduVozidlaCsvPage?.showNovyDetail();
+  }
+
+  importRzTypVozidlaFromDialog(rzTypVozidla: any) {
+    this.detail!.rzVozidla = rzTypVozidla.rzVozidla;
+    this.detail!.typVozidla = rzTypVozidla.typVozidla;
+    
+    this.detailPovoleniVjezduVozidlaTypRzCsvPage?.zavritDetail();
+  }
+
+  showTypRzVozidlaCsvDetail() {
+    this.detailPovoleniVjezduVozidlaTypRzCsvPage?.showNovyDetail();
+  }
+
 }

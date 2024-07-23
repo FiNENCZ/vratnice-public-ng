@@ -1,0 +1,50 @@
+<p-dialog [(visible)]="displayDetail" class="detailOkno" [baseZIndex]="1010" position="center"
+  (visibleChange)="visibleChange()" [modal]="true" [style]="{width: '700px'}">
+  <p-header>
+    <i class="fas fa-car"></i> {{ 'POVOLENI_VJEZDU_VOZIDLA.NAZEV_DETAIL' | translate }}
+  </p-header>
+    
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid justify-content-start">
+        <div>
+          <input #inputImportCSV id="inputImportCSV" type="file" style="display: none;" (change)="onCsvSelected($event)" data-button-id="btnImportCSV" accept=".csv">
+          <button id="btnImportCSV" (click)="importCSV();" type="button" class="btn btn-sm btn-outline-primary">Načíst CSV soubor</button>
+        </div>
+      </div>
+    </nav>
+    <div class="manual">
+      <h2>Struktura CSV souboru</h2>
+      <ul>
+        <li><strong>jmenoZadatele</strong>: Jméno žadatele, <strong>povinné pole</strong>.</li>
+        <li><strong>prijmeniZadatele</strong>: Příjmení žadatele, <strong>povinné pole</strong>.</li>
+        <li><strong>spolecnostZadatele</strong>: Název společnosti žadatele, <strong>povinné pole</strong>.</li>
+        <li><strong>icoZadatele</strong>: IČO žadatele.</li>
+        <li><strong>duvodZadosti</strong>: Důvod žádosti, <strong>povinné pole</strong>.</li>
+        <li><strong>rzVozidla</strong>: Řidičské značky vozidla, oddělené vertikální čárou (|).</li>
+        <li><strong>typVozidla</strong>: Typy vozidel, oddělené vertikální čárou (|). Povolený typy: <strong>osobní</strong>, <strong>dodávka</strong>, <strong>nákladní</strong>, <strong>speciální</strong></li>
+        <li><strong>zemeRegistraceVozidla</strong>: Země registrace vozidla, <strong>povinné pole</strong>. Povolený země: <strong>Česká republika</strong>, <strong>Slovensko</strong>, <strong>Polsko</strong>, <strong>Německo</strong>, <strong>Rakousko</strong></li>
+      </ul>
+        <div class="my-3">
+        <span><strong>Řidiče není povinné vyplňovat</strong>, pokud se již tak rozhodnete, tak musí být vyplněny parametry <strong><i>ridic_jmeno, ridic_prijmeni, ridic_cisloOp</i></strong></span>
+        </div>
+      <ul>
+        <li><strong>ridic_jmeno</strong>: Jméno řidiče.</li>
+        <li><strong>ridic_prijmeni</strong>: Příjmení řidiče.</li>
+        <li><strong>ridic_cisloOp</strong>: Číslo řidičského průkazu řidiče.</li>
+        <li><strong>ridic_firma</strong>: Firma řidiče.</li>
+        <li><strong>datumOd</strong>: Datum, od kterého je vjezd povolen, <strong>povinné pole</strong> (ve formátu DD/MM/YYYY).</li>
+        <li><strong>datumDo</strong>: Datum, do kterého je vjezd povolen, <strong>povinné pole</strong> (ve formátu DD/MM/YYYY).</li>
+        <li><strong>zavod_nazvy</strong>: Názvy závodů, kde je vjezd povolen, oddělené vertikální čárou (|), <strong>povinné pole</strong>.</li>
+        <li><strong>opakovanyVjezd</strong>: "true" pokud se jedná o opakovaný vjezd, jinak "false" </li>
+      </ul>
+    
+      <h2 class="mt-3">Názorný příklad CSV soubouru:</h2>
+      <pre>
+        jmenoZadatele,prijmeniZadatele,spolecnostZadatele,icoZadatele,duvodZadosti,rzVozidla,typVozidla,zemeRegistraceVozidla,ridic_jmeno,ridic_prijmeni,ridic_cisloOp,ridic_firma,spolecnostVozidla,datumOd,datumDo,zavod_nazvy,opakovanyVjezd
+        asdas,dasda,asd,asd,asdasd,,,asd,asd,asd,asd,asd,asd,26/06/2024,26/06/2024,Darkov|HBZS,
+        asd,asd,asd,asd,aasd,,,asd,,,,,asd,26/06/2024,26/06/2024,Darkov,true
+        Ondřej,Kudela,DIAMO,51561sdf,jen tak,6asdsad|65464,osobní|nákladní,asd,Ondřej,Kudela,2045265214,DIAMO,asd,26/06/2024,26/06/2024,Darkov,true
+      </pre>
+  </div>
+</p-dialog>
+

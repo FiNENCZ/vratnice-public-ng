@@ -3,5 +3,5 @@ import { PovoleniVjezduVozidlaComponent } from './pages/povoleni-vjezdu-vozidla/
 import { TestComponent } from './pages/test/test.component';
 
 export const routes: Routes = [
-    {path: "", component: TestComponent}
+    {path: '', component: PovoleniVjezduVozidlaComponent}
 ];

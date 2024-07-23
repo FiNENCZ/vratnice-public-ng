@@ -1,0 +1,65 @@
+{
+  "TOPMENU": {
+    "PRINT_QR_KOD": "Tisk QR kódu",
+    "READ_ID_CARD": "Načíst doklad",
+    "NEW": "Nový záznam",
+    "SAVE": "Uložit"
+  },
+
+  "RIDIC": {
+    "ID": "ID",
+    "JMENO": "Jméno",
+    "PRIJMENI": "Příjmeni",
+    "CISLO_OP": "Číslo OP",
+    "FIRMA": "Firma",
+    "DATUM_POUCENI": "Datum poučení",
+
+    "NAZEV_SEZNAM": "Řidiči",
+    "NAZEV_DETAIL": "Řidič",
+
+    "JMENO_VALIDATOR": "Jméno je nutné vyplnit",
+    "PRIJMENI_VALIDATOR": "Příjmení je nutné vyplnit",
+    "CISLO_OP_VALIDATOR": "Číslo OP je nutné vyplnit",
+    "DATUM_POUCENI_VALIDATOR": "Datum poučení je nutné vyplnit"
+  },
+
+  "POVOLENI_VJEZDU_VOZIDLA": {
+    "ID": "ID",
+    "JMENO": "Jméno žadatele",
+    "PRIJMENI": "Příjmeni žadatele",
+    "SPOLECNOST": "Společnost žadatele",
+    "ICO": "IČO žadazele",
+    "DUVOD": "Důvod žádosti",
+    "RZ_VOZIDLA": "RZ vozidla",
+    "TYP_VOZIDLA" : "Typ vozidla",
+    "ZEME_REGISTRACE_VOZIDLA": "Země registrace vozidla",
+    "RIDIC": "Řidič",
+    "SPOLECNOST_VOZIDLA": "Společnost vlastnící vozidlo",
+    "DATUM_OD": "Datum od",
+    "DATUM_DO": "Datum do",
+    "LOKALITA": "Lokalita (závod)",
+    "OPAKOVANY_VJEZD": "Opakovaný vjezd",
+    "STAV": "Stav",
+    "ULOZIT_POVOLENI_VJEZDU_VOZIDLA_CSV": "Vytvořit žádost z CSV",
+
+    "JMENO_VALIDATOR": "Jméno žadatele je nutné vyplnit",
+    "PRIJMENI_VALIDATOR": "Příjmeni žadatele je nutné vyplnit",
+    "SPOLECNOST_VALIDATOR": "Společnost žadatele je nutné vyplnit",
+    "DUVOD_VALIDATOR": "Důvod žádosti je nutné vyplnit",
+    "RZ_VOZIDLA_VALIDATOR": "RZ vozidla je nutné vyplnit",
+    "TYP_VOZIDLA_VALIDATOR" : "Typ vozidla je nutné vyplnit",
+    "ZEME_REGISTRACE_VOZIDLA_VALIDATOR": "Země registrace vozidla je nutné vyplnit",
+    "DATUM_OD_VALIDATOR": "Datum od je nutné vyplnit",
+    "DATUM_DO_VALIDATOR": "Datum do je nutné vyplnit",
+    "LOKALITA_VALIDATOR": "Lokalitu (závod) je nutné vyplnit",
+
+    "PRIDAT_RIDICE": "Přidat řidiče",
+    "ODEBRAT_RIDICE": "Odebrat řidiče",
+
+    "NAZEV_SEZNAM": "Povolení vjezdu vozidel",
+    "NAZEV_DETAIL": "Povolení vjezdu vozidla"
+    
+  }
+
+
+}

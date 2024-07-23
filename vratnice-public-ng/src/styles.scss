@@ -1,3 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
-@import "primeng/resources/themes/lara-light-blue/theme.css";
-@import "primeng/resources/primeng.css"
+@import 'node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+
+@import 'node_modules/bootstrap/dist/css/bootstrap.css';
+
+
+@import "primeng/resources/themes/mdc-light-indigo/theme.css";
+@import "primeng/resources/primeng.min.css";
+@import "primeicons/primeicons.css";
+//  @import "primeflex/primeflex.css";
+
+@import 'share-res/css/main-app.scss';
+@import 'share-res/css/main.scss';
+@import 'share-res/css/hamburger.scss';
+// @import '../share-res/css/custom-colors.scss';
+//@import 'share-res/css/custom-prime.scss';
+@import 'share-res/css/custom-prime-indigo.scss';
+
+
+@import 'share-res/css/tieredmenu-dragdrop.scss';

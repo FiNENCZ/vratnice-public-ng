@@ -1,0 +1,35 @@
+<span [class]="pouzeDropdown ? '' : ('p-float-label '  + divFormLabelGroupClass)">
+  <input pInputText type="text" *ngIf="readonly" [value]="readOnlyTxt ? readOnlyTxt : ''" [readOnly]="true" />
+  <p-dropdown #dropdown *ngIf="!readonly" id="{{idDropdown}}" [required]="required" name="{{idDropdown}}"
+    [readonly]="readonlyCiselnik" [virtualScroll]="virtualScroll"     
+    [virtualScrollItemSize]="virtualScrollItemSize"
+    [scrollHeight]="(virtualScroll && dropdown?.options?.length && (dropdown.options!.length * virtualScrollItemSize + 1) < 300) ?  (dropdown.options!.length * virtualScrollItemSize + 1) + 'px' : '300px'"
+    [showClear]="showClear" (onChange)="onChange($event)" [resetFilterOnHide]="true"
+    [autoDisplayFirst]="false" [ngClass]="(nacitani ? 'nacitani-dat' : '') + (readonlyCiselnik ? ' readonly-dropdown' : '')" [options]="values ? values : (valuesObservable | async)"
+    [dataKey]="dataKey" [ngModel]="hodnota" (ngModelChange)="modelChange($event)" [filter]="filter"
+    placeholder="{{ placeholderText ? (placeholderText | translate) : null}}" filterBy="{{filterBy}}" [filterFields]="filterFields ? filterFields : (filterBy ? filterBy.split(',') : undefined)" (onHide)="onHide($event, dropdown)"
+    [overlayOptions]="{baseZIndex: 1010, appendTo: 'body', onShow: onShow}" [optionLabel]="optionLabel">
+    <ng-template pTemplate="filter" let-options="options">
+      <div class="p-dropdown-filter-container">
+        <input #filter type="text" autocomplete="off" class="p-dropdown-filter p-inputtext p-component"
+        (input)="dropdown.onFilterInputChange($event)"
+        (keydown.enter)="filterKeyUp($any($event), options, dropdown)"
+        (keydown)="dropdown.onFilterKeyDown($event)" />
+        <span class="p-dropdown-filter-icon pi pi-search"></span>
+      </div>
+    </ng-template>
+    <ng-template *ngIf="selectedTemplate" let-value pTemplate="selectedItem">
+      <ng-container *ngTemplateOutlet="selectedTemplate;context:{value:value}">
+      </ng-container>
+    </ng-template>
+    <ng-template *ngIf="itemTemplate" let-value pTemplate="item">
+      <ng-container *ngTemplateOutlet="itemTemplate;context:{value:value}">
+      </ng-container>
+    </ng-template>
+  </p-dropdown>
+  <label *ngIf="!pouzeDropdown" for="{{idDropdown}}">{{ labelText | translate }} {{required ? '*' : ''}}</label>
+  <p-message class="validator-message" severity="danger"
+    text="{{ validatorMessageText ? (validatorMessageText | translate) : null}}"
+    *ngIf="required && form && !form.controls[idDropdown]?.valid && form.controls[idDropdown]?.dirty">
+  </p-message>
+</span>

@@ -1,0 +1,230 @@
+<ng-template #loading>
+  <!-- Načítání seznamu -->
+  <div class="row justify-content-center m-0">
+    <div class="col-xl-12 text-center">
+      <i class="fas fa-spinner fa-spin"></i>
+      <!-- <h5 class="page-header"> -->
+      {{ textNacitaniSeznam | translate }}
+      <!-- </h5> -->
+    </div>
+  </div>
+</ng-template>
+
+<div class="page-content" *ngIf="(seznamDataObservable$ | async) as seznamData; else loading;">
+
+  <p-table *ngIf="!nacitaniUzivNastaveni" #dt [value]="seznamData" columnResizeMode="expand" responsiveLayout="scroll" [scrollable]="true"
+    [columns]="selectedColumns!" [reorderableColumns]="true" [resizableColumns]="true" [multiSortMeta]="multiSortMeta!"
+    sortMode="multiple" [paginator]="true" [rows]="rows!" [dataKey]="userDataKey" [expandedRowKeys]="expandedRows"
+    [selectionMode]="seznamSelectionMode!" [rowHover]="radekHover" [(selection)]="selectedRows"
+    [globalFilterFields]="globalFilterFields ? globalFilterFields! : $any(null)" [rowsPerPageOptions]="[10,20,30,40,50,100]" [paginatorDropdownAppendTo]="'body'"
+    (onColResize)="onZmenaTabulka(dt)" (onRowSelect)="sloupecCheckbox ? onCheckbox($event) : onSelect($event)"
+    (onRowUnselect)="sloupecCheckbox ? onCheckbox($event) : null"
+    (onRowReorder)="sloupecReordable ? onReorder($event, seznamData) : null"
+    (onHeaderCheckboxToggle)="sloupecCheckbox ? onCheckbox($event) : null" (onPage)="onZmenaTabulka(dt)"
+    (onColReorder)="onZmenaTabulka(dt)" (onSort)="onZmenaSortTabulka(dt)" [showCurrentPageReport]="true"
+    currentPageReportTemplate="{{ 'SEZNAM.PATICKA_POCET' | translate }}" class="seznam-table">
+    <ng-template pTemplate="caption">
+      <!-- <div style="text-align:left">
+      <p-multiSelect id="selectedColums" (onChange)="onChangeColumns(dt)" [filter]="false" name="selectedColums" [options]="cols"
+        [(ngModel)]="selectedColumns" optionLabel="header" [style]="{minWidth: '200px'}">
+      </p-multiSelect>
+    </div> -->
+      <div #hlavicka class="d-flex">
+        <span *ngIf="exportExcelEmitter.observers.length > 0 && exportExcelPovolen">
+          <button type="button" class="btn btn-sm btn-outline-secondary" (click)="exportExcel(seznamData)"
+            title="{{ 'SEZNAM.EXPORT_XLS' | translate }}"><i class="fa-regular fa-file-excel"></i></button>
+        </span>
+        <!-- <button *ngIf="showExportZipButton" (click)="exportZip()" title="Export zip souboru" type="button" class="btn btn-sm btn-primary"><i class="far fa-file-archive"></i></button> -->
+        <!-- <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button> -->
+        <!-- <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button> -->
+        <!-- <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button> -->
+        <!-- <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button> -->
+        <span *ngIf="nadpisSeznam" class="ms-auto mt-auto mb-auto">{{nadpisSeznam}}</span>
+        <span class="ms-auto" [style]="vyberSloupcu ? 'margin-right: 1.875rem; padding-left: 0.4rem;' : ''">
+          <p-contextMenu [target]="hlavicka" appendTo="body" [model]="items!"></p-contextMenu>
+
+          <!-- <span class="p-input-icon-left p-input-icon-right">
+            <i class="pi pi-search"></i>
+            <i class="pi pi-spin pi-spinner" (click)="smazatFiltr(dt?.filters?.global)"></i>
+            <input type="text" pInputText />
+        </span> -->
+
+          <span class="p-input-icon-left p-input-icon-right p-mb-2 p-mb-md-0">
+            <i class="pi pi-search"></i>
+            <i [class]="!$any(dt?.filters?.global)?.value ? 'd-none' : 'seznam-hledani-smazat pi pi-times'"
+              title="{{ 'SEZNAM.SMAZAT' | translate }}" (click)="smazatFiltr(dt?.filters?.global)"></i>
+            <input type="text" pInputText size="30" placeholder="{{ 'SEZNAM.HLEDANI' | translate }}"
+              [value]="$any(dt?.filters?.global)?.value"
+              (input)="dt.filterGlobal($any($event.target)?.value, 'contains')" style="width:100%">
+          </span>
+          <!-- <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="30" placeholder="Hledání" [value]="dt?.filters?.global?.value"
+              (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto"> -->
+          <p-multiSelect *ngIf="filterHlavicka" [options]="filterHlavicka.values" class="filter-hlavicka-table"
+            [filter]="false" [defaultLabel]="filterHlavicka.label"
+            (onChange)="dt.filter($event.value, filterHlavicka.field, 'in')"></p-multiSelect>
+        </span>
+        <p-multiSelect *ngIf="vyberSloupcu" class="vyber-sloupcu" dropdownIcon="fas fa-cog" id="selectedColumns"
+          (onChange)="onChangeColumns(dt)" [filter]="false" name="selectedColumns" [options]="cols!" appendTo="body"
+          [(ngModel)]="selectedColumns" optionLabel="header">
+          <ng-template let-col pTemplate="item">
+            {{col.header | translate}}
+          </ng-template>
+        </p-multiSelect>
+      </div>
+
+      <!-- <div #hlavicka style="text-align: right">
+        <span style="margin-right: 30px;">
+          <p-contextMenu [target]="hlavicka" appendTo="body" [model]="items"></p-contextMenu>
+          <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+          <input type="text" pInputText size="30" placeholder="Hledání" [value]="dt?.filters?.global?.value"
+            (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+            <p-multiSelect *ngIf="filterHlavicka" [options]="filterHlavicka.values" class="filter-hlavicka-table" [filter]="false" [defaultLabel]="filterHlavicka.label" (onChange)="dt.filter($event.value, filterHlavicka.field, 'in')"></p-multiSelect>
+        </span>
+        <p-multiSelect class="vyber-sloupcu" dropdownIcon="fas fa-cog" id="selectedColumns"
+          (onChange)="onChangeColumns(dt)" [filter]="false" name="selectedColumns" [options]="cols"
+          [(ngModel)]="selectedColumns" optionLabel="header">
+        </p-multiSelect>
+      </div> -->
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th pResizableColumnDisabled [style.width]="'2.5rem'" *ngIf="sloupecReordable">&nbsp;</th>
+        <th pResizableColumnDisabled [style.width]="'2.5rem'" *ngIf="sloupecCheckbox">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pResizableColumnDisabled [style.width]="'2.5rem'" *ngIf="sloupecExpandable">&nbsp;</th>
+        <th pResizableColumnDisabled pFrozenColumn [frozen]="sloupecDetailFrozen" [style.width]="'3.125rem'" *ngIf="sloupecDetail">&nbsp;</th>
+        <th *ngFor="let tlacitko of tlacitka" pResizableColumnDisabled [style.width]="'3.125rem'">&nbsp;</th>
+
+        <th *ngFor="let col of columns" [style.width]="col.width" title="{{ (col.headerTitle ? col.headerTitle : col.header) | translate }}"
+          [pSortableColumn]="col.sortField ? col.sortField : col.field" [pSortableColumnDisabled]="col.sortableOff"
+          [attr.seznam-header-id]="col.field" [pResizableColumnDisabled]="col.resizableOff"
+          [pReorderableColumnDisabled]="col.reorderableOff" [class]="col.reorderableOff ? 'reorderable-off' : ''"
+          pFrozenColumn [frozen]="col.frozenColumn"
+          pResizableColumn pReorderableColumn>
+          {{ col.header | translate }}
+          <p-sortIcon *ngIf="!col.sortableOff" [field]="col.sortField ? col.sortField : col.field"></p-sortIcon>
+
+          <!-- Textový filtr -->
+          <p-columnFilter *ngIf="col.typFiltru == SeznamTypFiltruEnum.Text" type="text" [field]="col.field"
+            display="menu" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
+
+          <!-- Multiselect filtr -->
+          <p-columnFilter *ngIf="col.typFiltru == SeznamTypFiltruEnum.Vyber" [field]="col.filtrField" matchMode="in"
+            display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+            <!-- <ng-template pTemplate="header">
+              <div>
+                  Úřad
+                </div>
+            </ng-template> -->
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <ng-container
+                *ngTemplateOutlet="filtrTemplates ? filtrTemplates[col.idFiltrTemplates] : null;context:{value:value,filter:filter,col:col}">
+              </ng-container>
+            </ng-template>
+          </p-columnFilter>
+
+          <p-columnFilter *ngIf="col.typFiltru == SeznamTypFiltruEnum.VyberSeznam" [field]="col.filtrField"
+            matchMode="isInContains" display="menu" [showMatchModes]="false" [showOperator]="false"
+            [showAddButton]="false">
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <ng-container
+                *ngTemplateOutlet="filtrTemplates ? filtrTemplates[col.idFiltrTemplates] : null;context:{value:value,filter:filter,col:col}">
+              </ng-container>
+            </ng-template>
+          </p-columnFilter>
+
+
+          <!-- <p-multiSelect appendTo="body" *ngSwitchCase="'stav.nazev'" [options]="colors" defaultLabel="All Colors" (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect> -->
+        </th>
+
+
+
+      </tr>
+    </ng-template>
+
+
+    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded" let-columns="columns">
+      <tr [pReorderableRow]="sloupecReordable ? rowIndex : undefined" [pSelectableRow]="rowData"        
+        [pSelectableRowDisabled]="sloupecCheckbox" [ngClass]="podminkaRadek(rowData)!">
+        <td *ngIf="sloupecReordable" [style.width]="'2.5rem'">
+          <span class="pi pi-bars" pReorderableRowHandle></span>
+        </td>
+        <td *ngIf="sloupecCheckbox" [style.width]="'2.5rem'">
+          <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+        </td>
+        <td *ngIf="sloupecExpandable" [style.width]="'2.5rem'">
+          <a href="#" [pRowToggler]="rowData">
+            <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+          </a>
+        </td>
+        <td pFrozenColumn [frozen]="sloupecDetailFrozen" class="tlacitka" *ngIf="sloupecDetail" [style.width]="'3.125rem'"><button
+            (click)="showDetailDialog($event, rowData, rowIndex)" type="button" class="btn btn-sm btn-success">
+            <i class="fas fa-search"></i></button>
+        </td>
+        <td class="tlacitka" *ngFor="let tlacitko of tlacitka" [style.width]="'3.125rem'">
+          <button (click)="tlacitko.eventEmitter.emit(rowData)" [title]="tlacitko.tooltip" type="button"
+            class="btn btn-sm btn-success">
+            <i [class]="tlacitko.icon"></i></button>
+        </td>
+
+        <td *ngFor="let col of columns" [style.width]="col.width" [class]="col.styleField ? col.styleField : ''" 
+          pFrozenColumn [frozen]="col.frozenColumn">{{
+          !(col.idColTemplates != null)
+          ? (col.typeColumn != SeznamTypeColumnEnum.HodinyMinuty
+          ? (col.typeColumn != SeznamTypeColumnEnum.Castka
+          ? (col.typeColumn != SeznamTypeColumnEnum.DatumCasVteriny
+          ? (col.typeColumn != SeznamTypeColumnEnum.DatumCas
+          ? (col.typeColumn != SeznamTypeColumnEnum.Datum
+          ? (col.typeColumn != SeznamTypeColumnEnum.Cas
+          ? (rowData | field : col | anoNe)
+          : (rowData | field : col | date: 'HH:mm'))
+          : (rowData | field : col | date: 'dd.MM.yyyy'))
+          : (rowData | field : col | date: 'dd.MM.yyyy HH:mm'))
+          : (rowData | field : col | date: 'dd.MM.yyyy HH:mm:ss'))
+          : (rowData | field : col | currency))
+          : (rowData | field : col | hodinyMinuty))
+          : (undefined)}}
+          <ng-container
+            *ngTemplateOutlet="colTemplates ? colTemplates[col.idColTemplates] : null;context:{rowData:rowData,rowIndex:rowIndex,col:col}">
+          </ng-container>
+          <!-- {{rowData | field : col | date: 'dd.MM.yyyy HH:mm'}} -->
+          <!-- {{rowData[col.field]}} -->
+        </td>
+
+      </tr>
+    </ng-template>
+
+    <ng-template *ngIf="sloupecExpandable" pTemplate="rowexpansion" let-rowData let-rowIndex="rowIndex"
+      let-columns="columns">
+      <ng-container *ngTemplateOutlet="expandRowTemplate;context:{columns:columns, rowData:rowData, rowIndex:rowIndex}">
+      </ng-container>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td
+          [attr.colspan]="columns.length + ( sloupecReordable ? 1 : 0) + ( sloupecCheckbox ? 1 : 0) + ( sloupecExpandable ? 1 : 0) + ( sloupecDetail ? 1 : 0) + (tlacitka ? tlacitka.length : 0)">
+          {{ 'SEZNAM.EMPTY' | translate }}
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template *ngIf="summaryRow" pTemplate="footer">
+      <ng-container *ngTemplateOutlet="summaryTemplate">
+      </ng-container>
+    </ng-template>
+
+    <ng-template pTemplate="summary" *ngIf="sloupecCheckbox">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        {{'SEZNAM.PATICKA_TABULKA_VYBRANO' | translate:{ pocet:(selectedRows ?
+        selectedRows.length : 0) } }}
+      </div>
+    </ng-template>
+
+  </p-table>
+
+
+</div>

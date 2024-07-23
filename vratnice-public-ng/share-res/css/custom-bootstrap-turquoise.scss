@@ -1,0 +1,37 @@
+// Proměnné BootStrapu
+// Změna hlavní barvy bootstrapu
+$min-contrast-ratio: 3;
+
+//Zelená DIAMO barva
+//$primary: rgb(66, 151, 62);
+//$input-focus-border-color: rgb(139,184,117);
+
+$primary: #00A19A; // tyrkysová
+$input-focus-border-color: #7ccec7;// tyrkysová
+
+//$primary: #2D2E83; // fialově modrá
+//$input-focus-border-color: #8c81e3;// fialově modrá
+
+
+//@import '../css-custom/barvy.scss';
+
+//$component-active-bg: rgb(139,184,117);
+// $body-bg: #fff;
+// $secondary: #8300d9;
+
+// Moje proměnné
+//$left-menu-background: #e0f3ff;
+$left-menu-background: rgba($input-focus-border-color, .2);
+$pozadi-pole: rgba($input-focus-border-color, .2);
+
+$form-feedback-invalid-color: #B00020;
+
+$utilities: (
+  "opacity": (
+    property: opacity,
+    values: (
+      0: 0,
+      8: 0.8,
+    ),
+  ),
+);

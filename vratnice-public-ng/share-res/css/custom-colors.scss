@@ -1,0 +1,587 @@
+.p-dialog .p-dialog-footer button.btn-primary {
+  @include button-variant($primary, $primary);
+
+  &:hover {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+  } 
+  
+  &:focus {
+    box-shadow: var(--bs-btn-focus-box-shadow);
+  }
+}
+
+button.btn-success {
+  @include button-variant($primary, $primary);
+}
+
+.p-fileupload .p-button,
+.p-picklist .p-picklist-buttons .p-button {
+  @include button-variant($primary, $primary);
+  color: var(--bs-btn-color);
+  background-color: var(--bs-btn-bg);
+  border-color: var(--bs-btn-border-color);
+  
+  &:hover {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+  } 
+
+  &:focus {
+    box-shadow: 0 0 $input-btn-focus-blur $input-focus-width rgba($primary, $input-btn-focus-color-opacity);
+  }
+
+  &:active {
+    color: var(--bs-btn-active-color);
+    background-color: var(--bs-btn-active-bg);
+    border-color: var(--bs-btn-active-border-color);
+    box-shadow: var(--bs-btn-active-shadow);
+  } 
+
+}
+
+.p-fileupload .p-fileupload-buttonbar .p-button.p-fileupload-choose.p-focus {
+  box-shadow: 0 0 $input-btn-focus-blur $input-focus-width rgba($primary, $input-btn-focus-color-opacity);
+}
+
+p-calendar.only-icon-kalendar .p-button.p-button-icon-only{
+  @include button-outline-variant($secondary);
+  background-color: transparent;
+  color: var(--bs-btn-color);
+  border-color: var(--bs-btn-border-color);
+  
+  &:hover {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+  } 
+
+  &:focus {
+    box-shadow: 0 0 $input-btn-focus-blur $input-focus-width rgba($primary, $input-btn-focus-color-opacity);
+  }
+}
+
+.p-dialog .p-dialog-footer button.btn-outline-primary {
+  @include button-outline-variant($primary);
+  background-color: $body-bg;
+  padding: 0.429rem 1rem;
+  
+  &:hover, &:active, &:focus {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+  }
+  
+  &:focus {
+    box-shadow: var(--bs-btn-focus-box-shadow);
+  }
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight,
+.p-checkbox .p-checkbox-box.p-highlight {
+  @include button-variant($primary, $primary);
+  background-color: var(--bs-btn-bg);
+  border-color: var(--bs-btn-border-color);
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover,
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover{
+  background-color: var(--bs-btn-hover-bg);
+  border-color: var(--bs-btn-hover-border-color);  
+}
+
+.p-listbox.p-focus,
+.p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover,
+.p-radiobutton .p-radiobutton-box:not(.p-disabled).p-focus,
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover,
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+    border-color: $primary;
+}
+
+.p-radiobutton .p-radiobutton-box:not(.p-disabled).p-focus,
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+  @if $enable-shadows {
+    @include box-shadow($input-box-shadow, $input-focus-box-shadow);
+  } @else {
+    // Avoid using mixin so we can pass custom focus shadow properly
+    box-shadow: $input-focus-box-shadow;
+  }
+}
+
+.p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight,
+.p-datepicker table td.p-datepicker-today > span.p-highlight,
+.p-datepicker .p-monthpicker .p-monthpicker-month.p-highlight,
+.p-datepicker .p-yearpicker .p-yearpicker-year.p-highlight,
+.p-picklist .p-picklist-list .p-picklist-item.p-highlight,
+.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item.p-highlight {
+  background-color: $pozadi-pole;
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight {
+    @include button-variant($primary, $primary);  
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year:enabled:hover, 
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:enabled:hover,
+.p-datatable .p-sortable-column.p-highlight,
+.p-datatable .p-sortable-column.p-highlight:hover,
+.p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon,
+.p-datatable .p-sortable-column.p-highlight:hover .p-sortable-column-icon,
+.p-datatable .p-sortable-column .p-sortable-column-badge,
+.p-datepicker table td > span.p-highlight,
+.p-datepicker table td.p-datepicker-today > span.p-highlight,
+.p-datepicker .p-yearpicker .p-yearpicker-year.p-highlight,
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight,
+.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item.p-highlight {
+    color: $primary;
+}
+
+.p-datepicker-buttonbar .p-button.p-button-text:enabled {
+  @include button-outline-variant($primary);
+  border: none;
+  color: var(--bs-btn-color);
+  
+  &:hover {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+  } 
+
+  &:focus {
+    box-shadow: 0 0 $input-btn-focus-blur 0.15rem rgba($primary, $input-btn-focus-color-opacity);
+  }
+}
+
+.p-datepicker .p-timepicker button:focus {
+  box-shadow: 0 0 $input-btn-focus-blur 0.15rem rgba($primary, $input-btn-focus-color-opacity);
+}
+
+.p-inputtext.form-control:hover,
+.p-inputtext.p-component:enabled:hover,
+.p-dropdown:not(.p-disabled):hover,
+.p-calendar:not(.p-calendar-disabled).p-focus > .p-inputtext,
+.p-multiselect:not(.p-disabled):hover,
+.p-inputtext:enabled:hover,
+.p-fileupload:hover .p-fileupload-buttonbar,
+.p-fileupload:hover .p-fileupload-content,
+.p-autocomplete:not(.p-disabled):hover .p-autocomplete-multiple-container {
+  border-color: $input-focus-border-color;
+}
+
+.p-datepicker:not(.p-disabled) .p-monthpicker .p-monthpicker-month:not(.p-disabled):focus,
+.p-datepicker:not(.p-disabled) .p-yearpicker .p-yearpicker-year:not(.p-disabled):focus,
+.p-inputtext.form-control:focus,
+.p-inputtext.p-component:enabled:focus,
+.p-multiselect:not(.p-disabled).p-focus,
+.p-dropdown:not(.p-disabled).p-focus,
+.p-inputtext:enabled:focus,
+.p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-multiple-container {
+  box-shadow: inset 0 0 0 1px $input-focus-border-color, inset 0 0 0 1px $input-focus-border-color, inset 0 0 0 1px $input-focus-border-color, inset 0 0 0 1px $input-focus-border-color;
+  border-color: $input-focus-border-color;
+  // border-color: $input-focus-border-color;
+  // @if $enable-shadows {
+  //   @include box-shadow($input-box-shadow, $input-focus-box-shadow);
+  // } @else {
+  //   // Avoid using mixin so we can pass custom focus shadow properly
+  //   box-shadow: $input-focus-box-shadow;
+  // }
+}
+
+.btn:focus-visible,
+:not(.btn-check) + .btn:active:focus-visible {
+  box-shadow: inset 0 0 0 1px rgba(var(--bs-btn-focus-shadow-rgb), .5), inset 0 0 0 1px rgba(var(--bs-btn-focus-shadow-rgb), .5), inset 0 0 0 1px rgba(var(--bs-btn-focus-shadow-rgb), .5), inset 0 0 0 1px rgba(var(--bs-btn-focus-shadow-rgb), .5);
+}
+
+p-password.ng-dirty.ng-invalid > .p-password > .p-inputtext:hover,
+.p-inputtext.ng-dirty.ng-invalid:hover {
+  border-color: $form-feedback-invalid-color;
+}
+
+p-fileupload.ng-invalid .p-fileupload .p-fileupload-buttonbar,
+p-fileupload.ng-invalid .p-fileupload .p-fileupload-content,
+.p-inputtext.ng-dirty.ng-invalid, 
+p-inputnumber.ng-dirty.ng-invalid > .p-inputnumber > .p-inputtext,
+.app-dropdown.ng-dirty p-dropdown.ng-invalid > .p-dropdown,
+p-dropdown.ng-dirty.ng-invalid > .p-dropdown,
+p-multiselect.ng-dirty.ng-invalid > .p-multiselect,
+p-calendar.ng-dirty.ng-invalid > .p-calendar > .p-inputtext,
+.app-calendar.ng-dirty p-calendar.ng-invalid > .p-calendar > .p-inputtext {
+  border-color: $form-feedback-invalid-color;
+  
+  &:focus, &.p-focus {
+    box-shadow: 0 0 $input-btn-focus-blur $input-focus-width rgba($form-feedback-invalid-color, $input-btn-focus-color-opacity);
+  }  
+}
+
+p-password.ng-dirty.ng-invalid > .p-password > .p-inputtext:focus,
+.p-inputtext:enabled:focus.ng-invalid.ng-dirty,
+p-dropdown.ng-dirty.ng-invalid .p-dropdown:not(.p-disabled).p-focus,
+p-calendar.ng-dirty.ng-invalid .p-inputtext:enabled:focus,
+.app-calendar.ng-dirty p-calendar.ng-invalid .p-inputtext:enabled:focus {
+  box-shadow: inset 0 0 0 1px $form-feedback-invalid-color, inset 0 0 0 1px $form-feedback-invalid-color, inset 0 0 0 1px $form-feedback-invalid-color, inset 0 0 0 1px $form-feedback-invalid-color;
+  border-color: $form-feedback-invalid-color;
+}
+
+.p-float-label > .ng-invalid.ng-dirty + label,
+.p-inputtext.form-control.ng-dirty.ng-invalid + label,
+p-fileupload.ng-invalid .p-fileupload .p-fileupload-content,
+.app-dropdown.ng-dirty p-dropdown.ng-invalid + label,
+p-dropdown.ng-dirty.ng-invalid + label,
+p-multiselect.ng-dirty.ng-invalid + label,
+p-inputnumber.ng-dirty.ng-invalid + label,
+p-calendar.ng-dirty.ng-invalid + label,
+.app-calendar.ng-dirty p-calendar.ng-invalid + label,
+p-calendar.ng-dirty.ng-invalid > .p-calendar > .p-inputtext::placeholder {
+  color: $form-feedback-invalid-color;
+}
+
+p-calendar.ng-dirty.ng-invalid > .p-calendar > .p-inputtext:-ms-input-placeholder {
+  color: $form-feedback-invalid-color;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+  box-shadow: none;
+}
+
+.p-listbox .p-listbox-list .p-listbox-item:focus,
+.p-tree .p-tree-container .p-treenode .p-treenode-content:focus,
+.p-picklist .p-picklist-list .p-picklist-item:focus {
+  box-shadow: inset 0 0 0 0.15rem rgba($input-focus-border-color, $input-btn-focus-color-opacity);
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link{
+  color: $primary;
+  border-color: $input-focus-border-color;
+}
+
+.den-kalendar {
+  width: 43px; 
+  cursor: pointer;
+  &:hover {
+  box-shadow: 0 0 $input-btn-focus-blur 0.15rem rgba($primary, $input-btn-focus-color-opacity);
+  }
+}
+
+.den-kalendar-sablona {
+  width: 60px; 
+  cursor: pointer;
+  &:hover {
+  box-shadow: 0 0 $input-btn-focus-blur 0.15rem rgba($primary, $input-btn-focus-color-opacity);
+  }
+}
+
+
+.vybrany-den {
+  background-color: $pozadi-pole;
+}
+
+.p-datatable .p-datatable-tbody > tr.radek-neaktivni, 
+.p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr.radek-neaktivni:not(.p-highlight):hover,
+.p-datatable .p-datatable-tbody > tr.radek-bunka-neaktivni, 
+.p-datatable .p-datatable-tbody > tr.radek-bunka-neaktivni > td {
+  color: $gray-500 !important; 
+  font-style: italic !important;
+}
+
+.p-datatable .p-datatable-tbody > tr.radek-cervena, .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr.radek-cervena:not(.p-highlight):hover {
+  color: $red-500;
+}
+
+// Hamburger menu
+.hamburger.is-active .hamburger-inner,
+.hamburger.is-active .hamburger-inner::before,
+.hamburger.is-active .hamburger-inner::after {
+  background-color: $primary;
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+  background-color: $primary;
+}
+
+.app-header__logo .logo-text {
+  color: $primary;
+}
+.app-sidebar__heading {
+  color: $primary;
+}
+.mobile-toggle-header-nav.btn-primary:hover {
+  @include button-variant($primary, $primary);  
+}
+.mobile-toggle-header-nav.btn-primary {
+  background-color: $primary;
+  border-color: $primary;
+}
+.mobile-toggle-header-nav.btn-primary:not(:disabled):not(.disabled):active,
+.mobile-toggle-header-nav.btn-primary:not(:disabled):not(.disabled).active {
+  @include button-variant($primary, $primary);  
+}
+.vertical-nav-menu li a:hover {
+  background: $left-menu-background;
+}
+.vertical-nav-menu li a.mm-active {
+  background: $left-menu-background;
+  color: $primary;
+}
+.vertical-nav-menu ul > li > a:hover {
+  color: $primary;
+}
+.vertical-nav-menu ul > li > a.mm-active {
+  background: $left-menu-background;
+  color: $primary;
+}
+.vertical-nav-menu ul:before {
+  background: $left-menu-background;
+}
+.search-wrapper .input-holder .search-icon span::before {
+  background: $primary;
+}
+.search-wrapper .input-holder .search-icon span::after {
+  border: 2px solid $primary;
+}
+.search-wrapper .close::before,
+.search-wrapper .close::after {
+  background: $primary;
+}
+.closed-sidebar .app-sidebar .app-sidebar__inner .app-sidebar__heading::before {
+  background: $left-menu-background;
+}
+
+p-dropdown.nacitani-dat .p-dropdown,
+p-multiselect.nacitani-dat .p-multiselect,
+p-autocomplete.nacitani-dat .p-autocomplete .p-autocomplete-multiple-container {
+  background-color: $pozadi-pole;
+}
+
+.p-link:focus,
+.p-multiselect-panel .p-multiselect-header .p-multiselect-close:focus,
+.p-dialog .p-dialog-header .p-dialog-header-icon:focus,
+.p-datepicker .p-datepicker-header .p-datepicker-prev:focus, .p-datepicker .p-datepicker-header .p-datepicker-next:focus,
+.p-datepicker table td > span:focus,
+.p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):focus {
+  box-shadow: 0 0 $input-btn-focus-blur 0.2rem rgba($primary, $input-btn-focus-color-opacity);
+}
+
+.vertical-nav-menu li a:focus-visible {
+  box-shadow: 0 0 $input-btn-focus-blur 0.2rem rgba($primary, $input-btn-focus-color-opacity);
+}
+
+.p-paginator .p-dropdown:not(.p-disabled).p-focus{
+  box-shadow: 0 0 $input-btn-focus-blur 0.2rem rgba($primary, $input-btn-focus-color-opacity);
+  border-color: $input-focus-border-color;
+}
+
+.p-datatable .p-sortable-column:focus,
+.p-tieredmenu .p-menuitem-link:focus,
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus,
+// body p-dialog .navbar .btn.btn-sm.btn-outline-primary:focus,
+.p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
+  box-shadow: inset 0 0 $input-btn-focus-blur 0.15rem rgba($primary, $input-btn-focus-color-opacity);
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  outline-color: rgba($primary, $input-btn-focus-color-opacity);
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: $pozadi-pole;
+  border-color: $pozadi-pole;
+  color: $primary;
+
+  &:focus {
+    box-shadow: 0 0 $input-btn-focus-blur 0.2rem rgba($primary, $input-btn-focus-color-opacity);
+  }
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight,
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus.p-highlight,
+.p-datatable .p-sortable-column .p-sortable-column-badge,
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight,
+.p-datepicker table td > span.p-highlight {
+  background: $pozadi-pole;
+}
+
+.p-datatable .p-datatable-tbody > tr.p-highlight {
+  background-color: $pozadi-pole !important;
+}
+
+// Accordion detail - seznam 
+.p-accordion .accordion-detail-seznam .p-accordion-header .p-accordion-header-link {
+  @include button-variant($primary, $primary);
+}
+
+.p-accordion .accordion-detail-seznam .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link {
+  @include button-variant($primary, $primary);
+}
+
+.p-accordion .accordion-detail-seznam .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+  @include button-variant($primary, $primary);
+}
+
+.input-group:not(.has-validation) > :first-child:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.download-button):not(.input-group-tlacitka-readonly):not(.form-floating)[readonly],
+.p-dropdown,
+.p-multiselect,
+.p-inputtext {
+  @include border-radius($input-border-radius, 0);
+}
+
+.p-inputgroup .p-float-label:first-child input,
+.p-inputgroup .p-float-label:first-child .p-calendar input,
+.p-inputgroup > :first-child .p-calendar input,
+.p-inputgroup .p-float-label:first-child div {
+  @include border-start-radius($input-border-radius);
+}
+
+.p-inputgroup button:last-child,
+.p-inputgroup a.btn:last-child,
+button.p-autocomplete-dropdown {
+  @include border-start-radius(0);
+  @include border-end-radius($input-border-radius);
+}
+
+.p-inputgroup button:not(:nth-child(1)):not(:last-child),
+.p-inputgroup a.btn:not(:nth-child(1)):not(:last-child) {
+  @include border-start-radius(0);
+  @include border-end-radius(0);
+}
+
+.p-inputgroup button.btn:focus,
+.p-inputgroup a.btn:focus {
+  border-color: var(--bs-btn-border-color);
+}
+
+.input-group > p-dropdown:first-child:not(:last-child) .p-dropdown {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.oblibene-menu.dropdown .btn {
+  color: $primary;
+}
+
+// .p-checkbox .p-checkbox-box.p-highlight {
+//   @include button-variant($primary, $primary);
+//   //border-color: $primary;
+//   //background: $primary;
+// }
+
+.p-float-label input:focus ~ label, 
+.p-float-label textarea:focus ~ label,
+.p-float-label .p-inputwrapper-focus ~ label {
+  color: $primary;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  color: $primary;
+}
+
+.p-button:enabled:focus {
+  background-color: var(--bs-btn-bg);
+}
+
+.p-checkbox .p-checkbox-box.p-highlight:not(.p-disabled).p-focus {
+  border-color: var(--bs-btn-border-color);
+}
+
+div.dlazdice .title {
+  color: $primary;
+}
+
+div.dlazdice:hover {
+  background-color: $pozadi-pole;
+}
+
+.p-tabview .p-tabview-nav .p-tabview-ink-bar {
+  background-color: $primary;
+}
+
+.p-datatable .p-datatable-tbody > tr.p-highlight {
+  color: $primary;
+}
+
+.p-multiselect.p-multiselect-chip .p-multiselect-token,
+.p-float-label .p-autocomplete-multiple-container .p-autocomplete-token {
+  background: $left-menu-background;
+  color: $primary;
+}
+
+button.p-autocomplete-dropdown {
+  @include button-outline-variant($secondary);
+  border: 1px solid;
+  line-height: initial;
+  background-color: transparent;
+  color: var(--bs-btn-color);
+  border-color: var(--bs-btn-border-color);
+  
+  &:hover {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+  } 
+
+  &:enabled:focus {
+    background-color: var(--bs-btn-hover-bg);
+    // box-shadow: 0 0 $input-btn-focus-blur $input-focus-width rgba($primary, $input-btn-focus-color-opacity);
+  }
+
+  &:active {
+    color: var(--bs-btn-active-color);
+    background-color: var(--bs-btn-active-bg);
+    border-color: var(--bs-btn-active-border-color);
+    box-shadow: var(--bs-btn-active-shadow);
+  } 
+
+  // @include button-outline-variant($secondary);
+  // color: var(--bs-btn-color);
+  // background-color: var(--bs-btn-bg);
+  // border-color: var(--bs-btn-border-color);
+
+  // &:hover {
+  //   color: var(--bs-btn-hover-color);
+  //   background-color: var(--bs-btn-hover-bg);
+  //   border-color: var(--bs-btn-hover-border-color);
+  // } 
+}
+
+//Barvy pro zvýraznění kalendář
+.p-datepicker span span.zvyrazneni {
+  color: color-contrast($primary);
+}
+
+.p-datepicker table td > span.p-highlight span.zvyrazneni {
+  color: $primary;
+}
+
+.p-datepicker span:has(span.zvyrazneni) {
+  background: tint-color($primary, $btn-active-bg-tint-amount)
+}
+
+.p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):hover:has(span.zvyrazneni) {
+  background: shade-color($primary, $btn-hover-bg-shade-amount);
+}
+
+.p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+  background-color: #FFF;
+}
+
+.pozadi-prvni-polovina {
+  background: linear-gradient(90deg, $primary 50%, #FFFFFF 50%);
+}
+
+.pozadi-druha-polovina {
+  background: linear-gradient(90deg, #FFFFFF 50%, $primary 50%);
+}
+
+p-fieldset.fieldset-den > fieldset {
+ background-color: $pozadi-pole;
+}
+
+
+.EN {
+  background: url(../flags/US.svg) no-repeat;
+}
+.CS {
+  background: url(../flags/CZ.svg) no-repeat;
+}
