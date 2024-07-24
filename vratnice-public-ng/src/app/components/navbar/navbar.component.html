@@ -1,0 +1,15 @@
+<nav class="navbar">
+    <div class="navbar-left">
+      
+      <img class="logo" src="assets/images/logo.svg" alt="sdsadas" width="50" height="50">
+    <span class="icon">DIAMO - </span>
+    <span class="icon ms-2">{{ 'NAVBAR.TITLE' | translate }}</span>
+      
+    </div>
+    <div class="navbar-right">
+        <button (click)="changeLanguage();" type="button" id="languageButton" class="btn btn-sm btn-primary">
+            <img [src]="currentFlagPath" alt="Flag" width="23" height="23" class="icon-img me-1">
+            {{ 'NAVBAR.JAZYK' | translate }}
+          </button>
+    </div>
+  </nav>

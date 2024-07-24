@@ -8,11 +8,11 @@
       <div class="container-fluid justify-content-start">
         <div>
           <input #inputImportCSV id="inputImportCSV" type="file" style="display: none;" (change)="onCsvSelected($event)" data-button-id="btnImportCSV" accept=".csv">
-          <button id="btnImportCSV" (click)="importCSV();" type="button" class="btn btn-sm btn-outline-primary">Načíst CSV soubor</button>
+          <button id="btnImportCSV" (click)="importCSV();" type="button" class="btn btn-sm btn-outline-primary">{{ 'POVOLENI_VJEZDU_VOZIDLA.NACIST_CSV_SOUBOR' | translate }}</button>
         </div>
       </div>
     </nav>
-    <div class="manual">
+    <div class="manual" *ngIf="this.appComponent.getCurrentLanguage() == 'cs'">
       <h2>Struktura CSV souboru</h2>
       <ul>
         <li><strong>jmenoZadatele</strong>: Jméno žadatele, <strong>povinné pole</strong>.</li>
@@ -46,5 +46,38 @@
         Ondřej,Kudela,DIAMO,51561sdf,jen tak,6asdsad|65464,osobní|nákladní,asd,Ondřej,Kudela,2045265214,DIAMO,asd,26/06/2024,26/06/2024,Darkov,true
       </pre>
   </div>
+
+  <div class="manual" *ngIf="this.appComponent.getCurrentLanguage() == 'en'">
+    <h2>CSV File Structure</h2>
+    <ul>
+      <li><strong>jmenoZadatele</strong>: Applicant's first name, <strong>required field</strong>.</li>
+      <li><strong>prijmeniZadatele</strong>: Applicant's last name, <strong>required field</strong>.</li>
+      <li><strong>spolecnostZadatele</strong>: Applicant's company name, <strong>required field</strong>.</li>
+      <li><strong>icoZadatele</strong>: Applicant's company identification number (ICO).</li>
+      <li><strong>duvodZadosti</strong>: Reason for the request, <strong>required field</strong>.</li>
+      <li><strong>rzVozidla</strong>: Vehicle registration numbers, separated by a vertical bar (|).</li>
+      <li><strong>typVozidla</strong>: Vehicle types, separated by a vertical bar (|). Allowed types: <strong>osobní (personal)</strong>, <strong>dodávka (van)</strong>, <strong>nákladní (truck)</strong>, <strong>specialní (special)</strong></li>
+      <li><strong>zemeRegistraceVozidla</strong>: Country of vehicle registration, <strong>required field</strong>. Allowed countries: <strong>Česká republika (Czech Republic)</strong>, <strong>Slovensko (Slovakia)</strong>, <strong>Polsko (Poland)</strong>, <strong>Německo (Germany)</strong>, <strong>Rakousko (Austria)</strong></li>
+    </ul>
+      <div class="my-3">
+      <span><strong>Driver details are not mandatory</strong>, but if you choose to fill them in, the parameters <strong><i>ridic_jmeno, ridic_prijmeni, ridic_cisloOp</i></strong> must be filled out.</span>
+      </div>
+    <ul>
+      <li><strong>ridic_jmeno</strong>: Driver's first name.</li>
+      <li><strong>ridic_prijmeni</strong>: Driver's last name.</li>
+      <li><strong>ridic_cisloOp</strong>: Driver's driving license number.</li>
+      <li><strong>ridic_firma</strong>: Driver's company.</li>
+      <li><strong>datumOd</strong>: Date from which entry is allowed, <strong>required field</strong> (in DD/MM/YYYY format).</li>
+      <li><strong>datumDo</strong>: Date until which entry is allowed, <strong>required field</strong> (in DD/MM/YYYY format).</li>
+      <li><strong>zavod_nazvy</strong>: Names of the plants where entry is allowed, separated by a vertical bar (|), <strong>required field</strong>.</li>
+      <li><strong>opakovanyVjezd</strong>: "true" if it is a repeated entry, otherwise "false"</li>
+    </ul>
+  
+    <h2 class="mt-3">Example CSV File:</h2>
+    <pre>
+      jmenoZadatele,prijmeniZadatele,spolecnostZadatele,icoZadatele,duvodZadosti,rzVozidla,typVozidla,zemeRegistraceVozidla,ridic_jmeno,ridic_prijmeni,ridic_cisloOp,ridic_firma,spolecnostVozidla,datumOd,datumDo,zavod_nazvy,opakovanyVjezd
+      Ondřej,Kudela,DIAMO,51561sdf,just because,6asdsad|65464,osobní|nákladní,asd,Ondřej,Kudela,2045265214,DIAMO,asd,26/06/2024,26/06/2024,Darkov,true
+    </pre>
+</div>
 </p-dialog>
 

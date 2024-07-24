@@ -32,6 +32,7 @@ import { CalendarComponent } from 'src/app/shared/components/calendar/calendar-s
 import { DropdownComponent } from 'src/app/shared/components/dropdown/dropdown.component';
 import { DetailPovoleniVjezduVozidlaCsvPage } from '../detail-povoleni-vjezdu-vozidla-csv/detail-povoleni-vjezdu-vozidla-csv.page';
 import { DetailPovoleniVjezduVozidlaTypRzCsvPage } from '../detail-povoleni-vjezdu-vozidla-typ-rz-csv/detail-povoleni-vjezdu-vozidla-typ-rz-csv.page';
+import { getErrorMessage } from 'src/app/functions/get-error-message.function';
 
 
 @Component({
@@ -219,7 +220,7 @@ export class PovoleniVjezduVozidlaComponent {
           //this.uiService.stopSpinner();
           console.log(error);
           console.log(error.error);
-          this.messageService.add({ severity: 'error', detail: this.getErrorMessage(error), closable: false });
+          this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
         }
       });
   }
@@ -242,7 +243,7 @@ export class PovoleniVjezduVozidlaComponent {
           }),
           catchError(
             error => {
-              this.messageService.add({ severity: 'error', detail: this.getErrorMessage(error), closable: false });
+              this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
               //this.uiService.stopSpinner();
               return of(undefined);
             }
@@ -303,7 +304,7 @@ export class PovoleniVjezduVozidlaComponent {
           },
           error => {
             //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'error', detail: this.getErrorMessage(error), closable: false });
+            this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
           }
       );
     }
@@ -390,17 +391,6 @@ export class PovoleniVjezduVozidlaComponent {
     console.log(this.zavodList);
   }
 
-  private getErrorMessage(error: any): string{
-    const keys = Object.keys(error.error);
-    if (keys.length > 0) {
-      const firstKey = keys[0];
-      const value = error.error[firstKey];
-      return value
-    } else {
-      return "Vznikla nezmapovaná chyba na serveru. Akci opakujte později."
-    }
-  }
-  
   showPovoleniVjezduVozidlaCsvDetail() {
     this.detailPovoleniVjezduVozidlaCsvPage?.showNovyDetail();
   }

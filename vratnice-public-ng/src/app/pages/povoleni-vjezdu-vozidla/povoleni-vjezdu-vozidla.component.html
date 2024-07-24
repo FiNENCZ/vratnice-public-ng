@@ -14,31 +14,13 @@
           <button (click)="showPovoleniVjezduVozidlaCsvDetail();" type="button" class="btn btn-sm btn-outline-primary ms-1"><i class="fa-solid fa-file-csv"></i>
             {{ 'POVOLENI_VJEZDU_VOZIDLA.ULOZIT_POVOLENI_VJEZDU_VOZIDLA_CSV' | translate }}</button>
           <button id="btnImportCSV" (click)="showTypRzVozidlaCsvDetail();" type="button" class="btn btn-sm btn-outline-primary ms-1">
-            <i class="fa-solid fa-file-csv"></i> Načíst vozidla z CSV souboru
+            <i class="fa-solid fa-file-csv"></i> {{ 'POVOLENI_VJEZDU_VOZIDLA.NACIST_VOZIDLA_CSV' | translate }}
           </button>
   
         </div>
       </div> 
     </nav>
 
-    <p-dialog [(visible)]="showCsvInfoDialog" header="Dokumentace CSV" [modal]="true" [style]="{width: '50vw'}">
-      <p-header>
-        <i class="fa-solid fa-info me-1"></i> {{ 'Dokumentace CSV' }}
-      </p-header>
-    
-      <div class="manual">
-        <h4>Struktura CSV souboru</h4>
-        <ul>
-          <li><strong>typVozidla</strong>: Typ vozidla, povolené hodnoty jsou <strong>osobní</strong>, <strong>dodávka</strong>, <strong>nákladní</strong>, <strong>speciální</strong>. Můžete zadat více typů oddělených vertikální čárou (|).</li>
-          <li><strong>rzVozidla</strong>: RZ vozidla, můžete zadat více hodnot oddělených vertikální čárou (|).</li>
-        </ul>
-        <h4 class="mt-3">Názorný příklad CSV soubouru:</h4>
-        <pre>
-          typVozidla,rzVozidla
-          osobní|nákladní,6asdsad|65464
-        </pre>
-      </div>
-    </p-dialog>
 
     <div class="row m-0">
       <!-- Jméno -->
@@ -100,7 +82,7 @@
 
       <div class="d-flex">
         <button type="button" class="btn btn-sm btn-outline-primary ms-auto mt-2" (click)="pridatVstup()">
-          <i class="fas fa-plus"></i> Přidat RZ a Typ Vozidla
+          <i class="fas fa-plus"></i>{{ 'POVOLENI_VJEZDU_VOZIDLA.PRIDAT_RZ_TYP_VOZIDLA' | translate }}
         </button>
       </div>
 
@@ -136,7 +118,7 @@
             <!-- Tlačítko odstranit -->
             <div *ngIf="detail.rzVozidla.length > 1" class="col-sm-2 p-0 pe-sm-1 d-flex align-items-center">
               <button type="button" class="btn btn-sm btn-outline-danger" style="margin: 10px 0px 0px 8px; padding: 7px 8px;"  (click)="odstranitVstup(i)">
-                <i class="fas fa-minus"></i> Odstranit
+                <i class="fas fa-minus"></i> {{ 'POVOLENI_VJEZDU_VOZIDLA.ODREBRAT_RZ_TYP_VOZIDLA' | translate }}
               </button>
             </div>
           </div>
@@ -262,7 +244,7 @@
         </p-multiSelect>
         <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.LOKALITA_VALIDATOR' | translate }}"
           *ngIf="!formDetail.controls['zavod']?.valid && formDetail.controls['zavod']?.dirty"></p-message>
-        <label htmlFor="multiSelect">Závod *</label>
+        <label htmlFor="multiSelect">{{ 'POVOLENI_VJEZDU_VOZIDLA.ZAVOD' | translate }} *</label>
       </span>
 
       <!-- Checkbox pro opakovaný vjezd -->

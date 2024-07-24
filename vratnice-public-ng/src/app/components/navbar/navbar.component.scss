@@ -1,0 +1,41 @@
+/* Základní stylování pro navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Rozprostírá obsah mezi levý a pravý okraj */
+    align-items: center; /* Vertikálně centrováno */
+    padding: 0 20px; /* Volitelné: přidání vnitřního okraje */
+    background-image: linear-gradient(to right, white, #8cb876);
+    height: 60px; /* Volitelné: výška navbaru */
+  }
+  
+  .navbar-left {
+    display: flex;
+    align-items: center; /* Vertikální centrování uvnitř navbar-left */
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center; /* Vertikální centrování uvnitř navbar-right */
+  }
+  
+  .logo {
+    margin-right: 10px; /* Volitelné: mezera mezi logem a textem */
+  }
+  
+  /* Stylování pro ikonu */
+  .icon {
+    margin-top: 0px;
+    color: #4b9945;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  #languageButton {
+    display: flex;
+    justify-content: space-between; /* Rozprostírá obsah mezi levý a pravý okraj */
+    align-items: center;
+    font-size: 20px;
+  }
+
+
+  

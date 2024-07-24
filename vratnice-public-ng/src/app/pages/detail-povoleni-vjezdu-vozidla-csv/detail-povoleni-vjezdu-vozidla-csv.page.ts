@@ -5,12 +5,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { errorTxtFunction } from 'src/app/shared/functions/error-txt.function';
 import { DetailBaseClass } from 'src/app/shared/pages/base/detail-base.class';
 import { DialogModule } from 'primeng/dialog';
+import { AppComponent } from 'src/app/app.component';
+import { CommonModule } from '@angular/common';
+import { getErrorMessage } from 'src/app/functions/get-error-message.function';
 
 
 @Component({
   selector: 'app-detail-povoleni-vjezdu-vozidla-csv',
   standalone: true,
-  imports: [DialogModule, TranslateModule],
+  imports: [DialogModule, TranslateModule, AppComponent, CommonModule],
   providers: [ConfirmationService, TranslateService],
   templateUrl: './detail-povoleni-vjezdu-vozidla-csv.page.html',
   styleUrls: ['./detail-povoleni-vjezdu-vozidla-csv.page.css']
@@ -25,6 +28,7 @@ export class DetailPovoleniVjezduVozidlaCsvPage extends DetailBaseClass {
     translateService: TranslateService,
     elementRef: ElementRef,
     private readonly messageService: MessageService,
+    readonly appComponent: AppComponent,
     //private readonly uiService: UiService,
     //private readonly authService: AuthService,
     private readonly povoleniVjezduVozidlaControllerService: PovoleniVjezduVozidlaControllerService,
@@ -63,7 +67,7 @@ export class DetailPovoleniVjezduVozidlaCsvPage extends DetailBaseClass {
           },
           error => {
             //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'error', detail: this.getErrorMessage(error), closable: false });
+            this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
           }
       );
     }
@@ -78,27 +82,5 @@ export class DetailPovoleniVjezduVozidlaCsvPage extends DetailBaseClass {
 
   importCSV(){
     document.getElementById("inputImportCSV")?.click();
-  }
-
-  private getErrorMessage(error: any): string{
-    const keys = Object.keys(error.error);
-    if (keys.length > 0) {
-      const firstKey = keys[0];
-      const value = error.error[firstKey];
-      return value
-    } else if (error.error && error.error.message) {
-      const message = error.error.message;
-  
-      // Definujte regulární výraz pro extrakci chybové zprávy mezi \" a \"\""
-      const regex = /"([^"]*)""/;
-  
-      // Použijte regulární výraz pro extrakci zprávy
-      const match = message.match(regex);
-      if (match && match.length > 1) {
-        return match[1];
-      }
-    } 
-    return "Vznikla nezmapovaná chyba na serveru. Akci opakujte později."
-    
   }
 }

@@ -1,4 +1,9 @@
 {
+  "NAVBAR": {
+    "TITLE": "Žádost o povolení vjezdu vozila",
+    "JAZYK": "EN"
+  },
+
   "TOPMENU": {
     "PRINT_QR_KOD": "Tisk QR kódu",
     "READ_ID_CARD": "Načíst doklad",
@@ -32,6 +37,7 @@
     "DUVOD": "Důvod žádosti",
     "RZ_VOZIDLA": "RZ vozidla",
     "TYP_VOZIDLA" : "Typ vozidla",
+    "ZAVOD": "Závod",
     "ZEME_REGISTRACE_VOZIDLA": "Země registrace vozidla",
     "RIDIC": "Řidič",
     "SPOLECNOST_VOZIDLA": "Společnost vlastnící vozidlo",
@@ -55,9 +61,16 @@
 
     "PRIDAT_RIDICE": "Přidat řidiče",
     "ODEBRAT_RIDICE": "Odebrat řidiče",
+    "PRIDAT_RZ_TYP_VOZIDLA": "Přidat RZ a typ Vozidla",
+    "ODREBRAT_RZ_TYP_VOZIDLA": "Odstranit",
+    "NACIST_CSV_SOUBOR": "Načíst CSV soubor",
+
+    "NACIST_VOZIDLA_CSV": "Načíst vozidla z CSV souboru",
 
     "NAZEV_SEZNAM": "Povolení vjezdu vozidel",
     "NAZEV_DETAIL": "Povolení vjezdu vozidla"
+
+    
     
   }
 

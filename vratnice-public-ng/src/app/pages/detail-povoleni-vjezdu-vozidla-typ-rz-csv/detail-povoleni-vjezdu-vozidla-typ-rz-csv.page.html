@@ -8,11 +8,11 @@
       <div class="container-fluid justify-content-start">
         <div>
           <input #inputImportCSV id="inputImportCSV" type="file" style="display: none;" (change)="onCsvSelected($event)" data-button-id="btnImportCSV" accept=".csv">
-          <button id="btnImportCSV" (click)="importCSV();" type="button" class="btn btn-sm btn-outline-primary">Načíst CSV soubor</button>
+          <button id="btnImportCSV" (click)="importCSV();" type="button" class="btn btn-sm btn-outline-primary">{{ 'POVOLENI_VJEZDU_VOZIDLA.NACIST_CSV_SOUBOR' | translate }}</button>
         </div>
       </div>
     </nav>
-    <div class="manual">
+    <div class="manual" *ngIf="this.appComponent.getCurrentLanguage() == 'cs'">
       <h4>Struktura CSV souboru</h4>
       <ul>
         <li><strong>typVozidla</strong>: Typ vozidla, povolené hodnoty jsou <strong>osobní</strong>, <strong>dodávka</strong>, <strong>nákladní</strong>, <strong>speciální</strong>. Můžete zadat více typů oddělených vertikální čárou (|).</li>
@@ -22,6 +22,19 @@
       <pre>
         typVozidla,rzVozidla
         osobní|nákladní,6asdsad|65464
+      </pre>
+    </div>
+
+    <div class="manual" *ngIf="this.appComponent.getCurrentLanguage() == 'en'">
+      <h4>CSV File Structure</h4>
+      <ul>
+        <li><strong>typVozidla</strong>: Vehicle type, allowed values are <strong>osobní (personal)</strong>, <strong>dodávka (van)</strong>, <strong>nákladní (truck)</strong>, <strong>specialní (special)</strong>. You can enter multiple types separated by a vertical bar (|).</li>
+        <li><strong>rzVozidla</strong>: Vehicle registration number, you can enter multiple values separated by a vertical bar (|).</li>
+      </ul>
+      <h4 class="mt-3">Example CSV File:</h4>
+      <pre>
+        typVozidla,rzVozidla
+        osobní|nádladní,6asdsad|65464
       </pre>
     </div>
 </p-dialog>
