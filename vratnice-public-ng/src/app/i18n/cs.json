@@ -64,6 +64,9 @@
     "PRIDAT_RZ_TYP_VOZIDLA": "Přidat RZ a typ Vozidla",
     "ODREBRAT_RZ_TYP_VOZIDLA": "Odstranit",
     "NACIST_CSV_SOUBOR": "Načíst CSV soubor",
+    "RIDIC_NACTEN": "Řidič byl načten z databáze dle čísla OP.",
+    "VOZIDLA_NACTENA": "Vozidla byla úspěšně načtena",
+    "ZADOSTI_PODANY": "Žádosti byly úspěšně podány",
 
     "NACIST_VOZIDLA_CSV": "Načíst vozidla z CSV souboru",
 
@@ -71,8 +74,80 @@
     "NAZEV_DETAIL": "Povolení vjezdu vozidla"
 
     
-    
-  }
+  },
+
+  "primeng": {
+    "startsWith": "Začíná na",
+    "contains": "Obsahuje",
+    "notContains": "Neobsahuje",
+    "endsWith": "Končí na",
+    "equals": "Rovná se",
+    "notEquals": "Nerovná se",
+    "clear": "Vyčistit",
+    "apply": "Použít",
+    "dayNames": [
+        "Neděle",
+        "Pondělí",
+        "Úterý",
+        "Středa",
+        "Čtvrtek",
+        "Pátek",
+        "Sobota"
+    ],
+    "dayNamesShort": [
+        "Ned",
+        "Pon",
+        "Úte",
+        "Sře",
+        "Čtv",
+        "Pát",
+        "Sob"
+    ],
+    "dayNamesMin": [
+        "Ne",
+        "Po",
+        "Út",
+        "St",
+        "Čt",
+        "Pá",
+        "So"
+    ],
+    "monthNames": [
+        "Leden",
+        "Únor",
+        "Březen",
+        "Duben",
+        "Květen",
+        "Červen",
+        "Červenec",
+        "Srpen",
+        "Září",
+        "Říjen",
+        "Listopad",
+        "Prosinec"
+    ],
+    "monthNamesShort": [
+        "Led",
+        "Úno",
+        "Bře",
+        "Dub",
+        "Kvě",
+        "Črv",
+        "Črc",
+        "Srp",
+        "Zář",
+        "Říj",
+        "Lis",
+        "Pro"
+    ],
+    "dateFormat": "dd.mm.yy",
+    "firstDayOfWeek": 1,
+    "today": "Dnes",
+    "weekHeader": "Tý",
+    "emptyMessage": "Nenalezen žádný záznam",
+    "emptySearchMessage": "Nenalezen žádný záznam",
+    "emptyFilterMessage": "Nenalezen žádný záznam"
+}
 
 
 }

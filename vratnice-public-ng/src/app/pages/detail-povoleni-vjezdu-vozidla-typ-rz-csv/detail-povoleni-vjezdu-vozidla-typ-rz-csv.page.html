@@ -12,7 +12,7 @@
         </div>
       </div>
     </nav>
-    <div class="manual" *ngIf="this.appComponent.getCurrentLanguage() == 'cs'">
+    <div class="manual" *ngIf="this.translateService.currentLang == 'cs'">
       <h4>Struktura CSV souboru</h4>
       <ul>
         <li><strong>typVozidla</strong>: Typ vozidla, povolené hodnoty jsou <strong>osobní</strong>, <strong>dodávka</strong>, <strong>nákladní</strong>, <strong>speciální</strong>. Můžete zadat více typů oddělených vertikální čárou (|).</li>
@@ -25,7 +25,7 @@
       </pre>
     </div>
 
-    <div class="manual" *ngIf="this.appComponent.getCurrentLanguage() == 'en'">
+    <div class="manual" *ngIf="this.translateService.currentLang == 'en'">
       <h4>CSV File Structure</h4>
       <ul>
         <li><strong>typVozidla</strong>: Vehicle type, allowed values are <strong>osobní (personal)</strong>, <strong>dodávka (van)</strong>, <strong>nákladní (truck)</strong>, <strong>specialní (special)</strong>. You can enter multiple types separated by a vertical bar (|).</li>

@@ -12,7 +12,7 @@
         </div>
       </div>
     </nav>
-    <div class="manual" *ngIf="this.appComponent.getCurrentLanguage() == 'cs'">
+    <div class="manual" *ngIf="this.translateService.currentLang == 'cs'">
       <h2>Struktura CSV souboru</h2>
       <ul>
         <li><strong>jmenoZadatele</strong>: Jméno žadatele, <strong>povinné pole</strong>.</li>
@@ -47,7 +47,7 @@
       </pre>
   </div>
 
-  <div class="manual" *ngIf="this.appComponent.getCurrentLanguage() == 'en'">
+  <div class="manual" *ngIf="this.translateService.currentLang == 'en'">
     <h2>CSV File Structure</h2>
     <ul>
       <li><strong>jmenoZadatele</strong>: Applicant's first name, <strong>required field</strong>.</li>

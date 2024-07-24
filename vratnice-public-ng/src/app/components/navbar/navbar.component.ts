@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { PrimeNGConfig } from 'primeng/api';
 import { AppComponent } from 'src/app/app.component';
 
 @Component({
@@ -19,18 +20,27 @@ export class NavbarComponent {
 
   constructor(
     private readonly translateService: TranslateService,
-    private readonly appComponent: AppComponent
+    private readonly primeNGConfig: PrimeNGConfig,
   ) {}
 
-  changeLanguage() {
-    if (this.appComponent.getCurrentLanguage() == "en"){
-      this.appComponent.changeLanguage("cs");
+  toggleLanguage() {
+    if (this.translateService.currentLang == "en"){
+      this.changeLanguage("cs");
       this.currentFlagPath = this.ukFlagPath;
     }
     else {
-      this.appComponent.changeLanguage("en");
+      this.changeLanguage("en");
       this.currentFlagPath = this.czFlagPath;
     }
+  }
+
+  changeLanguage(language: string) {
+    this.translateService.use(language)
+    this.translateService.get('primeng').subscribe(
+      (res: any) => {
+        this.primeNGConfig.setTranslation(res);
+      }
+    );
   }
 
 }

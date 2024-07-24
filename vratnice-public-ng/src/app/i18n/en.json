@@ -64,11 +64,90 @@
       "PRIDAT_RZ_TYP_VOZIDLA": "Add Registration Number and Vehicle Type",
       "ODREBRAT_RZ_TYP_VOZIDLA": "Remove",
       "NACIST_CSV_SOUBOR": "Load CSV File",
+      "RIDIC_NACTEN": "The driver was loaded from the database according to the ID card number.",
+      "VOZIDLA_NACTENA": "The vehicles were successfully loaded.",
+      "ZADOSTI_PODANY":  "The applications were successfully submitted.",
   
       "NACIST_VOZIDLA_CSV": "Load Vehicles from CSV File",
   
       "NAZEV_SEZNAM": "Vehicle Entry Permits",
       "NAZEV_DETAIL": "Vehicle Entry Permit"
+    },
+
+    
+    "primeng": {
+      "startsWith": "Starts with",
+      "contains": "Contains",
+      "notContains": "Does not contain",
+      "endsWith": "Ends with",
+      "equals": "Equals",
+      "notEquals": "Does not equal",
+      "clear": "Clear",
+      "apply": "Apply",
+      "dayNames": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+      ],
+      "dayNamesShort": [
+          "Sun",
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat"
+      ],
+      "dayNamesMin": [
+          "Su",
+          "Mo",
+          "Tu",
+          "We",
+          "Th",
+          "Fr",
+          "Sa"
+      ],
+      "monthNames": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+      ],
+      "monthNamesShort": [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+      ],
+      "dateFormat": "dd.mm.yy",
+      "firstDayOfWeek": 1,
+      "today": "Today",
+      "weekHeader": "Wk",
+      "emptyMessage": "No records found",
+      "emptySearchMessage": "No records found",
+      "emptyFilterMessage": "No records found"
     }
+    
+    
   }
   

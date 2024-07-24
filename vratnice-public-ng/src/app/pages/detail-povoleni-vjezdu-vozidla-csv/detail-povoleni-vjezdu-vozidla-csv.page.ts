@@ -28,7 +28,6 @@ export class DetailPovoleniVjezduVozidlaCsvPage extends DetailBaseClass {
     translateService: TranslateService,
     elementRef: ElementRef,
     private readonly messageService: MessageService,
-    readonly appComponent: AppComponent,
     //private readonly uiService: UiService,
     //private readonly authService: AuthService,
     private readonly povoleniVjezduVozidlaControllerService: PovoleniVjezduVozidlaControllerService,
@@ -58,11 +57,11 @@ export class DetailPovoleniVjezduVozidlaCsvPage extends DetailBaseClass {
     //this.uiService.showSpinner();
     const file: File = event.target.files[0];
     if (file) {
-      this.povoleniVjezduVozidlaControllerService.povoleniCsvPovoleniVjezduVozidla(file)
+      this.povoleniVjezduVozidlaControllerService.povoleniCsvPovoleniVjezduVozidla(file, this.translateService.currentLang)
       .subscribe(
           response => {
             //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'success', detail: 'Žádosti byly úspěšně podány', closable: false });
+            this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.ZADOSTI_PODANY'), closable: false });
             this.refreshSeznamToken$?.next(undefined);
           },
           error => {

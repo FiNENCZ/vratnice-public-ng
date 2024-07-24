@@ -3,7 +3,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { routes } from './app.routes';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
-import { MessageService } from 'primeng/api';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 @Component({
@@ -18,19 +18,22 @@ export class AppComponent implements OnInit {
 
   constructor(
     private readonly translateService: TranslateService,
+    private readonly primeNGConfig: PrimeNGConfig,
   ) {
   }
  
   ngOnInit() {
-    this.translateService.setDefaultLang("cs");
+    this.changeLanguage("cs") 
   }
 
   changeLanguage(language: string) {
     this.translateService.use(language)
+    this.translateService.get('primeng').subscribe(
+      (res: any) => {
+        this.primeNGConfig.setTranslation(res);
+      }
+    );
   }
 
-  getCurrentLanguage() : string {
-    return this.translateService.currentLang || "cs";
-  }
   
 }

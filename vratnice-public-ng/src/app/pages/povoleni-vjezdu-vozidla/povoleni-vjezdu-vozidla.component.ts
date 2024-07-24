@@ -108,15 +108,12 @@ export class PovoleniVjezduVozidlaComponent {
       }
     );
 
-    const vozidloTyp = ['osobní', 'dodávka', 'nákladní', 'speciální'];
-    this.vozidloTyp$ = of(vozidloTyp);
-
-    
+  
     this.searchTerms.pipe(
       debounceTime(1000), // Odložení vyhledávání o 1 sekundu
       distinctUntilChanged(), // Spustit pouze při změně hodnoty
       switchMap((cisloOp: string) => 
-        this.ridicControllerService.getRidicByCisloOpRidic(cisloOp).pipe(
+        this.ridicControllerService.getRidicByCisloOpRidic(cisloOp, this.translateService.currentLang).pipe(
           catchError((error) => {
             console.error('Řidič nenalezen:', error);
             return of(null); // Vraťte null nebo jiný vhodný výstup pro pokračování procesu
@@ -128,7 +125,7 @@ export class PovoleniVjezduVozidlaComponent {
         if (ridic) {
           this.detail!.ridic = ridic;
           this.initializeRidicValues();
-          this.messageService.add({ severity: 'success', detail: 'Řidič byl načten z databáze dle čísla OP.', closable: false });
+          this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.RIDIC_NACTEN'), closable: false });
         }
       },
       error: (error) => {
@@ -208,7 +205,7 @@ export class PovoleniVjezduVozidlaComponent {
 
     console.log(this.detail);
 
-    this.povoleniVjezduVozidlaControllerService.savePovoleniVjezduVozidla(this.detail!)
+    this.povoleniVjezduVozidlaControllerService.savePovoleniVjezduVozidla(this.detail!, this.translateService.currentLang)
       .subscribe({
         next: (vysledek: PovoleniVjezduVozidlaDto) => {
           //this.uiService.stopSpinner();
@@ -234,7 +231,7 @@ export class PovoleniVjezduVozidlaComponent {
         return this.zavodSubject.asObservable();
       } else {
         this.nacitaniZavodu = true;
-        return this.zavodControllerService.listZavod(this.aktivita, "cs").pipe(
+        return this.zavodControllerService.listZavod(this.aktivita, this.translateService.currentLang).pipe(
           map((value) => {
             this.nacitaniZavodu = false;
             //this.uiService.stopSpinner();
@@ -291,12 +288,11 @@ export class PovoleniVjezduVozidlaComponent {
     //this.uiService.showSpinner();
     const file: File = event.target.files[0];
     if (file) {
-      this.povoleniVjezduVozidlaControllerService.rzTypVozidlaCsvPovoleniVjezduVozidla(file)
+      this.povoleniVjezduVozidlaControllerService.rzTypVozidlaCsvPovoleniVjezduVozidla(file, this.translateService.currentLang)
       .subscribe(
           (response: RzTypVozidlaDto) => {
             //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'success', detail: 'Vozidla byla úspěšně načtena', closable: false });
-
+            this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.VOZIDLA_NACTENA'), closable: false });
             this.detail!.rzVozidla = response.rzVozidla;
             this.detail!.typVozidla = response.typVozidla;
 
@@ -340,7 +336,7 @@ export class PovoleniVjezduVozidlaComponent {
               return this.vozidloTypValuesSubject.asObservable();
           } else {
               this.nacitaniDatVozidloTyp = true;
-              return this.vozidlotypControllerService.listVozidloTyp(false ,"cs").pipe(
+              return this.vozidlotypControllerService.listVozidloTyp(false, this.translateService.currentLang).pipe(
                   map(response => {
                       this.nacitaniDatVozidloTyp = false;
                       this.vozidloTypValuesSubject.next(response);
@@ -359,7 +355,7 @@ export class PovoleniVjezduVozidlaComponent {
               return this.StatValuesSubject.asObservable();
           } else {
               this.nacitaniDatStat = true;
-              return this.statControllerService.listStat("cs").pipe(
+              return this.statControllerService.listStat(this.translateService.currentLang).pipe(
                   map(response => {
                       this.nacitaniDatStat = false;
                       this.StatValuesSubject.next(response);

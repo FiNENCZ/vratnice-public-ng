@@ -31,7 +31,6 @@ export class DetailPovoleniVjezduVozidlaTypRzCsvPage extends DetailBaseClass {
     translateService: TranslateService,
     elementRef: ElementRef,
     private readonly messageService: MessageService,
-    readonly appComponent: AppComponent,
     //private readonly uiService: UiService,
     //private readonly authService: AuthService,
     private readonly povoleniVjezduVozidlaControllerService: PovoleniVjezduVozidlaControllerService,
@@ -65,11 +64,11 @@ export class DetailPovoleniVjezduVozidlaTypRzCsvPage extends DetailBaseClass {
     //this.uiService.showSpinner();
     const file: File = event.target.files[0];
     if (file) {
-      this.povoleniVjezduVozidlaControllerService.rzTypVozidlaCsvPovoleniVjezduVozidla(file)
+      this.povoleniVjezduVozidlaControllerService.rzTypVozidlaCsvPovoleniVjezduVozidla(file, this.translateService.currentLang)
       .subscribe(
           response => {
             //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'success', detail: 'RZ a typy vozidla byly úspěšně přidány', closable: false });
+            this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.VOZIDLA_NACTENA'), closable: false });
             this.sendTypRzVozidla(response);
           },
           error => {
@@ -79,6 +78,8 @@ export class DetailPovoleniVjezduVozidlaTypRzCsvPage extends DetailBaseClass {
           }
       );
     }
+
+    console.log(this.translateService.currentLang);
 
     if (this.inputImportCSV) {
       this.inputImportCSV.nativeElement.value = '';
