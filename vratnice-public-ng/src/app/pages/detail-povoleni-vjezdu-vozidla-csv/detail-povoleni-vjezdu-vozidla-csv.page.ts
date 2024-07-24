@@ -58,12 +58,12 @@ export class DetailPovoleniVjezduVozidlaCsvPage extends DetailBaseClass {
       .subscribe(
           response => {
             //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'success', summary: 'Žádosti byly úspěšně podány' });
+            this.messageService.add({ severity: 'success', detail: 'Žádosti byly úspěšně podány', closable: false });
             this.refreshSeznamToken$?.next(undefined);
           },
           error => {
             //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'error', summary: error.error?.message ? error.error.message : (error.error ? errorTxtFunction(error.error) : errorTxtFunction(error)) });
+            this.messageService.add({ severity: 'error', detail: this.getErrorMessage(error), closable: false });
           }
       );
     }
@@ -80,4 +80,25 @@ export class DetailPovoleniVjezduVozidlaCsvPage extends DetailBaseClass {
     document.getElementById("inputImportCSV")?.click();
   }
 
+  private getErrorMessage(error: any): string{
+    const keys = Object.keys(error.error);
+    if (keys.length > 0) {
+      const firstKey = keys[0];
+      const value = error.error[firstKey];
+      return value
+    } else if (error.error && error.error.message) {
+      const message = error.error.message;
+  
+      // Definujte regulární výraz pro extrakci chybové zprávy mezi \" a \"\""
+      const regex = /"([^"]*)""/;
+  
+      // Použijte regulární výraz pro extrakci zprávy
+      const match = message.match(regex);
+      if (match && match.length > 1) {
+        return match[1];
+      }
+    } 
+    return "Vznikla nezmapovaná chyba na serveru. Akci opakujte později."
+    
+  }
 }

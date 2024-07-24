@@ -111,7 +111,7 @@
           <div class="row m-0">
             <div class="col-sm-5 p-0 pe-sm-1">
               <span class="p-float-label">
-                <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="detail!.rzVozidla[i]"
+                <input pInputText type="text" [required]="false" autocomplete="off" [(ngModel)]="detail!.rzVozidla[i]"
                   id="rzVozidla{{i}}" name="rzVozidla{{i}}" />
                 <label for="rzVozidla{{i}}">{{ 'POVOLENI_VJEZDU_VOZIDLA.RZ_VOZIDLA' | translate }} *</label>
                 <p-message class="validator-message" severity="danger"
@@ -276,5 +276,6 @@
   </form>
 </div>
 
+<p-toast></p-toast>
 <app-detail-povoleni-vjezdu-vozidla-csv></app-detail-povoleni-vjezdu-vozidla-csv>
 <app-detail-povoleni-vjezdu-vozidla-typ-rz-csv (rzTypVozidla)="importRzTypVozidlaFromDialog($event)"></app-detail-povoleni-vjezdu-vozidla-typ-rz-csv>

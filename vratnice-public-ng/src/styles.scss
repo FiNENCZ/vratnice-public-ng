@@ -18,3 +18,17 @@
 
 
 @import 'share-res/css/tieredmenu-dragdrop.scss';
+
+.p-toast {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.p-toast-summary {
+    display: none;
+}
+
+.p-toast-detail {
+    padding-top: 0px;
+    margin-top: 0px;
+}

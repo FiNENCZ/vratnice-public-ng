@@ -85,7 +85,7 @@ export class PovoleniVjezduVozidlaComponent {
   constructor(
     //private readonly confirmationService: ConfirmationService,
     private readonly elementRef: ElementRef,
-    private readonly messageService: MessageService,
+    private messageService: MessageService,
     private readonly translateService: TranslateService,
     //private readonly uiService: UiService,
     
@@ -127,7 +127,7 @@ export class PovoleniVjezduVozidlaComponent {
         if (ridic) {
           this.detail!.ridic = ridic;
           this.initializeRidicValues();
-          this.messageService.add({ severity: 'success', summary: 'Řidič byl načten z databáze dle čísla OP.' });
+          this.messageService.add({ severity: 'success', detail: 'Řidič byl načten z databáze dle čísla OP.', closable: false });
         }
       },
       error: (error) => {
@@ -187,8 +187,6 @@ export class PovoleniVjezduVozidlaComponent {
   }
 
   ulozit(form: NgForm) {
-    this.messageService.add({ severity: 'error', summary: "test", detail: "Success Service Message"});
-    
     if (form.pending) {
       return;
     }
@@ -221,7 +219,7 @@ export class PovoleniVjezduVozidlaComponent {
           //this.uiService.stopSpinner();
           console.log(error);
           console.log(error.error);
-          this.messageService.add({ severity: 'error', summary: this.getErrorMessage(error) });
+          this.messageService.add({ severity: 'error', detail: this.getErrorMessage(error), closable: false });
         }
       });
   }
@@ -244,7 +242,7 @@ export class PovoleniVjezduVozidlaComponent {
           }),
           catchError(
             error => {
-              this.messageService.add({ severity: 'error', summary: this.getErrorMessage(error) });
+              this.messageService.add({ severity: 'error', detail: this.getErrorMessage(error), closable: false });
               //this.uiService.stopSpinner();
               return of(undefined);
             }
@@ -296,7 +294,7 @@ export class PovoleniVjezduVozidlaComponent {
       .subscribe(
           (response: RzTypVozidlaDto) => {
             //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'success', summary: 'Vozidla byla úspěšně načtena' });
+            this.messageService.add({ severity: 'success', detail: 'Vozidla byla úspěšně načtena', closable: false });
 
             this.detail!.rzVozidla = response.rzVozidla;
             this.detail!.typVozidla = response.typVozidla;
@@ -305,7 +303,7 @@ export class PovoleniVjezduVozidlaComponent {
           },
           error => {
             //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'error', summary: this.getErrorMessage(error) });
+            this.messageService.add({ severity: 'error', detail: this.getErrorMessage(error), closable: false });
           }
       );
     }
