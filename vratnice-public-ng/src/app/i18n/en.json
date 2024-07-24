@@ -67,6 +67,7 @@
       "RIDIC_NACTEN": "The driver was loaded from the database according to the ID card number.",
       "VOZIDLA_NACTENA": "The vehicles were successfully loaded.",
       "ZADOSTI_PODANY":  "The applications were successfully submitted.",
+      "ZADOST_PODANA":  "The application was successfully submitted.",
   
       "NACIST_VOZIDLA_CSV": "Load Vehicles from CSV File",
   

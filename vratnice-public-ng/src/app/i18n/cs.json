@@ -67,6 +67,7 @@
     "RIDIC_NACTEN": "Řidič byl načten z databáze dle čísla OP.",
     "VOZIDLA_NACTENA": "Vozidla byla úspěšně načtena",
     "ZADOSTI_PODANY": "Žádosti byly úspěšně podány",
+    "ZADOST_PODANA": "Žádost bylya úspěšně podána",
 
     "NACIST_VOZIDLA_CSV": "Načíst vozidla z CSV souboru",
 

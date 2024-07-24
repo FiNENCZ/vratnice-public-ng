@@ -130,6 +130,7 @@ export class PovoleniVjezduVozidlaComponent {
       },
       error: (error) => {
         console.error('Chyba při vyhledávání řidiče:', error);
+        this.ridicId = undefined;
       }
     });
   }
@@ -209,7 +210,8 @@ export class PovoleniVjezduVozidlaComponent {
       .subscribe({
         next: (vysledek: PovoleniVjezduVozidlaDto) => {
           //this.uiService.stopSpinner();
-          console.log(vysledek)
+          this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.ZADOST_PODANA'), closable: false });
+          this.novyDetail();
           this.formDetail?.form.markAsPristine();
           this.refreshSeznamToken$?.next(undefined);
         },
