@@ -34,7 +34,26 @@
               "src/app/i18n"
             ],
             "styles": [
-              "src/styles.scss"
+              {
+                "input": "src/styles.scss",
+                "inject": true
+              },
+              {
+                "input": "src/styles-scheme/styles_green.scss",
+                "inject": false
+              },
+              {
+                "input": "src/styles-scheme/styles_blue.scss",
+                "inject": false
+              },
+              {
+                "input": "src/styles-scheme/styles_red.scss",
+                "inject": false
+              },
+              {
+                "input": "src/styles-scheme/styles_turquoise.scss",
+                "inject": false
+              }
             ],
             "scripts": [],
             "server": "src/main.server.ts",

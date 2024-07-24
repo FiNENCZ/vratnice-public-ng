@@ -1,9 +1,0 @@
-<div class="container">
-  {{'AUTO_LOGOUT.LOGOUT_TEXT' | translate:{cas: (authService.getCasExpirace() | hodinyMinutySekundy)} }}
-</div>
-
-<div class="footer">
-  <p-button label="{{'AUTO_LOGOUT.ZUSTAT_PRIHLASEN' | translate}}" (click)="zustatPrihlasen()"
-    styleClass="p-button-success me-3"></p-button>
-  <p-button (click)="odhlasit()" label="{{'AUTO_LOGOUT.ODHLASIT' | translate}}" styleClass="p-button-danger"></p-button>
-</div>

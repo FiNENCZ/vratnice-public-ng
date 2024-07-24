@@ -160,6 +160,15 @@
     vite "5.3.2"
     watchpack "2.4.1"
 
+"@angular/cdk@^18.1.1":
+  version "18.1.1"
+  resolved "https://registry.npmjs.org/@angular/cdk/-/cdk-18.1.1.tgz"
+  integrity sha512-IaDjvRUgAoKnEeafrnBX+hjTR+1M3O3fV3AybBCjN4NuiPtuyOJiTMg0cTv6RbluJ/SenbT4MQq3tMpOsa9i4w==
+  dependencies:
+    tslib "^2.3.0"
+  optionalDependencies:
+    parse5 "^7.1.2"
+
 "@angular/cli@^18.1.1":
   version "18.1.1"
   resolved "https://registry.npmjs.org/@angular/cli/-/cli-18.1.1.tgz"
@@ -183,7 +192,7 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^18.0.0", "@angular/common@^18.1.0", "@angular/common@>=13.0.0", "@angular/common@>=16.0.0", "@angular/common@18.1.1":
+"@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^18.0.0", "@angular/common@^18.0.0 || ^19.0.0", "@angular/common@^18.1.0", "@angular/common@>=13.0.0", "@angular/common@>=16.0.0", "@angular/common@18.1.1":
   version "18.1.1"
   resolved "https://registry.npmjs.org/@angular/common/-/common-18.1.1.tgz"
   integrity sha512-qNfYAapvIi8JyQToSqbg3O5dRXaElv/yNp2evvBGn4UO/liHjdNV/DzgCdyKP7uVbYrR0W3bzj++SxVR3mrATQ==
@@ -211,7 +220,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^18.0.0", "@angular/core@^18.1.0", "@angular/core@>=13.0.0", "@angular/core@>=16.0.0", "@angular/core@18.1.1":
+"@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^18.0.0", "@angular/core@^18.0.0 || ^19.0.0", "@angular/core@^18.1.0", "@angular/core@>=13.0.0", "@angular/core@>=16.0.0", "@angular/core@18.1.1":
   version "18.1.1"
   resolved "https://registry.npmjs.org/@angular/core/-/core-18.1.1.tgz"
   integrity sha512-/JFQ49fVIthZzdggl7FOCYAjaynbkRcCyiri85kAyTIvJ6aMSIiEKwJCw45WI5ICf2HtC9kz6dr0OKhMR6SeiA==
@@ -5054,7 +5063,7 @@ parse5-sax-parser@^7.0.0:
   dependencies:
     parse5 "^7.0.0"
 
-parse5@^7.0.0:
+parse5@^7.0.0, parse5@^7.1.2:
   version "7.1.2"
   resolved "https://registry.npmjs.org/parse5/-/parse5-7.1.2.tgz"
   integrity sha512-Czj1WaSVpaoj0wbhMzLmWD69anp2WH7FXMB9n1Sy8/ZFF9jolSQVMu1Ij5WIyGmcBmhk7EOndpO4mIpihVqAXw==

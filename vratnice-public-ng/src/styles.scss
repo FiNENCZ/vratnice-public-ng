@@ -1,8 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 
-@import 'node_modules/bootstrap/dist/css/bootstrap.css';
-
 
 @import "primeng/resources/themes/mdc-light-indigo/theme.css";
 @import "primeng/resources/primeng.min.css";
@@ -16,6 +14,7 @@
 //@import 'share-res/css/custom-prime.scss';
 @import 'share-res/css/custom-prime-indigo.scss';
 
+@import '@angular/cdk/overlay-prebuilt.css';
 
 @import 'share-res/css/tieredmenu-dragdrop.scss';
 
