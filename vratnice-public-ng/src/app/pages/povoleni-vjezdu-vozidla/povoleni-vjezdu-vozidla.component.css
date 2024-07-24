@@ -1,5 +1,26 @@
 .main-container {
-    padding: 2rem 12rem;
+    padding: 2rem 25vw;
+}
+
+/* Padding for screens larger than 1910px */
+@media (min-width: 1910px) {
+    .main-container {
+        padding: 2rem 25vw; /* Adjust this value as needed */
+    }
+}
+
+/* Padding for screens between 1300px and 1909px */
+@media (min-width: 1100px) and (max-width: 1909px) {
+    .main-container {
+        padding: 2rem 20vw; /* Adjust this value as needed */
+    }
+}
+
+/* Padding for screens smaller than 1300px */
+@media (max-width: 1099px) {
+    .main-container {
+        padding: 2rem 9vw; /* Adjust this value as needed */
+    }
 }
 
 .main-container form {
