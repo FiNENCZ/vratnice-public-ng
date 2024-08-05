@@ -12,6 +12,7 @@
 import { RidicDto } from './ridicDto';
 import { ZavodDto } from './zavodDto';
 import { VozidloTypDto } from './vozidloTypDto';
+import { LokalitaDto } from './lokalitaDto';
 import { StatDto } from './statDto';
 
 
@@ -29,7 +30,8 @@ export interface PovoleniVjezduVozidlaDto {
     spolecnostVozidla?: string;
     datumOd: Date;
     datumDo: Date;
-    zavod: Array<ZavodDto>;
+    zavod: ZavodDto;
+    lokality: Array<LokalitaDto>;
     opakovanyVjezd?: boolean;
     stav?: string;
 }

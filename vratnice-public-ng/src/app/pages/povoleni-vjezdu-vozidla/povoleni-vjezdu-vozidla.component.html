@@ -65,7 +65,7 @@
           <span class="p-float-label">
             <input pInputText type="text" autocomplete="off" [(ngModel)]="detail!.icoZadatele" id="icoZadatele"
               name="icoZadatele"/>
-            <label for="icoZadatele">{{ 'POVOLENI_VJEZDU_VOZIDLA.ICO' | translate }} *</label>
+            <label for="icoZadatele">{{ 'POVOLENI_VJEZDU_VOZIDLA.ICO' | translate }}</label>
           </span>
         </div>
       </div>
@@ -144,7 +144,7 @@
           <span class="p-float-label">
             <input pInputText type="text" autocomplete="off" [(ngModel)]="detail!.spolecnostVozidla" id="spolecnostVozidla"
               name="spolecnostVozidla" />
-            <label for="spolecnostVozidla">{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST_VOZIDLA' | translate }} *</label>
+            <label for="spolecnostVozidla">{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST_VOZIDLA' | translate }}</label>
             <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST_VOZIDLA_VALIDATOR' | translate }}"
               *ngIf="!formDetail.controls['spolecnostVozidla']?.valid && formDetail.controls['spolecnostVozidla']?.dirty"></p-message>
           </span>
@@ -236,17 +236,31 @@
         </div>
       </div>
 
-      <!-- Lokalita - závod -->
-      <span class="p-float-label">
-        <p-multiSelect id="multiSelect" name="multiSelect" scrollHeight="300px" display="chip" required="true"
-          [options]="zavodList" dataKey="id" [(ngModel)]="detail!.zavod" optionLabel="nazev"
-            [overlayOptions]="{baseZIndex: 1010, appendTo: 'body'}">
-        </p-multiSelect>
-        <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.LOKALITA_VALIDATOR' | translate }}"
-          *ngIf="!formDetail.controls['zavod']?.valid && formDetail.controls['zavod']?.dirty"></p-message>
-        <label htmlFor="multiSelect">{{ 'POVOLENI_VJEZDU_VOZIDLA.ZAVOD' | translate }} *</label>
-      </span>
+      <!-- Lokalita -->
+    <div class="row m-0">
+      <div class="col-sm-6 p-0 pe-sm-1">
+        <app-dropdown class="app-dropdown" idDropdown="zavod"
+        id="zavod" name="zavod" [virtualScroll]="true" (onChangeEvent)="getLokalitaList($any($event.id))"
+        [required]="true" labelText="POVOLENI_VJEZDU_VOZIDLA.ZAVOD" validatorMessageText="{{ 'POVOLENI_VJEZDU_VOZIDLA.ZAVOD_VALIDATOR' | translate }}"
+        [form]="formDetail" [nacitani]="nacitaniDatZavodu" dataKey="id" [valuesObservable]="zavodyValuesObservable$"
+        [(ngModel)]="detail.zavod" [filter]="true" filterBy="nazev"
+        optionLabel="nazev"></app-dropdown>
+      </div>
 
+      <!-- Lokalita -->
+      <div class="col-sm-6 p-0 ps-sm-1">
+        <span class="p-float-label">
+          <p-multiSelect id="lokalita" name="lokalita" scrollHeight="300px" display="chip" required="true"
+            [options]="lokalitaList" dataKey="id" [(ngModel)]="detail!.lokality" optionLabel="nazev"
+            [overlayOptions]="{baseZIndex: 1010, appendTo: 'body'}">
+          </p-multiSelect>
+          <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.LOKALITA_VALIDATOR' | translate }}"
+            *ngIf="!formDetail.controls['lokalita']?.valid && formDetail.controls['lokalita']?.dirty"></p-message>
+          <label htmlFor="lokalita">{{ 'POVOLENI_VJEZDU_VOZIDLA.LOKALITA' | translate }} *</label>
+        </span>
+      </div>
+
+    </div>
       <!-- Checkbox pro opakovaný vjezd -->
       <div class="form-label-group ps-2">
         <div class="p-field-checkbox">

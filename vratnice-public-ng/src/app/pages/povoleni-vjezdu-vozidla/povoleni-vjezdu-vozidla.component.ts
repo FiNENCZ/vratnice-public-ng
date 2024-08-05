@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 import { DialogModule } from "primeng/dialog"
 import { MessageModule } from "primeng/message"
@@ -16,7 +16,7 @@ import { ZavodDto } from '../../../../build/openapi/model/zavodDto';
 import { newPovoleniVjezduVozidlaDto } from '../../functions/povoleniVjezduVozidla.dto.function ';
 import { newRidicDto } from '../../functions/ridic.dto.function';
 import { TranslateModule, TranslateLoader, TranslateService } from "@ngx-translate/core";
-import { ZavodControllerService, RidicControllerService, VozidloTypControllerService, StatControllerService, PovoleniVjezduVozidlaControllerService, RzTypVozidlaDto } from '../../../../build/openapi';
+import { ZavodControllerService, RidicControllerService, VozidloTypControllerService, StatControllerService, PovoleniVjezduVozidlaControllerService, RzTypVozidlaDto, LokalitaDto, LokalitaControllerService } from '../../../../build/openapi';
 import moment from 'moment';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpBackend, HttpClient, HttpClientModule } from '@angular/common/http';
@@ -69,7 +69,7 @@ export class PovoleniVjezduVozidlaComponent {
   idZaznamu?: string;
   aktivita: boolean = true;
   isRidicRequired: boolean = false;
-  zavodList: ZavodDto[] = [];
+  lokalitaList: LokalitaDto[] = [];
 
   // Pomocné proměnné pro dvoucestnou vazbu
   ridicId?: string;
@@ -94,6 +94,7 @@ export class PovoleniVjezduVozidlaComponent {
     private readonly elementRef: ElementRef,
     private messageService: MessageService,
     private readonly translateService: TranslateService,
+    private readonly changeDetectorRef: ChangeDetectorRef,
     //private readonly uiService: UiService,
     
     private readonly povoleniVjezduVozidlaControllerService: PovoleniVjezduVozidlaControllerService,
@@ -102,6 +103,8 @@ export class PovoleniVjezduVozidlaComponent {
     private readonly vozidlotypControllerService: VozidloTypControllerService,
     private readonly statControllerService: StatControllerService,
     private readonly languageService: LanguageService,
+    private readonly lokalitaControllerService: LokalitaControllerService,
+    
   ) {
     this.vozidloTyp$ = this.languageService.vozidloTypValuesObservable;
     this.stat$ = this.languageService.statValuesObservable;
@@ -119,11 +122,7 @@ export class PovoleniVjezduVozidlaComponent {
       console.log('Updated stat values:', data);
     })
 
-    this.zavodControllerService.listZavod(true).subscribe(
-      response => {
-        this.zavodList = response;
-      }
-    );
+
 
   
     this.searchTerms.pipe(
@@ -305,6 +304,46 @@ export class PovoleniVjezduVozidlaComponent {
     this.toggleRidicRequired();
   }
 
+  private readonly zavodValuesSubject = new BehaviorSubject<ZavodDto[] | any>(undefined);
+  protected nacitaniDatZavodu: boolean = true;
+  protected zavodyValuesObservable$: Observable<ZavodDto[] | any> = new BehaviorSubject(undefined).pipe(
+    switchMap(() => {
+      if (this.zavodValuesSubject.getValue() !== undefined) {
+        return this.zavodValuesSubject.asObservable();
+      } else {
+        this.nacitaniDatZavodu = true;
+        return this.zavodControllerService.listZavod(true, this.translateService.currentLang).pipe(
+          map(response => {
+            this.nacitaniDatZavodu = false;
+            this.zavodValuesSubject.next(response);
+            return response;
+          })
+        );
+      }
+    })
+  ).pipe(
+    map((response: ZavodDto[]) => {
+      if (response && response.length > 0) {
+        if (!this.detail?.zavod) {
+          this.detail!.zavod = response[0];
+          this.getLokalitaList(response[0].id!.toString());
+          //this.getBudovaValuesObservable(this.detail?.lokalita?.id!);
+        }
+
+        this.changeDetectorRef.detectChanges();
+      }
+      return response;
+    })
+  );
+
+  getLokalitaList(idZavod: string) {
+    this.lokalitaControllerService.listLokalita(idZavod).subscribe(
+      response => {
+        this.lokalitaList = response;
+      }
+    );
+  }
+
   onCsvSelected(event: any): void {
     //this.uiService.showSpinner();
     const file: File = event.target.files[0];
@@ -405,7 +444,7 @@ export class PovoleniVjezduVozidlaComponent {
   }
 
   public printZavodList() {
-    console.log(this.zavodList);
+    console.log(this.lokalitaList);
   }
 
   showPovoleniVjezduVozidlaCsvDetail() {
