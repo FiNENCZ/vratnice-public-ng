@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { AppComponent } from 'src/app/app.component';
+import { LanguageService } from 'src/app/servis/language-service.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,29 +19,11 @@ export class NavbarComponent {
   czFlagPath: string = "assets/images/cz-flag.svg"
   currentFlagPath: string = this.ukFlagPath;
 
-  constructor(
-    private readonly translateService: TranslateService,
-    private readonly primeNGConfig: PrimeNGConfig,
-  ) {}
+  constructor(private languageService: LanguageService) {}
 
   toggleLanguage() {
-    if (this.translateService.currentLang == "en"){
-      this.changeLanguage("cs");
-      this.currentFlagPath = this.ukFlagPath;
-    }
-    else {
-      this.changeLanguage("en");
-      this.currentFlagPath = this.czFlagPath;
-    }
-  }
-
-  changeLanguage(language: string) {
-    this.translateService.use(language)
-    this.translateService.get('primeng').subscribe(
-      (res: any) => {
-        this.primeNGConfig.setTranslation(res);
-      }
-    );
+    this.languageService.toggleLanguage();
+    this.currentFlagPath = this.languageService.translateService.currentLang === 'en' ? this.czFlagPath : this.ukFlagPath;
   }
 
 }

@@ -6,7 +6,7 @@ import { MultiSelectModule } from "primeng/multiselect"
 import { CheckboxModule } from "primeng/checkbox"
 import { FormsModule, NgForm } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, catchError, BehaviorSubject, map } from 'rxjs';
+import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, catchError, BehaviorSubject, map, Subscription } from 'rxjs';
 import { PovoleniVjezduVozidlaDto } from '../../../../build/openapi/model/povoleniVjezduVozidlaDto';
 import { RidicDto } from '../../../../build/openapi/model/ridicDto';
 import { StatDto } from '../../../../build/openapi/model/statDto';
@@ -33,6 +33,7 @@ import { DropdownComponent } from 'src/app/shared/components/dropdown/dropdown.c
 import { DetailPovoleniVjezduVozidlaCsvPage } from '../detail-povoleni-vjezdu-vozidla-csv/detail-povoleni-vjezdu-vozidla-csv.page';
 import { DetailPovoleniVjezduVozidlaTypRzCsvPage } from '../detail-povoleni-vjezdu-vozidla-typ-rz-csv/detail-povoleni-vjezdu-vozidla-typ-rz-csv.page';
 import { getErrorMessage } from 'src/app/functions/get-error-message.function';
+import { LanguageService } from 'src/app/servis/language-service.service';
 
 
 @Component({
@@ -69,7 +70,6 @@ export class PovoleniVjezduVozidlaComponent {
   aktivita: boolean = true;
   isRidicRequired: boolean = false;
   zavodList: ZavodDto[] = [];
-  vozidloTyp$: Observable<any[]>  = of([]);
 
   // Pomocné proměnné pro dvoucestnou vazbu
   ridicId?: string;
@@ -83,6 +83,12 @@ export class PovoleniVjezduVozidlaComponent {
 
   private searchTerms = new Subject<string>();
 
+  vozidloTyp$: Observable<VozidloTypDto[] | null>;
+  private vozidloTypSubscription?: Subscription;
+
+  stat$: Observable<StatDto[] | null>;
+  private statSubscription?: Subscription;
+
   constructor(
     //private readonly confirmationService: ConfirmationService,
     private readonly elementRef: ElementRef,
@@ -95,12 +101,23 @@ export class PovoleniVjezduVozidlaComponent {
     private readonly ridicControllerService: RidicControllerService,
     private readonly vozidlotypControllerService: VozidloTypControllerService,
     private readonly statControllerService: StatControllerService,
+    private readonly languageService: LanguageService,
   ) {
+    this.vozidloTyp$ = this.languageService.vozidloTypValuesObservable;
+    this.stat$ = this.languageService.statValuesObservable;
   }
 
   ngOnInit() {
     this.showNovyDetail()
     this.initializeRidicValues();
+
+    this.vozidloTypSubscription = this.vozidloTyp$.subscribe(data => {
+      console.log('Updated vozidloTyp values:', data);
+    });
+
+    this.statSubscription = this.stat$.subscribe(data => {
+      console.log('Updated stat values:', data);
+    })
 
     this.zavodControllerService.listZavod(true).subscribe(
       response => {
@@ -137,6 +154,8 @@ export class PovoleniVjezduVozidlaComponent {
 
   ngOnDestroy(): void {
     this.searchTerms.complete();
+    this.vozidloTypSubscription!.unsubscribe();
+    this.statSubscription!.unsubscribe();
   }
 
   initializeRidicValues() {

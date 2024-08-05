@@ -109,8 +109,8 @@
                 name="typVozidla{{i}}" [required]="true" [showClear]="true" labelText="{{ 'POVOLENI_VJEZDU_VOZIDLA.TYP_VOZIDLA' }}" 
                 placeholderText="POVOLENI_VJEZDU_VOZIDLA.TYP_VOZIDLA"
                 validatorMessageText="POVOLENI_VJEZDU_VOZIDLA.TYP_VOZIDLA_VALIDATOR" [form]="formDetail"
-                [nacitani]="nacitaniDatVozidloTyp" dataKey="id"
-                [valuesObservable]="vozidloTypValuesObservable" 
+                [nacitani]="false" dataKey="id"
+                [valuesObservable]="vozidloTyp$" 
                 [(ngModel)]="detail!.typVozidla[i]" optionLabel="nazev"
                ></app-dropdown> 
             </div>
@@ -132,8 +132,8 @@
           name="zemeRegistraceVozidla" [required]="true" labelText="{{ 'POVOLENI_VJEZDU_VOZIDLA.ZEME_REGISTRACE_VOZIDLA' }}"
           placeholderText="{{ 'POVOLENI_VJEZDU_VOZIDLA.ZEME_REGISTRACE_VOZIDLA' }}"
           validatorMessageText="{{ 'POVOLENI_VJEZDU_VOZIDLA.ZEME_REGISTRACE_VOZIDLA_VALIDATOR' }}" [form]="formDetail"
-          [nacitani]="nacitaniDatStat" dataKey="id"
-          [valuesObservable]="statValuesObservable"
+          [nacitani]="false" dataKey="id"
+          [valuesObservable]="stat$"
           [(ngModel)]="detail!.zemeRegistraceVozidla"
           optionLabel="nazev"></app-dropdown> 
         </div>

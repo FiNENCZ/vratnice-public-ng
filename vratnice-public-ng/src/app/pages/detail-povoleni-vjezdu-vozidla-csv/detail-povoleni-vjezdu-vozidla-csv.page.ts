@@ -62,11 +62,13 @@ export class DetailPovoleniVjezduVozidlaCsvPage extends DetailBaseClass {
           response => {
             //this.uiService.stopSpinner();
             this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.ZADOSTI_PODANY'), closable: false });
-            this.refreshSeznamToken$?.next(undefined);
+            console.log(response);
+            //this.refreshSeznamToken$?.next(undefined);
           },
           error => {
             //this.uiService.stopSpinner();
             this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
+            console.log(error);
           }
       );
     }
