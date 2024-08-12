@@ -33,7 +33,7 @@
     "JMENO": "Jméno žadatele",
     "PRIJMENI": "Příjmeni žadatele",
     "SPOLECNOST": "Společnost žadatele",
-    "ICO": "IČO žadazele",
+    "ICO": "IČO žadatele",
     "DUVOD": "Důvod žádosti",
     "RZ_VOZIDLA": "RZ vozidla",
     "TYP_VOZIDLA" : "Typ vozidla",
@@ -47,6 +47,7 @@
     "OPAKOVANY_VJEZD": "Opakovaný vjezd",
     "STAV": "Stav",
     "ULOZIT_POVOLENI_VJEZDU_VOZIDLA_CSV": "Vytvořit žádost z CSV",
+    "EMAIL": "Email žadatele",
 
     "JMENO_VALIDATOR": "Jméno žadatele je nutné vyplnit",
     "PRIJMENI_VALIDATOR": "Příjmeni žadatele je nutné vyplnit",
@@ -59,6 +60,7 @@
     "DATUM_DO_VALIDATOR": "Datum do je nutné vyplnit",
     "ZAVOD_VALIDATOR": "Závod je nutné vyplnit",
     "LOKALITA_VALIDATOR": "Lokalitu je nutné vyplnit",
+    "EMAIL_VALIDATOR": "Email žadatele je nutné vyplnit",
 
     "PRIDAT_RIDICE": "Přidat řidiče",
     "ODEBRAT_RIDICE": "Odebrat řidiče",

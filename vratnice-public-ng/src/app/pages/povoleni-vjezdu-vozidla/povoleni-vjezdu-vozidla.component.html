@@ -48,14 +48,14 @@
     </div>
 
       <div class="row m-0">
-        <!-- Společnost -->
         <div class="col-sm-6 p-0 pe-sm-1">
+          <!-- Email uživatele -->
           <span class="p-float-label">
-            <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="detail!.spolecnostZadatele" id="spolecnostZadatele"
-              name="spolecnostZadatele" />
-            <label for="spolecnostZadatele" >{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST' | translate }} *</label>
-            <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST_VALIDATOR' | translate }}"
-              *ngIf="!formDetail.controls['spolecnostZadatele']?.valid && formDetail.controls['spolecnostZadatele']?.dirty"></p-message>
+            <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="detail!.emailZadatele" id="emailZadatele"
+              name="emailZadatele"/>
+            <label for="emailZadatele">{{ 'POVOLENI_VJEZDU_VOZIDLA.EMAIL' | translate }} *</label>
+            <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.EMAIL_VALIDATOR' | translate }}"
+              *ngIf="!formDetail.controls['emailZadatele']?.valid && formDetail.controls['emailZadatele']?.dirty"></p-message>
           </span>
         </div>
   
@@ -69,6 +69,21 @@
           </span>
         </div>
       </div>
+
+      <!-- Společnost -->
+      <span class="p-float-label">
+        <p-autoComplete [required]="false" [suggestions]="filtrovaneSpolecnosti!"  (completeMethod)="searchSpolecnost($event)"
+        field="nazev" [(ngModel)]="detail!.spolecnostZadatele" id="spolecnostZadatele"
+         name="spolecnostZadatele">
+         <ng-template let-spolecnost pTemplate="item">
+           <div>{{ spolecnost.nazev }}</div>
+       </ng-template>
+      </p-autoComplete>
+      <label for="spolecnostZadatele" >{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST' | translate }} *</label>
+      <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST_VALIDATOR' | translate }}"
+        *ngIf="!formDetail.controls['spolecnostZadatele']?.valid && formDetail.controls['spolecnostZadatele']?.dirty"></p-message>
+    </span>
+
 
       <!-- Důvod -->
       <div>
@@ -142,8 +157,13 @@
         <!-- Společnost vozidla -->
         <div class="col-sm-6 p-0 ps-sm-1">
           <span class="p-float-label">
-            <input pInputText type="text" autocomplete="off" [(ngModel)]="detail!.spolecnostVozidla" id="spolecnostVozidla"
-              name="spolecnostVozidla" />
+            <p-autoComplete [required]="false" [suggestions]="filtrovaneSpolecnosti!"  (completeMethod)="searchSpolecnost($event)"
+            field="nazev" [(ngModel)]="detail!.spolecnostVozidla" id="spolecnostVozidla"
+             name="spolecnostVozidla">
+             <ng-template let-spolecnost pTemplate="item">
+               <div>{{ spolecnost.nazev }}</div>
+           </ng-template>
+          </p-autoComplete>
             <label for="spolecnostVozidla">{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST_VOZIDLA' | translate }}</label>
             <p-message class="validator-message" severity="danger" text="{{ 'POVOLENI_VJEZDU_VOZIDLA.SPOLECNOST_VOZIDLA_VALIDATOR' | translate }}"
               *ngIf="!formDetail.controls['spolecnostVozidla']?.valid && formDetail.controls['spolecnostVozidla']?.dirty"></p-message>
@@ -154,20 +174,20 @@
       <!-- Řidič -->
       
       <div class="d-flex" >
-        <button *ngIf="!isRidicRequired" (click)="toggleRidicRequired();" type="button" class="btn btn-sm btn-outline-primary mt-2 ms-auto"><i class="far fa-file"></i>
+        <button *ngIf="!this.detail.ridic" (click)="addRidic();" type="button" class="btn btn-sm btn-outline-primary mt-2 ms-auto"><i class="far fa-file"></i>
           {{ 'POVOLENI_VJEZDU_VOZIDLA.PRIDAT_RIDICE' | translate }}</button>
-        <button *ngIf="isRidicRequired" (click)="smazatRidice();" type="button" class="btn btn-sm btn-outline-danger mt-2 ms-auto"><i class="far fa-file"></i>
+        <button *ngIf="this.detail.ridic" (click)="smazatRidice();" type="button" class="btn btn-sm btn-outline-danger mt-2 ms-auto"><i class="far fa-file"></i>
           {{ 'POVOLENI_VJEZDU_VOZIDLA.ODEBRAT_RIDICE' | translate }}</button>
       </div>
 
-      <fieldset *ngIf="isRidicRequired">
-        <legend>Řidič</legend>
+      <fieldset *ngIf="this.detail.ridic">
+        <legend>{{ 'POVOLENI_VJEZDU_VOZIDLA.RIDIC' | translate }}</legend>
 
         <div class="row m-0">
           <!-- Řidič - Jméno -->
           <div class="col-sm-6 p-0 pe-sm-1">
             <span class="p-float-label">
-              <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="ridicJmeno" id="jmeno"
+              <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="detail!.ridic!.jmeno" id="jmeno"
                 name="jmeno"/>
               <label for="jmeno">{{ 'RIDIC.JMENO' | translate }}  *</label>
               <p-message class="validator-message" severity="danger" text="{{ 'RIDIC.JMENO_VALIDATOR' | translate }}"
@@ -178,7 +198,7 @@
           <!-- Řidič - Příjmení -->
           <div class="col-sm-6 p-0 ps-sm-1">
             <span class="p-float-label">
-              <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="ridicPrijmeni" id="prijmeni"
+              <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="detail!.ridic!.prijmeni" id="prijmeni"
                 name="prijmeni" />
               <label for="prijmeni">{{ 'RIDIC.PRIJMENI' | translate }} *</label>
               <p-message class="validator-message" severity="danger" text="{{ 'RIDIC.PRIJMENI_VALIDATOR' | translate }}"
@@ -191,18 +211,23 @@
           <!-- Řidič - Firma -->
           <div class="col-sm-6 p-0 pe-sm-1">
             <span class="p-float-label">
-              <input pInputText type="text" [required]="false" autocomplete="off" [(ngModel)]="ridicFirma" id="firma"
-                name="firma" />
-              <label for="firma">{{ 'RIDIC.FIRMA' | translate }}</label>
+              <p-autoComplete [required]="false" [suggestions]="filtrovaneSpolecnosti!"  (completeMethod)="searchSpolecnost($event)"
+              field="nazev" [(ngModel)]="detail!.ridic!.spolecnost" id="spolecnostRidice"
+               name="spolecnostRidice">
+               <ng-template let-spolecnost pTemplate="item">
+                 <div>{{ spolecnost.nazev }}</div>
+             </ng-template>
+            </p-autoComplete>
+              <label for="spolecnostRidice">{{ 'RIDIC.FIRMA' | translate }}</label>
               <p-message class="validator-message" severity="danger" text="{{ 'RIDIC.FIRMA_VALIDATOR' | translate }}"
-                *ngIf="!formDetail.controls['firma']?.valid && formDetail.controls['firma']?.dirty"></p-message>
+                *ngIf="!formDetail.controls['spolecnostRidice']?.valid && formDetail.controls['spolecnostRidice']?.dirty"></p-message>
             </span>
           </div>
 
           <!-- Řidič - Číslo OP -->
           <div class="col-sm-6 p-0 ps-sm-1">
             <span class="p-float-label">
-              <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="ridicCisloOp" id="cisloOp"
+              <input pInputText type="text" [required]="true" autocomplete="off" [(ngModel)]="detail!.ridic!.cisloOp" id="cisloOp"
                 name="cisloOp" (ngModelChange)="fillInRidicByCisloOp($event)" />
               <label for="cisloOp">{{ 'RIDIC.CISLO_OP' | translate }} *</label>
               <p-message class="validator-message" severity="danger" text="{{ 'RIDIC.CISLO_OP_VALIDATOR' | translate }}"

@@ -47,6 +47,7 @@
       "OPAKOVANY_VJEZD": "Repeated Entry",
       "STAV": "Status",
       "ULOZIT_POVOLENI_VJEZDU_VOZIDLA_CSV": "Create Request from CSV",
+      "EMAIL": "Applicant's Email",
   
       "JMENO_VALIDATOR": "Applicant's First Name is required",
       "PRIJMENI_VALIDATOR": "Applicant's Last Name is required",
@@ -59,6 +60,7 @@
       "DATUM_DO_VALIDATOR": "Date To is required",
       "ZAVOD_VALIDATOR": "Plant is required",
       "LOKALITA_VALIDATOR": "Location is required",
+      "EMAIL_VALIDATOR": "Applicant's Email is required",
   
       "PRIDAT_RIDICE": "Add Driver",
       "ODEBRAT_RIDICE": "Remove Driver",

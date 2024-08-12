@@ -5,6 +5,7 @@ api/api.ts
 api/lokalitaController.service.ts
 api/povoleniVjezduVozidlaController.service.ts
 api/ridicController.service.ts
+api/spolecnostController.service.ts
 api/statController.service.ts
 api/vozidloTypController.service.ts
 api/zavodController.service.ts
@@ -17,6 +18,7 @@ model/models.ts
 model/povoleniVjezduVozidlaDto.ts
 model/ridicDto.ts
 model/rzTypVozidlaDto.ts
+model/spolecnostDto.ts
 model/statDto.ts
 model/vozidloTypDto.ts
 model/zavodDto.ts

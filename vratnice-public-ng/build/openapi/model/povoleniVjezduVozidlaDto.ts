@@ -13,6 +13,7 @@ import { RidicDto } from './ridicDto';
 import { ZavodDto } from './zavodDto';
 import { VozidloTypDto } from './vozidloTypDto';
 import { LokalitaDto } from './lokalitaDto';
+import { SpolecnostDto } from './spolecnostDto';
 import { StatDto } from './statDto';
 
 
@@ -20,14 +21,15 @@ export interface PovoleniVjezduVozidlaDto {
     idPovoleniVjezduVozidla?: string;
     jmenoZadatele: string;
     prijmeniZadatele: string;
-    spolecnostZadatele: string;
+    spolecnostZadatele?: SpolecnostDto;
     icoZadatele?: string;
+    emailZadatele: string;
     duvodZadosti?: string;
     rzVozidla: Array<string>;
     typVozidla: Array<VozidloTypDto>;
     zemeRegistraceVozidla: StatDto;
     ridic?: RidicDto;
-    spolecnostVozidla?: string;
+    spolecnostVozidla?: SpolecnostDto;
     datumOd: Date;
     datumDo: Date;
     zavod: ZavodDto;

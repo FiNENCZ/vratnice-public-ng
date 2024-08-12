@@ -9,6 +9,7 @@ import * as packageJson_ from '../../package.json';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module} from "ng-recaptcha";
 
 const packageJson = packageJson_;
  
@@ -37,8 +38,10 @@ export const appConfig: ApplicationConfig = {
         
         //defaultLanguage: 'cs'
       }),
-      ConfirmationService
+      ConfirmationService,
+      RecaptchaV3Module
     ),
+    {provide: RECAPTCHA_V3_SITE_KEY, useValue: "6LdxRCEqAAAAAPod-t3GRdvUAJ8QbhYvAdIr6cgO"},
     MessageService,
     { provide: LOCALE_ID, useValue: 'cs-CZ' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'CZK' }]

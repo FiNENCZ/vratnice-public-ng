@@ -9,15 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { SpolecnostDto } from './spolecnostDto';
 
 
-export interface RidicDto { 
-    idRidic?: string;
-    jmeno: string;
-    prijmeni: string;
-    cisloOp: string;
-    spolecnost?: SpolecnostDto;
-    datumPouceni?: string;
+export interface SpolecnostDto { 
+    id?: string;
+    nazev: string;
 }
 

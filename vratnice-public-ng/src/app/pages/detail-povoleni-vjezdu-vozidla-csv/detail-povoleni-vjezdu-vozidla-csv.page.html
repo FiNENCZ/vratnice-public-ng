@@ -19,6 +19,7 @@
         <li><strong>prijmeniZadatele</strong>: Příjmení žadatele, <strong>povinné pole</strong>.</li>
         <li><strong>spolecnostZadatele</strong>: Název společnosti žadatele, <strong>povinné pole</strong>.</li>
         <li><strong>icoZadatele</strong>: IČO žadatele.</li>
+        <li><strong>emailZadatele</strong>: Email žadatele, <strong>povinné pole</strong>.</li>
         <li><strong>duvodZadosti</strong>: Důvod žádosti, <strong>povinné pole</strong>.</li>
         <li><strong>rzVozidla</strong>: Řidičské značky vozidla, oddělené vertikální čárou (|).</li>
         <li><strong>typVozidla</strong>: Typy vozidel, oddělené vertikální čárou (|). Povolený typy: <strong>osobní</strong>, <strong>dodávka</strong>, <strong>nákladní</strong>, <strong>speciální</strong></li>
@@ -41,8 +42,8 @@
     
       <h2 class="mt-3">Názorný příklad CSV soubouru:</h2>
       <pre>
-        jmenoZadatele,prijmeniZadatele,spolecnostZadatele,icoZadatele,duvodZadosti,rzVozidla,typVozidla,zemeRegistraceVozidla,ridic_jmeno,ridic_prijmeni,ridic_cisloOp,ridic_firma,spolecnostVozidla,datumOd,datumDo,zavodNazev,lokalitaNazvy,opakovanyVjezd
-        Ondřej,Kudela,DIAMO,51561,jen tak,6asdsad|65464,osobní|nákladní,Česká republika,Ondřej,Kudela,204514,DIAMO,asd,26/06/2024,26/06/2024,ŘSP,Lokalita 1,true
+        jmenoZadatele,prijmeniZadatele,spolecnostZadatele,icoZadatele,emailZadatele,duvodZadosti,rzVozidla,typVozidla,zemeRegistraceVozidla,ridic_jmeno,ridic_prijmeni,ridic_cisloOp,ridic_firma,spolecnostVozidla,datumOd,datumDo,zavodNazev,lokalitaNazvy,opakovanyVjezd
+        Ondřej,Kudela,DIAMO,51561,test&#64;email.cz,jen tak,6asdsad|65464,osobní|nákladní,Česká republika,Ondřej,Kudela,204514,DIAMO,asd,26/06/2024,26/06/2024,ŘSP,Lokalita 1,true
       </pre>
   </div>
 
@@ -53,6 +54,7 @@
       <li><strong>applicantLastName</strong>: Applicant's last name, <strong>required field</strong>.</li>
       <li><strong>applicantCompany</strong>: Applicant's company name, <strong>required field</strong>.</li>
       <li><strong>applicantICO</strong>: Applicant's company identification number (ICO).</li>
+      <li><strong>applicantEmail</strong>: Applicant's email, <strong>required field</strong>.</li>
       <li><strong>requestReason</strong>: Reason for the request, <strong>required field</strong>.</li>
       <li><strong>vehicleLicensePlates</strong>: Vehicle registration numbers, separated by a vertical bar (|).</li>
       <li><strong>vehicleTypes</strong>: Vehicle types, separated by a vertical bar (|). Allowed types: <strong>personal</strong>, <strong>van</strong>, <strong>truck</strong>, <strong>special</strong></li>
@@ -75,8 +77,8 @@
   
     <h2 class="mt-3">Example CSV File:</h2>
     <pre>
-      applicantFirstName,applicantLastName,applicantCompany,applicantICO,requestReason,vehicleLicensePlates,vehicleTypes,vehicleRegistrationCountry,driverFirstName,driverLastName,driverIDNumber,driverCompany,vehicleCompany,startDate,endDate,plantName, locationNames,repeatedEntry
-      Ondřej,Kudela,DIAMO,0101447744,just because,6asdsad|65464,personal|truck,Slovakia,Ondřej,Kudela,204514,DIAMO,asd,26/06/2024,26/06/2024,ŘSP,Lokalita 1,true
+      applicantFirstName,applicantLastName,applicantCompany,applicantICO,applicantEmail,requestReason,vehicleLicensePlates,vehicleTypes,vehicleRegistrationCountry,driverFirstName,driverLastName,driverIDNumber,driverCompany,vehicleCompany,startDate,endDate,plantName, locationNames,repeatedEntry
+      Ondřej,Kudela,DIAMO,0101447744,test&#64;email.cz,just because,6asdsad|65464,personal|truck,Slovakia,Ondřej,Kudela,204514,DIAMO,asd,26/06/2024,26/06/2024,ŘSP,Lokalita 1,true
 
     </pre>
 </div>

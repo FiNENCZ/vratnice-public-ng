@@ -16,7 +16,7 @@ import { ZavodDto } from '../../../../build/openapi/model/zavodDto';
 import { newPovoleniVjezduVozidlaDto } from '../../functions/povoleniVjezduVozidla.dto.function ';
 import { newRidicDto } from '../../functions/ridic.dto.function';
 import { TranslateModule, TranslateLoader, TranslateService } from "@ngx-translate/core";
-import { ZavodControllerService, RidicControllerService, VozidloTypControllerService, StatControllerService, PovoleniVjezduVozidlaControllerService, RzTypVozidlaDto, LokalitaDto, LokalitaControllerService } from '../../../../build/openapi';
+import { ZavodControllerService, RidicControllerService, VozidloTypControllerService, StatControllerService, PovoleniVjezduVozidlaControllerService, RzTypVozidlaDto, LokalitaDto, LokalitaControllerService, SpolecnostControllerService, SpolecnostDto } from '../../../../build/openapi';
 import moment from 'moment';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpBackend, HttpClient, HttpClientModule } from '@angular/common/http';
@@ -28,12 +28,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarComponent } from 'src/app/shared/components/calendar/calendar-standalone.component';
 import { DropdownComponent } from 'src/app/shared/components/dropdown/dropdown.component';
 import { DetailPovoleniVjezduVozidlaCsvPage } from '../detail-povoleni-vjezdu-vozidla-csv/detail-povoleni-vjezdu-vozidla-csv.page';
 import { DetailPovoleniVjezduVozidlaTypRzCsvPage } from '../detail-povoleni-vjezdu-vozidla-typ-rz-csv/detail-povoleni-vjezdu-vozidla-typ-rz-csv.page';
 import { getErrorMessage } from 'src/app/functions/get-error-message.function';
 import { LanguageService } from 'src/app/servis/language-service.service';
+import { transformSpolecnostFunction } from 'src/app/functions/transformSpolecnost.function';
 
 
 @Component({
@@ -51,6 +53,7 @@ import { LanguageService } from 'src/app/servis/language-service.service';
     MessageModule,
     CalendarComponent,
     DropdownComponent,
+    AutoCompleteModule,
     ToastModule,
     DetailPovoleniVjezduVozidlaCsvPage,
     DetailPovoleniVjezduVozidlaTypRzCsvPage],
@@ -71,13 +74,6 @@ export class PovoleniVjezduVozidlaComponent {
   isRidicRequired: boolean = false;
   lokalitaList: LokalitaDto[] = [];
 
-  // Pomocné proměnné pro dvoucestnou vazbu
-  ridicId?: string;
-  ridicJmeno?: string;
-  ridicPrijmeni?: string;
-  ridicFirma?: string;
-  ridicCisloOp?: string;
-
   showCsvInfoDialog = false;
   infoDialogTimeout: any;
 
@@ -88,6 +84,9 @@ export class PovoleniVjezduVozidlaComponent {
 
   stat$: Observable<StatDto[] | null>;
   private statSubscription?: Subscription;
+
+  spolecnostList: SpolecnostDto[] = [];
+  filtrovaneSpolecnosti?: SpolecnostDto[];
 
   constructor(
     //private readonly confirmationService: ConfirmationService,
@@ -104,6 +103,7 @@ export class PovoleniVjezduVozidlaComponent {
     private readonly statControllerService: StatControllerService,
     private readonly languageService: LanguageService,
     private readonly lokalitaControllerService: LokalitaControllerService,
+    private readonly spolecnostControllerService: SpolecnostControllerService
     
   ) {
     this.vozidloTyp$ = this.languageService.vozidloTypValuesObservable;
@@ -112,7 +112,6 @@ export class PovoleniVjezduVozidlaComponent {
 
   ngOnInit() {
     this.showNovyDetail()
-    this.initializeRidicValues();
 
     this.vozidloTypSubscription = this.vozidloTyp$.subscribe(data => {
       console.log('Updated vozidloTyp values:', data);
@@ -122,9 +121,13 @@ export class PovoleniVjezduVozidlaComponent {
       console.log('Updated stat values:', data);
     })
 
+    this.spolecnostControllerService.listSpolecnost().subscribe(
+      response => {
+        this.spolecnostList = response;
+      }
+    );
 
 
-  
     this.searchTerms.pipe(
       debounceTime(1000), // Odložení vyhledávání o 1 sekundu
       distinctUntilChanged(), // Spustit pouze při změně hodnoty
@@ -140,13 +143,11 @@ export class PovoleniVjezduVozidlaComponent {
       next: (ridic: RidicDto | null) => {
         if (ridic) {
           this.detail!.ridic = ridic;
-          this.initializeRidicValues();
           this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.RIDIC_NACTEN'), closable: false });
         }
       },
       error: (error) => {
         console.error('Chyba při vyhledávání řidiče:', error);
-        this.ridicId = undefined;
       }
     });
   }
@@ -157,38 +158,13 @@ export class PovoleniVjezduVozidlaComponent {
     this.statSubscription!.unsubscribe();
   }
 
-  initializeRidicValues() {
-    this.ridicId = this.detail?.ridic?.idRidic;
-    this.ridicJmeno = this.detail?.ridic?.jmeno;
-    this.ridicPrijmeni = this.detail?.ridic?.prijmeni;
-    this.ridicFirma = this.detail?.ridic?.firma;
-    this.ridicCisloOp = this.detail?.ridic?.cisloOp;
-
-    if (this.detail?.ridic) {
-      // pokud je ridic prázdný objekt, tak ho vymazat (nenačítat)
-      if (this.detail?.ridic && this.isObjectEmpty(this.detail.ridic)) {
-        delete this.detail.ridic;
-        return;
-      }
-      this.isRidicRequired = true;
-    } else {
-      this.isRidicRequired = false;
-    }
+  searchSpolecnost(event: any) {
+    this.filtrovaneSpolecnosti = this.spolecnostList.filter(spolecnost => spolecnost.nazev.toLowerCase().includes(event.query.toLowerCase()));
   }
 
-  updateRidicValues() {
-    if (this.ridicJmeno && this.ridicPrijmeni && this.ridicCisloOp) {
-      const ridic = newRidicDto();
 
-      ridic.idRidic = this.ridicId;
-      ridic.jmeno = this.ridicJmeno || '';
-      ridic.prijmeni = this.ridicPrijmeni || '';
-      ridic.firma = this.ridicFirma;
-      ridic.cisloOp = this.ridicCisloOp || '';
 
-      this.detail!.ridic = ridic;
-    }
-  }
+ 
 
   showNovyDetail() {
     this.novyDetail();
@@ -198,8 +174,6 @@ export class PovoleniVjezduVozidlaComponent {
   novyDetail() {
     this.formDetail?.form.markAsPristine();
     this.detail = newPovoleniVjezduVozidlaDto();
-    this.isRidicRequired = false;
-    this.initializeRidicValues();
     this.pridatVstup();
   }
 
@@ -215,12 +189,13 @@ export class PovoleniVjezduVozidlaComponent {
       return;
     }
 
-    this.updateRidicValues();
-
     // Zkontrolovat jestli je Ridic prázdný objekt, pokud ano, tak ho vymazat
     if (this.detail?.ridic && this.isObjectEmpty(this.detail.ridic)) {
       delete this.detail.ridic;
     }
+
+    this.detail = transformSpolecnostFunction(this.detail);
+    console.log(this.detail);
 
     console.log(this.detail);
 
@@ -284,8 +259,8 @@ export class PovoleniVjezduVozidlaComponent {
     return index; // or item.id
   }
 
-  toggleRidicRequired() {
-    this.isRidicRequired = !this.isRidicRequired;
+  addRidic() {
+    this.detail!.ridic = newRidicDto();
   }
 
   private isObjectEmpty(obj: any): boolean {
@@ -293,15 +268,7 @@ export class PovoleniVjezduVozidlaComponent {
   }
 
   smazatRidice() {
-    this.ridicId = undefined;
-    this.ridicJmeno = undefined;
-    this.ridicPrijmeni = undefined;
-    this.ridicFirma = undefined;
-    this.ridicCisloOp = undefined;
-
-    delete this.detail?.ridic;
-
-    this.toggleRidicRequired();
+    delete this.detail!.ridic;
   }
 
   private readonly zavodValuesSubject = new BehaviorSubject<ZavodDto[] | any>(undefined);
