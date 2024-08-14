@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { VozidloTypDto, VozidloTypControllerService, StatDto, StatControllerService } from 'build/openapi';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -17,6 +18,7 @@ export class LanguageService {
     public translateService: TranslateService,
     private vozidloTypControllerService: VozidloTypControllerService,
     private statControllerService: StatControllerService,
+    private readonly recaptchaService: ReCaptchaV3Service,
   ) {
     this.reloadCiselniky();
   }
@@ -36,16 +38,21 @@ export class LanguageService {
 
 
   private reloadCiselniky() {
-    this.vozidloTypControllerService.listVozidloTyp(false, this.translateService.currentLang).subscribe(
-      response => {
-        this.vozidloTypValuesSubject.next(response);
-      }
-    );
-    
-    this.statControllerService.listStat(this.translateService.currentLang).subscribe(
-      response => {
-        this.statValuesSubject.next(response);
-      }
-    )
+    this.recaptchaService.execute('save').subscribe((token) => {
+      this.vozidloTypControllerService.listVozidloTyp(token, false, this.translateService.currentLang).subscribe(
+        response => {
+          this.vozidloTypValuesSubject.next(response);
+        }
+      );
+    })
+
+    this.recaptchaService.execute('save').subscribe((token) => {
+      this.statControllerService.listStat(token, this.translateService.currentLang).subscribe(
+        response => {
+          this.statValuesSubject.next(response);
+        }
+      )
+    })
   }
+
 }

@@ -93,14 +93,18 @@ export class StatControllerService {
     }
 
     /**
+     * @param reCAPTCHAToken 
      * @param lang 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listStat(lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<StatDto>>;
-    public listStat(lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<StatDto>>>;
-    public listStat(lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<StatDto>>>;
-    public listStat(lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public listStat(reCAPTCHAToken: string, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<StatDto>>;
+    public listStat(reCAPTCHAToken: string, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<StatDto>>>;
+    public listStat(reCAPTCHAToken: string, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<StatDto>>>;
+    public listStat(reCAPTCHAToken: string, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (reCAPTCHAToken === null || reCAPTCHAToken === undefined) {
+            throw new Error('Required parameter reCAPTCHAToken was null or undefined when calling listStat.');
+        }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (lang !== undefined && lang !== null) {
@@ -109,6 +113,9 @@ export class StatControllerService {
         }
 
         let localVarHeaders = this.defaultHeaders;
+        if (reCAPTCHAToken !== undefined && reCAPTCHAToken !== null) {
+            localVarHeaders = localVarHeaders.set('reCAPTCHA-Token', String(reCAPTCHAToken));
+        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {

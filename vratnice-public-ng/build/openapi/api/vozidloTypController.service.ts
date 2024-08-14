@@ -93,15 +93,19 @@ export class VozidloTypControllerService {
     }
 
     /**
+     * @param reCAPTCHAToken 
      * @param withIZS 
      * @param lang 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listVozidloTyp(withIZS?: boolean, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<VozidloTypDto>>;
-    public listVozidloTyp(withIZS?: boolean, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<VozidloTypDto>>>;
-    public listVozidloTyp(withIZS?: boolean, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<VozidloTypDto>>>;
-    public listVozidloTyp(withIZS?: boolean, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public listVozidloTyp(reCAPTCHAToken: string, withIZS?: boolean, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<VozidloTypDto>>;
+    public listVozidloTyp(reCAPTCHAToken: string, withIZS?: boolean, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<VozidloTypDto>>>;
+    public listVozidloTyp(reCAPTCHAToken: string, withIZS?: boolean, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<VozidloTypDto>>>;
+    public listVozidloTyp(reCAPTCHAToken: string, withIZS?: boolean, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (reCAPTCHAToken === null || reCAPTCHAToken === undefined) {
+            throw new Error('Required parameter reCAPTCHAToken was null or undefined when calling listVozidloTyp.');
+        }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (withIZS !== undefined && withIZS !== null) {
@@ -114,6 +118,9 @@ export class VozidloTypControllerService {
         }
 
         let localVarHeaders = this.defaultHeaders;
+        if (reCAPTCHAToken !== undefined && reCAPTCHAToken !== null) {
+            localVarHeaders = localVarHeaders.set('reCAPTCHA-Token', String(reCAPTCHAToken));
+        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {

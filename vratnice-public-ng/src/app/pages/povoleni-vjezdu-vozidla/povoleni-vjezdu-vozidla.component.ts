@@ -6,7 +6,7 @@ import { MultiSelectModule } from "primeng/multiselect"
 import { CheckboxModule } from "primeng/checkbox"
 import { FormsModule, NgForm } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, catchError, BehaviorSubject, map, Subscription } from 'rxjs';
+import { Observable, of, Subject, debounceTime, distinctUntilChanged, switchMap, catchError, BehaviorSubject, map, Subscription, concatMap } from 'rxjs';
 import { PovoleniVjezduVozidlaDto } from '../../../../build/openapi/model/povoleniVjezduVozidlaDto';
 import { RidicDto } from '../../../../build/openapi/model/ridicDto';
 import { StatDto } from '../../../../build/openapi/model/statDto';
@@ -121,24 +121,30 @@ export class PovoleniVjezduVozidlaComponent {
 
     this.statSubscription = this.stat$.subscribe(data => {
       console.log('Updated stat values:', data);
-    })
+    });
 
-    this.spolecnostControllerService.listSpolecnost().subscribe(
-      response => {
-        this.spolecnostList = response;
-      }
-    );
+    this.recaptchaService.execute('save').subscribe((token) => {
+      this.spolecnostControllerService.listSpolecnost(token).subscribe(
+        response => {
+          this.spolecnostList = response;
+        }
+      );
+    });
 
 
     this.searchTerms.pipe(
       debounceTime(1000), // Odložení vyhledávání o 1 sekundu
       distinctUntilChanged(), // Spustit pouze při změně hodnoty
       switchMap((cisloOp: string) => 
-        this.ridicControllerService.getRidicByCisloOpRidic(cisloOp, this.translateService.currentLang).pipe(
-          catchError((error) => {
-            console.error('Řidič nenalezen:', error);
-            return of(null); // Vraťte null nebo jiný vhodný výstup pro pokračování procesu
-          })
+        this.recaptchaService.execute('save').pipe(
+          switchMap((token) => 
+            this.ridicControllerService.getRidicByCisloOpRidic(cisloOp, token, this.translateService.currentLang).pipe(
+              catchError((error) => {
+                console.error('Řidič nenalezen:', error);
+                return of(null); // Vraťte null nebo jiný vhodný výstup pro pokračování procesu
+              })
+            )
+          )
         )
       )
     ).subscribe({
@@ -220,34 +226,6 @@ export class PovoleniVjezduVozidlaComponent {
     });
   }
 
-  private zavodSubject = new BehaviorSubject<ZavodDto[] | undefined>(undefined);
-  nacitaniZavodu: boolean = true;
-
-  zavod$: Observable<ZavodDto[] | undefined> = new BehaviorSubject(undefined).pipe(
-    switchMap(() => {
-      if (this.zavodSubject.getValue() !== undefined) {
-        return this.zavodSubject.asObservable();
-      } else {
-        this.nacitaniZavodu = true;
-        return this.zavodControllerService.listZavod(this.aktivita, this.translateService.currentLang).pipe(
-          map((value) => {
-            this.nacitaniZavodu = false;
-            //this.uiService.stopSpinner();
-            this.zavodSubject.next(value);
-            return value;
-          }),
-          catchError(
-            error => {
-              this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
-              //this.uiService.stopSpinner();
-              return of(undefined);
-            }
-          )
-        );
-      }
-    })
-  );
-
 
   pridatVstup() {
     this.detail!.rzVozidla.push('');
@@ -282,11 +260,20 @@ export class PovoleniVjezduVozidlaComponent {
         return this.zavodValuesSubject.asObservable();
       } else {
         this.nacitaniDatZavodu = true;
-        return this.zavodControllerService.listZavod(true, this.translateService.currentLang).pipe(
-          map(response => {
-            this.nacitaniDatZavodu = false;
-            this.zavodValuesSubject.next(response);
-            return response;
+        return this.recaptchaService.execute('save').pipe(
+          concatMap((token) => {
+            return this.zavodControllerService.listZavod(token, this.aktivita, this.translateService.currentLang).pipe(
+              map((value) => {
+                this.nacitaniDatZavodu = false;
+                this.zavodValuesSubject.next(value);
+                return value;
+              }),
+              catchError(error => {
+                this.nacitaniDatZavodu = false;
+                this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
+                return of(undefined);
+              })
+            );
           })
         );
       }
@@ -307,11 +294,13 @@ export class PovoleniVjezduVozidlaComponent {
   );
 
   getLokalitaList(idZavod: string) {
-    this.lokalitaControllerService.listLokalita(idZavod).subscribe(
-      response => {
-        this.lokalitaList = response;
-      }
-    );
+    this.recaptchaService.execute('save').subscribe((token) => {
+      this.lokalitaControllerService.listLokalita(token, idZavod).subscribe(
+        response => {
+          this.lokalitaList = response;
+        }
+      )
+    });
   }
 
   showCsvInfo() {
@@ -335,13 +324,17 @@ export class PovoleniVjezduVozidlaComponent {
               return this.vozidloTypValuesSubject.asObservable();
           } else {
               this.nacitaniDatVozidloTyp = true;
-              return this.vozidlotypControllerService.listVozidloTyp(false, this.translateService.currentLang).pipe(
-                  map(response => {
-                      this.nacitaniDatVozidloTyp = false;
-                      this.vozidloTypValuesSubject.next(response);
-                      return response;
-                  })
-              );
+              return this.recaptchaService.execute('save').pipe(
+                concatMap((token) => {
+                return this.vozidlotypControllerService.listVozidloTyp(token, false, this.translateService.currentLang).pipe(
+                    map(response => {
+                        this.nacitaniDatVozidloTyp = false;
+                        this.vozidloTypValuesSubject.next(response);
+                        return response;
+                    })
+                );
+              })
+            )
           }
       })
   );
@@ -354,13 +347,17 @@ export class PovoleniVjezduVozidlaComponent {
               return this.StatValuesSubject.asObservable();
           } else {
               this.nacitaniDatStat = true;
-              return this.statControllerService.listStat(this.translateService.currentLang).pipe(
-                  map(response => {
-                      this.nacitaniDatStat = false;
-                      this.StatValuesSubject.next(response);
-                      return response;
-                  })
-              );
+              return this.recaptchaService.execute('save').pipe(
+                concatMap((token) => {
+                  return this.statControllerService.listStat(token, this.translateService.currentLang).pipe(
+                      map(response => {
+                          this.nacitaniDatStat = false;
+                          this.StatValuesSubject.next(response);
+                          return response;
+                      })
+                  );
+                })
+               ) 
           }
       })
   );

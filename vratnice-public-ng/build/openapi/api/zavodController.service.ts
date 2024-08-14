@@ -93,16 +93,20 @@ export class ZavodControllerService {
     }
 
     /**
+     * @param reCAPTCHAToken 
      * @param aktivni 
      * @param idZavodu 
      * @param lang 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listZavod(aktivni?: boolean, idZavodu?: string, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<ZavodDto>>;
-    public listZavod(aktivni?: boolean, idZavodu?: string, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<ZavodDto>>>;
-    public listZavod(aktivni?: boolean, idZavodu?: string, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<ZavodDto>>>;
-    public listZavod(aktivni?: boolean, idZavodu?: string, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public listZavod(reCAPTCHAToken: string, aktivni?: boolean, idZavodu?: string, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<ZavodDto>>;
+    public listZavod(reCAPTCHAToken: string, aktivni?: boolean, idZavodu?: string, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<ZavodDto>>>;
+    public listZavod(reCAPTCHAToken: string, aktivni?: boolean, idZavodu?: string, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<ZavodDto>>>;
+    public listZavod(reCAPTCHAToken: string, aktivni?: boolean, idZavodu?: string, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (reCAPTCHAToken === null || reCAPTCHAToken === undefined) {
+            throw new Error('Required parameter reCAPTCHAToken was null or undefined when calling listZavod.');
+        }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (aktivni !== undefined && aktivni !== null) {
@@ -119,6 +123,9 @@ export class ZavodControllerService {
         }
 
         let localVarHeaders = this.defaultHeaders;
+        if (reCAPTCHAToken !== undefined && reCAPTCHAToken !== null) {
+            localVarHeaders = localVarHeaders.set('reCAPTCHA-Token', String(reCAPTCHAToken));
+        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {

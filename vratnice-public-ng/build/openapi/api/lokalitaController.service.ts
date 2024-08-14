@@ -93,15 +93,19 @@ export class LokalitaControllerService {
     }
 
     /**
+     * @param reCAPTCHAToken 
      * @param idZavod 
      * @param lang 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listLokalita(idZavod?: string, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<LokalitaDto>>;
-    public listLokalita(idZavod?: string, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<LokalitaDto>>>;
-    public listLokalita(idZavod?: string, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<LokalitaDto>>>;
-    public listLokalita(idZavod?: string, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public listLokalita(reCAPTCHAToken: string, idZavod?: string, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<LokalitaDto>>;
+    public listLokalita(reCAPTCHAToken: string, idZavod?: string, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<LokalitaDto>>>;
+    public listLokalita(reCAPTCHAToken: string, idZavod?: string, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<LokalitaDto>>>;
+    public listLokalita(reCAPTCHAToken: string, idZavod?: string, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (reCAPTCHAToken === null || reCAPTCHAToken === undefined) {
+            throw new Error('Required parameter reCAPTCHAToken was null or undefined when calling listLokalita.');
+        }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (idZavod !== undefined && idZavod !== null) {
@@ -114,6 +118,9 @@ export class LokalitaControllerService {
         }
 
         let localVarHeaders = this.defaultHeaders;
+        if (reCAPTCHAToken !== undefined && reCAPTCHAToken !== null) {
+            localVarHeaders = localVarHeaders.set('reCAPTCHA-Token', String(reCAPTCHAToken));
+        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
