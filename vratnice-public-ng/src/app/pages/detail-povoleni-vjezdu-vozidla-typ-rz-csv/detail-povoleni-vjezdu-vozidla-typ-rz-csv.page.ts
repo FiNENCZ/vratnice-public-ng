@@ -76,7 +76,7 @@ export class DetailPovoleniVjezduVozidlaTypRzCsvPage extends DetailBaseClass {
             },
             error => {
               //this.uiService.stopSpinner();
-              console.log(error);
+              console.error(error);
               this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
             }
         );

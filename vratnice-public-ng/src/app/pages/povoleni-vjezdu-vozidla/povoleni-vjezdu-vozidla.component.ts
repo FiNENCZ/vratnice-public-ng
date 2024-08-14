@@ -218,8 +218,6 @@ export class PovoleniVjezduVozidlaComponent {
         },
         error: error => {
           //this.uiService.stopSpinner();
-          console.log(error);
-          console.log(error.error);
           this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
         }
       });
@@ -379,9 +377,6 @@ export class PovoleniVjezduVozidlaComponent {
     }
   }
 
-  public printZavodList() {
-    console.log(this.lokalitaList);
-  }
 
   showPovoleniVjezduVozidlaCsvDetail() {
     this.detailPovoleniVjezduVozidlaCsvPage?.showNovyDetail();
