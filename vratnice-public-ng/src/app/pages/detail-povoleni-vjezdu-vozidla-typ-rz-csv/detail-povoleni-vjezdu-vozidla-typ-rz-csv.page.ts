@@ -8,6 +8,7 @@ import { DialogModule } from 'primeng/dialog';
 import { AppComponent } from 'src/app/app.component';
 import { CommonModule } from '@angular/common';
 import { getErrorMessage } from 'src/app/functions/get-error-message.function';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 
 
@@ -35,6 +36,7 @@ export class DetailPovoleniVjezduVozidlaTypRzCsvPage extends DetailBaseClass {
     //private readonly authService: AuthService,
     private readonly povoleniVjezduVozidlaControllerService: PovoleniVjezduVozidlaControllerService,
     private readonly zavodControllerService: ZavodControllerService,
+    private readonly recaptchaService: ReCaptchaV3Service,
   ) {
     super(confirmationService, translateService, elementRef);
   }
@@ -64,19 +66,21 @@ export class DetailPovoleniVjezduVozidlaTypRzCsvPage extends DetailBaseClass {
     //this.uiService.showSpinner();
     const file: File = event.target.files[0];
     if (file) {
-      this.povoleniVjezduVozidlaControllerService.rzTypVozidlaCsvPovoleniVjezduVozidla(file, this.translateService.currentLang)
-      .subscribe(
-          response => {
-            //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.VOZIDLA_NACTENA'), closable: false });
-            this.sendTypRzVozidla(response);
-          },
-          error => {
-            //this.uiService.stopSpinner();
-            console.log(error);
-            this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
-          }
-      );
+      this.recaptchaService.execute('save').subscribe((token) => {
+        this.povoleniVjezduVozidlaControllerService.rzTypVozidlaCsvPovoleniVjezduVozidla(token!, file, this.translateService.currentLang)
+        .subscribe(
+            response => {
+              //this.uiService.stopSpinner();
+              this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.VOZIDLA_NACTENA'), closable: false });
+              this.sendTypRzVozidla(response);
+            },
+            error => {
+              //this.uiService.stopSpinner();
+              console.log(error);
+              this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
+            }
+        );
+      });
     }
 
     console.log(this.translateService.currentLang);

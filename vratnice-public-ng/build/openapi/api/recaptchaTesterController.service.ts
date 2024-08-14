@@ -18,8 +18,6 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
-// @ts-ignore
-import { VozidloTypDto } from '../model/vozidloTypDto';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -30,7 +28,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class VozidloTypControllerService {
+export class RecaptchaTesterControllerService {
 
     protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
@@ -93,27 +91,33 @@ export class VozidloTypControllerService {
     }
 
     /**
-     * @param withIZS 
+     * @param reCAPTCHAToken 
+     * @param body 
      * @param lang 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listVozidloTyp(withIZS?: boolean, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<VozidloTypDto>>;
-    public listVozidloTyp(withIZS?: boolean, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<VozidloTypDto>>>;
-    public listVozidloTyp(withIZS?: boolean, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<VozidloTypDto>>>;
-    public listVozidloTyp(withIZS?: boolean, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public testingRecaptchaTester(reCAPTCHAToken: string, body: string, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<boolean>;
+    public testingRecaptchaTester(reCAPTCHAToken: string, body: string, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<boolean>>;
+    public testingRecaptchaTester(reCAPTCHAToken: string, body: string, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<boolean>>;
+    public testingRecaptchaTester(reCAPTCHAToken: string, body: string, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (reCAPTCHAToken === null || reCAPTCHAToken === undefined) {
+            throw new Error('Required parameter reCAPTCHAToken was null or undefined when calling testingRecaptchaTester.');
+        }
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling testingRecaptchaTester.');
+        }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
-        if (withIZS !== undefined && withIZS !== null) {
-          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>withIZS, 'withIZS');
-        }
         if (lang !== undefined && lang !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>lang, 'lang');
         }
 
         let localVarHeaders = this.defaultHeaders;
+        if (reCAPTCHAToken !== undefined && reCAPTCHAToken !== null) {
+            localVarHeaders = localVarHeaders.set('reCAPTCHA-Token', String(reCAPTCHAToken));
+        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -138,6 +142,15 @@ export class VozidloTypControllerService {
         }
 
 
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
         let responseType_: 'text' | 'json' | 'blob' = 'json';
         if (localVarHttpHeaderAcceptSelected) {
             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -149,10 +162,11 @@ export class VozidloTypControllerService {
             }
         }
 
-        let localVarPath = `/api/vozidlo-typ/list`;
-        return this.httpClient.request<Array<VozidloTypDto>>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/api/recaptcha/testing`;
+        return this.httpClient.request<boolean>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                body: body,
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

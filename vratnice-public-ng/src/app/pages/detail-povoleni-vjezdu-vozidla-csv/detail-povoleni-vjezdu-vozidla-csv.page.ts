@@ -8,6 +8,7 @@ import { DialogModule } from 'primeng/dialog';
 import { AppComponent } from 'src/app/app.component';
 import { CommonModule } from '@angular/common';
 import { getErrorMessage } from 'src/app/functions/get-error-message.function';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class DetailPovoleniVjezduVozidlaCsvPage extends DetailBaseClass {
     //private readonly authService: AuthService,
     private readonly povoleniVjezduVozidlaControllerService: PovoleniVjezduVozidlaControllerService,
     private readonly zavodControllerService: ZavodControllerService,
+    private readonly recaptchaService: ReCaptchaV3Service,
   ) {
     super(confirmationService, translateService, elementRef);
   }
@@ -57,20 +59,22 @@ export class DetailPovoleniVjezduVozidlaCsvPage extends DetailBaseClass {
     //this.uiService.showSpinner();
     const file: File = event.target.files[0];
     if (file) {
-      this.povoleniVjezduVozidlaControllerService.povoleniCsvPovoleniVjezduVozidla(file, this.translateService.currentLang)
-      .subscribe(
-          response => {
-            //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.ZADOSTI_PODANY'), closable: false });
-            console.log(response);
-            //this.refreshSeznamToken$?.next(undefined);
-          },
-          error => {
-            //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
-            console.log(error);
-          }
-      );
+      this.recaptchaService.execute('save').subscribe((token) => {
+        this.povoleniVjezduVozidlaControllerService.povoleniCsvPovoleniVjezduVozidla(token!, file, this.translateService.currentLang)
+        .subscribe(
+            response => {
+              //this.uiService.stopSpinner();
+              this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.ZADOSTI_PODANY'), closable: false });
+              console.log(response);
+              //this.refreshSeznamToken$?.next(undefined);
+            },
+            error => {
+              //this.uiService.stopSpinner();
+              this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
+              console.log(error);
+            }
+        );
+      });
     }
 
     if (this.inputImportCSV) {
@@ -80,8 +84,8 @@ export class DetailPovoleniVjezduVozidlaCsvPage extends DetailBaseClass {
     
   }
 
-
   importCSV(){
     document.getElementById("inputImportCSV")?.click();
   }
+
 }

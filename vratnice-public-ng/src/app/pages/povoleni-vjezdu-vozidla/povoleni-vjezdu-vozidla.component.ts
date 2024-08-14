@@ -36,6 +36,7 @@ import { DetailPovoleniVjezduVozidlaTypRzCsvPage } from '../detail-povoleni-vjez
 import { getErrorMessage } from 'src/app/functions/get-error-message.function';
 import { LanguageService } from 'src/app/servis/language-service.service';
 import { transformSpolecnostFunction } from 'src/app/functions/transformSpolecnost.function';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 
 @Component({
@@ -103,7 +104,8 @@ export class PovoleniVjezduVozidlaComponent {
     private readonly statControllerService: StatControllerService,
     private readonly languageService: LanguageService,
     private readonly lokalitaControllerService: LokalitaControllerService,
-    private readonly spolecnostControllerService: SpolecnostControllerService
+    private readonly spolecnostControllerService: SpolecnostControllerService,
+    private readonly recaptchaService: ReCaptchaV3Service,
     
   ) {
     this.vozidloTyp$ = this.languageService.vozidloTypValuesObservable;
@@ -195,11 +197,11 @@ export class PovoleniVjezduVozidlaComponent {
     }
 
     this.detail = transformSpolecnostFunction(this.detail);
-    console.log(this.detail);
 
-    console.log(this.detail);
+ 
 
-    this.povoleniVjezduVozidlaControllerService.savePovoleniVjezduVozidla(this.detail!, this.translateService.currentLang)
+    this.recaptchaService.execute('save').subscribe((token) => {
+      this.povoleniVjezduVozidlaControllerService.savePovoleniVjezduVozidla(token!, this.detail!, this.translateService.currentLang)
       .subscribe({
         next: (vysledek: PovoleniVjezduVozidlaDto) => {
           //this.uiService.stopSpinner();
@@ -215,6 +217,7 @@ export class PovoleniVjezduVozidlaComponent {
           this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
         }
       });
+    });
   }
 
   private zavodSubject = new BehaviorSubject<ZavodDto[] | undefined>(undefined);
@@ -309,37 +312,6 @@ export class PovoleniVjezduVozidlaComponent {
         this.lokalitaList = response;
       }
     );
-  }
-
-  onCsvSelected(event: any): void {
-    //this.uiService.showSpinner();
-    const file: File = event.target.files[0];
-    if (file) {
-      this.povoleniVjezduVozidlaControllerService.rzTypVozidlaCsvPovoleniVjezduVozidla(file, this.translateService.currentLang)
-      .subscribe(
-          (response: RzTypVozidlaDto) => {
-            //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.VOZIDLA_NACTENA'), closable: false });
-            this.detail!.rzVozidla = response.rzVozidla;
-            this.detail!.typVozidla = response.typVozidla;
-
-            console.log(response);
-          },
-          error => {
-            //this.uiService.stopSpinner();
-            this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
-          }
-      );
-    }
-
-    if (this.inputImportCSV) {
-      this.inputImportCSV.nativeElement.value = '';
-    }
-
-  }
-
-  importCSV() {
-    document.getElementById('inputImportCSV')?.click();
   }
 
   showCsvInfo() {

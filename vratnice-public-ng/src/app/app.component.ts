@@ -5,12 +5,11 @@ import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { CaptchaComponent } from './components/captcha/captcha.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, CaptchaComponent ],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

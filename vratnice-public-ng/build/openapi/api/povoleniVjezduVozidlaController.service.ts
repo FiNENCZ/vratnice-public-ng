@@ -108,15 +108,19 @@ export class PovoleniVjezduVozidlaControllerService {
     }
 
     /**
+     * @param reCAPTCHAToken 
      * @param file 
      * @param lang 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public povoleniCsvPovoleniVjezduVozidla(file: Blob, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Set<PovoleniVjezduVozidlaDto>>;
-    public povoleniCsvPovoleniVjezduVozidla(file: Blob, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Set<PovoleniVjezduVozidlaDto>>>;
-    public povoleniCsvPovoleniVjezduVozidla(file: Blob, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Set<PovoleniVjezduVozidlaDto>>>;
-    public povoleniCsvPovoleniVjezduVozidla(file: Blob, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public povoleniCsvPovoleniVjezduVozidla(reCAPTCHAToken: string, file: Blob, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Set<PovoleniVjezduVozidlaDto>>;
+    public povoleniCsvPovoleniVjezduVozidla(reCAPTCHAToken: string, file: Blob, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Set<PovoleniVjezduVozidlaDto>>>;
+    public povoleniCsvPovoleniVjezduVozidla(reCAPTCHAToken: string, file: Blob, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Set<PovoleniVjezduVozidlaDto>>>;
+    public povoleniCsvPovoleniVjezduVozidla(reCAPTCHAToken: string, file: Blob, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (reCAPTCHAToken === null || reCAPTCHAToken === undefined) {
+            throw new Error('Required parameter reCAPTCHAToken was null or undefined when calling povoleniCsvPovoleniVjezduVozidla.');
+        }
         if (file === null || file === undefined) {
             throw new Error('Required parameter file was null or undefined when calling povoleniCsvPovoleniVjezduVozidla.');
         }
@@ -128,6 +132,9 @@ export class PovoleniVjezduVozidlaControllerService {
         }
 
         let localVarHeaders = this.defaultHeaders;
+        if (reCAPTCHAToken !== undefined && reCAPTCHAToken !== null) {
+            localVarHeaders = localVarHeaders.set('reCAPTCHA-Token', String(reCAPTCHAToken));
+        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -202,15 +209,19 @@ export class PovoleniVjezduVozidlaControllerService {
     }
 
     /**
+     * @param reCAPTCHAToken 
      * @param file 
      * @param lang 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public rzTypVozidlaCsvPovoleniVjezduVozidla(file: Blob, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<RzTypVozidlaDto>;
-    public rzTypVozidlaCsvPovoleniVjezduVozidla(file: Blob, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<RzTypVozidlaDto>>;
-    public rzTypVozidlaCsvPovoleniVjezduVozidla(file: Blob, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<RzTypVozidlaDto>>;
-    public rzTypVozidlaCsvPovoleniVjezduVozidla(file: Blob, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public rzTypVozidlaCsvPovoleniVjezduVozidla(reCAPTCHAToken: string, file: Blob, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<RzTypVozidlaDto>;
+    public rzTypVozidlaCsvPovoleniVjezduVozidla(reCAPTCHAToken: string, file: Blob, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<RzTypVozidlaDto>>;
+    public rzTypVozidlaCsvPovoleniVjezduVozidla(reCAPTCHAToken: string, file: Blob, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<RzTypVozidlaDto>>;
+    public rzTypVozidlaCsvPovoleniVjezduVozidla(reCAPTCHAToken: string, file: Blob, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (reCAPTCHAToken === null || reCAPTCHAToken === undefined) {
+            throw new Error('Required parameter reCAPTCHAToken was null or undefined when calling rzTypVozidlaCsvPovoleniVjezduVozidla.');
+        }
         if (file === null || file === undefined) {
             throw new Error('Required parameter file was null or undefined when calling rzTypVozidlaCsvPovoleniVjezduVozidla.');
         }
@@ -222,6 +233,9 @@ export class PovoleniVjezduVozidlaControllerService {
         }
 
         let localVarHeaders = this.defaultHeaders;
+        if (reCAPTCHAToken !== undefined && reCAPTCHAToken !== null) {
+            localVarHeaders = localVarHeaders.set('reCAPTCHA-Token', String(reCAPTCHAToken));
+        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -296,15 +310,19 @@ export class PovoleniVjezduVozidlaControllerService {
     }
 
     /**
+     * @param reCAPTCHAToken 
      * @param povoleniVjezduVozidlaDto 
      * @param lang 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public savePovoleniVjezduVozidla(povoleniVjezduVozidlaDto: PovoleniVjezduVozidlaDto, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PovoleniVjezduVozidlaDto>;
-    public savePovoleniVjezduVozidla(povoleniVjezduVozidlaDto: PovoleniVjezduVozidlaDto, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PovoleniVjezduVozidlaDto>>;
-    public savePovoleniVjezduVozidla(povoleniVjezduVozidlaDto: PovoleniVjezduVozidlaDto, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PovoleniVjezduVozidlaDto>>;
-    public savePovoleniVjezduVozidla(povoleniVjezduVozidlaDto: PovoleniVjezduVozidlaDto, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public savePovoleniVjezduVozidla(reCAPTCHAToken: string, povoleniVjezduVozidlaDto: PovoleniVjezduVozidlaDto, lang?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PovoleniVjezduVozidlaDto>;
+    public savePovoleniVjezduVozidla(reCAPTCHAToken: string, povoleniVjezduVozidlaDto: PovoleniVjezduVozidlaDto, lang?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PovoleniVjezduVozidlaDto>>;
+    public savePovoleniVjezduVozidla(reCAPTCHAToken: string, povoleniVjezduVozidlaDto: PovoleniVjezduVozidlaDto, lang?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PovoleniVjezduVozidlaDto>>;
+    public savePovoleniVjezduVozidla(reCAPTCHAToken: string, povoleniVjezduVozidlaDto: PovoleniVjezduVozidlaDto, lang?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (reCAPTCHAToken === null || reCAPTCHAToken === undefined) {
+            throw new Error('Required parameter reCAPTCHAToken was null or undefined when calling savePovoleniVjezduVozidla.');
+        }
         if (povoleniVjezduVozidlaDto === null || povoleniVjezduVozidlaDto === undefined) {
             throw new Error('Required parameter povoleniVjezduVozidlaDto was null or undefined when calling savePovoleniVjezduVozidla.');
         }
@@ -316,6 +334,9 @@ export class PovoleniVjezduVozidlaControllerService {
         }
 
         let localVarHeaders = this.defaultHeaders;
+        if (reCAPTCHAToken !== undefined && reCAPTCHAToken !== null) {
+            localVarHeaders = localVarHeaders.set('reCAPTCHA-Token', String(reCAPTCHAToken));
+        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
