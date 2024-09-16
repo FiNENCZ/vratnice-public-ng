@@ -72,7 +72,6 @@ export class PovoleniVjezduVozidlaComponent {
   detail?: PovoleniVjezduVozidlaDto = newPovoleniVjezduVozidlaDto();
   idZaznamu?: string;
   aktivita: boolean = true;
-  isRidicRequired: boolean = false;
   lokalitaList: LokalitaDto[] = [];
 
   showCsvInfoDialog = false;

@@ -70,7 +70,7 @@
         </div>
       </div>
 
-      <!-- Společnost -->
+      <!-- Společnost žadatele -->
       <span class="p-float-label">
         <p-autoComplete [required]="false" [suggestions]="filtrovaneSpolecnosti!"  (completeMethod)="searchSpolecnost($event)"
         field="nazev" [(ngModel)]="detail!.spolecnostZadatele" id="spolecnostZadatele"
@@ -172,7 +172,6 @@
       </div>
 
       <!-- Řidič -->
-      
       <div class="d-flex" >
         <button *ngIf="!this.detail.ridic" (click)="addRidic();" type="button" class="btn btn-sm btn-outline-primary mt-2 ms-auto"><i class="far fa-file"></i>
           {{ 'POVOLENI_VJEZDU_VOZIDLA.PRIDAT_RIDICE' | translate }}</button>
@@ -261,7 +260,7 @@
         </div>
       </div>
 
-      <!-- Lokalita -->
+      <!-- Zavod -->
     <div class="row m-0">
       <div class="col-sm-6 p-0 pe-sm-1">
         <app-dropdown class="app-dropdown" idDropdown="zavod"
