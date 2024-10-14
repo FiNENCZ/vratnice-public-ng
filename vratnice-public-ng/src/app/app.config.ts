@@ -1,5 +1,5 @@
-import { ApplicationConfig, DEFAULT_CURRENCY_CODE, LOCALE_ID, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withHashLocation, withInMemoryScrolling } from '@angular/router';
+import { APP_INITIALIZER, ApplicationConfig, DEFAULT_CURRENCY_CODE, ErrorHandler, LOCALE_ID, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter, Router, withHashLocation, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -10,6 +10,8 @@ import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module} from "ng-recaptcha";
+
+import * as Sentry from "@sentry/angular";
 
 const packageJson = packageJson_;
  
@@ -44,6 +46,11 @@ export const appConfig: ApplicationConfig = {
     {provide: RECAPTCHA_V3_SITE_KEY, useValue: "6LdxRCEqAAAAAPod-t3GRdvUAJ8QbhYvAdIr6cgO"},
     MessageService,
     { provide: LOCALE_ID, useValue: 'cs-CZ' },
-    { provide: DEFAULT_CURRENCY_CODE, useValue: 'CZK' }]
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'CZK' },
+    { provide: ErrorHandler, useValue: Sentry.createErrorHandler({ showDialog: true }) },
+    { provide: Sentry.TraceService, deps: [Router] },
+    { provide: APP_INITIALIZER, useFactory: () => () => { }, deps: [Sentry.TraceService], multi: true },
+  
+  ]
 
 };
