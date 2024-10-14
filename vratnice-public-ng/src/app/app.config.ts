@@ -11,7 +11,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module} from "ng-recaptcha";
 
-import * as Sentry from "@sentry/angular";
+import * as Sentry from "@sentry/angular-ivy";
 
 const packageJson = packageJson_;
  
@@ -47,7 +47,7 @@ export const appConfig: ApplicationConfig = {
     MessageService,
     { provide: LOCALE_ID, useValue: 'cs-CZ' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'CZK' },
-    { provide: ErrorHandler, useValue: Sentry.createErrorHandler({ showDialog: true }) },
+    { provide: ErrorHandler, useValue: Sentry.createErrorHandler({ showDialog: false }) },
     { provide: Sentry.TraceService, deps: [Router] },
     { provide: APP_INITIALIZER, useFactory: () => () => { }, deps: [Sentry.TraceService], multi: true },
   
