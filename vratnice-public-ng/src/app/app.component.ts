@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
     private readonly translateService: TranslateService,
     private readonly primeNGConfig: PrimeNGConfig,
   ) {
-    throw new Error('Testing');
   }
  
   ngOnInit() {
