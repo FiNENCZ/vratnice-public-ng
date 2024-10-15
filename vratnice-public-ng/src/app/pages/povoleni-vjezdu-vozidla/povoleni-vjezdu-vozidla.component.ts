@@ -392,4 +392,9 @@ export class PovoleniVjezduVozidlaComponent {
     this.detailPovoleniVjezduVozidlaTypRzCsvPage?.showNovyDetail();
   }
 
+  onInputRZVozidla(event: any, index: number): void {
+    const value = event.target.value.toUpperCase();
+    this.detail!.rzVozidla[index] = value;
+  }
+
 }

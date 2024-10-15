@@ -109,7 +109,7 @@
             <div class="col-sm-5 p-0 pe-sm-1">
               <span class="p-float-label">
                 <input pInputText type="text" [required]="false" autocomplete="off" [(ngModel)]="detail!.rzVozidla[i]"
-                  id="rzVozidla{{i}}" name="rzVozidla{{i}}" />
+                  id="rzVozidla{{i}}" name="rzVozidla{{i}}" (input)="onInputRZVozidla($event, i)"/>
                 <label for="rzVozidla{{i}}">{{ 'POVOLENI_VJEZDU_VOZIDLA.RZ_VOZIDLA' | translate }} *</label>
                 <p-message class="validator-message" severity="danger"
                   text="{{ 'POVOLENI_VJEZDU_VOZIDLA.RZ_VOZIDLA_VALIDATOR' | translate }}"
