@@ -15,14 +15,14 @@ import { LoadingService } from 'src/app/servis/loading.service';
 
 
 @Component({
-  selector: 'app-detail-povoleni-vjezdu-vozidla-typ-rz-csv',
+  selector: 'app-detail-zpracovani-osobnich-udaju',
   standalone: true,
   imports: [DialogModule, TranslateModule, AppComponent, CommonModule],
   providers: [ConfirmationService, TranslateService],
-  templateUrl: './detail-povoleni-vjezdu-vozidla-typ-rz-csv.page.html',
-  styleUrls: ['./detail-povoleni-vjezdu-vozidla-typ-rz-csv.page.css']
+  templateUrl: './detail-zpracovani-osobnich-udaju.page.html',
+  styleUrls: ['./detail-zpracovani-osobnich-udaju.page.css']
 })
-export class DetailPovoleniVjezduVozidlaTypRzCsvPage extends DetailBaseClass {
+export class DetailZpracovaniOsobnichUdaju extends DetailBaseClass {
   @ViewChild('inputImportCSV') inputImportCSV?: ElementRef;
 
   @Output() rzTypVozidla = new EventEmitter<RzTypVozidlaDto>();

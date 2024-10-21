@@ -1,7 +1,8 @@
 {
     "NAVBAR": {
       "TITLE": "Vehicle Entry Permit Request",
-      "JAZYK": "CZ"
+      "JAZYK": "CZ",
+      "LOADING": "Loading..."
     },
   
     "TOPMENU": {
@@ -9,6 +10,13 @@
       "READ_ID_CARD": "Scan ID Card",
       "NEW": "New Record",
       "SAVE": "Save"
+    },
+
+    "SOUHLAS_ZADATELE": {
+      "NAZEV_DETAILU": "Consent to the processing of personal data",
+      "CHECBOX_PART_1": "I agree to the ",
+      "CHECBOX_PART_2": "processing of personal data",
+      "CHECKBOX_VALIDATOR": "It is necessary to agree to the processing of personal data to submit the application."
     },
   
     "RIDIC": {

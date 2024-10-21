@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { routes } from './app.routes';
 import { CommonModule } from '@angular/common';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { NgxSpinnerModule} from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet, NavbarComponent, NgxSpinnerModule, TranslateModule,],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

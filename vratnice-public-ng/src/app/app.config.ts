@@ -3,7 +3,7 @@ import { provideRouter, Router, withHashLocation, withInMemoryScrolling } from '
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { HttpBackend, provideHttpClient, withFetch } from '@angular/common/http';
 import * as packageJson_ from '../../package.json';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
@@ -12,6 +12,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module} from "ng-recaptcha";
 
 import * as Sentry from "@sentry/angular-ivy";
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { OverlayContainer, OverlayModule } from '@angular/cdk/overlay';
+
 
 const packageJson = packageJson_;
  
@@ -41,8 +44,12 @@ export const appConfig: ApplicationConfig = {
         //defaultLanguage: 'cs'
       }),
       ConfirmationService,
-      RecaptchaV3Module
+      RecaptchaV3Module,
+      ProgressSpinnerModule,
+      OverlayModule,
+      BrowserAnimationsModule
     ),
+    OverlayModule,
     {provide: RECAPTCHA_V3_SITE_KEY, useValue: "6LdxRCEqAAAAAPod-t3GRdvUAJ8QbhYvAdIr6cgO"},
     MessageService,
     { provide: LOCALE_ID, useValue: 'cs-CZ' },

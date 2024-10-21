@@ -12,7 +12,6 @@ import { RidicDto } from '../../../../build/openapi/model/ridicDto';
 import { StatDto } from '../../../../build/openapi/model/statDto';
 import { VozidloTypDto } from '../../../../build/openapi/model/vozidloTypDto';
 import { ZavodDto } from '../../../../build/openapi/model/zavodDto';
-//import { UiService } from '../../shared/services/ui.service';
 import { newPovoleniVjezduVozidlaDto } from '../../functions/povoleniVjezduVozidla.dto.function ';
 import { newRidicDto } from '../../functions/ridic.dto.function';
 import { TranslateModule, TranslateLoader, TranslateService } from "@ngx-translate/core";
@@ -37,6 +36,9 @@ import { getErrorMessage } from 'src/app/functions/get-error-message.function';
 import { LanguageService } from 'src/app/servis/language-service.service';
 import { transformSpolecnostFunction } from 'src/app/functions/transformSpolecnost.function';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { UiService } from 'src/app/shared/services/ui.service';
+import { LoadingService } from 'src/app/servis/loading.service';
+import { DetailZpracovaniOsobnichUdaju } from "../detail-zpracovani-osobnich-udaju/detail-zpracovani-osobnich-udaju.page";
 
 
 @Component({
@@ -44,20 +46,22 @@ import { ReCaptchaV3Service } from 'ng-recaptcha';
   standalone: true,
   imports: [
     CommonModule,
-    DialogModule, 
+    DialogModule,
     FormsModule,
     InputTextModule,
     InputTextareaModule,
-    MultiSelectModule, 
+    MultiSelectModule,
     TranslateModule,
-    CheckboxModule, 
+    CheckboxModule,
     MessageModule,
     CalendarComponent,
     DropdownComponent,
     AutoCompleteModule,
     ToastModule,
     DetailPovoleniVjezduVozidlaCsvPage,
-    DetailPovoleniVjezduVozidlaTypRzCsvPage],
+    DetailPovoleniVjezduVozidlaTypRzCsvPage,
+    DetailZpracovaniOsobnichUdaju
+],
   providers: [ConfirmationService, TranslateService],
   templateUrl: './povoleni-vjezdu-vozidla.component.html',
   styleUrl: './povoleni-vjezdu-vozidla.component.css'
@@ -68,11 +72,15 @@ export class PovoleniVjezduVozidlaComponent {
   @ViewChild('inputImportCSV') inputImportCSV?: ElementRef;
   @ViewChild(DetailPovoleniVjezduVozidlaCsvPage) detailPovoleniVjezduVozidlaCsvPage?: DetailPovoleniVjezduVozidlaCsvPage;
   @ViewChild(DetailPovoleniVjezduVozidlaTypRzCsvPage) detailPovoleniVjezduVozidlaTypRzCsvPage?: DetailPovoleniVjezduVozidlaTypRzCsvPage;
+  @ViewChild(DetailZpracovaniOsobnichUdaju) detailZpracovaniOsobnichUdaju?: DetailZpracovaniOsobnichUdaju;
 
   detail?: PovoleniVjezduVozidlaDto = newPovoleniVjezduVozidlaDto();
   idZaznamu?: string;
   aktivita: boolean = true;
   lokalitaList: LokalitaDto[] = [];
+
+  souhlasZadatele: boolean = false;
+  souhlasZadateleValidation: boolean = false;
 
   showCsvInfoDialog = false;
   infoDialogTimeout: any;
@@ -95,6 +103,7 @@ export class PovoleniVjezduVozidlaComponent {
     private readonly translateService: TranslateService,
     private readonly changeDetectorRef: ChangeDetectorRef,
     //private readonly uiService: UiService,
+    private readonly loadingService: LoadingService,
     
     private readonly povoleniVjezduVozidlaControllerService: PovoleniVjezduVozidlaControllerService,
     private readonly zavodControllerService: ZavodControllerService,
@@ -180,6 +189,7 @@ export class PovoleniVjezduVozidlaComponent {
 
   novyDetail() {
     this.formDetail?.form.markAsPristine();
+    this.souhlasZadateleValidation = false;
     this.detail = newPovoleniVjezduVozidlaDto();
     this.pridatVstup();
   }
@@ -196,6 +206,13 @@ export class PovoleniVjezduVozidlaComponent {
       return;
     }
 
+    if(!this.souhlasZadatele) {
+      this.souhlasZadateleValidation = true;
+      return;
+    }
+
+    this.loadingService.show();
+
     // Zkontrolovat jestli je Ridic prázdný objekt, pokud ano, tak ho vymazat
     if (this.detail?.ridic && this.isObjectEmpty(this.detail.ridic)) {
       delete this.detail.ridic;
@@ -203,20 +220,18 @@ export class PovoleniVjezduVozidlaComponent {
 
     this.detail = transformSpolecnostFunction(this.detail);
 
- 
-
     this.recaptchaService.execute('save').subscribe((token) => {
       this.povoleniVjezduVozidlaControllerService.savePovoleniVjezduVozidla(token!, this.detail!, this.translateService.currentLang)
       .subscribe({
         next: (vysledek: PovoleniVjezduVozidlaDto) => {
-          //this.uiService.stopSpinner();
+          this.loadingService.hide();
           this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.ZADOST_PODANA'), closable: false });
           this.novyDetail();
           this.formDetail?.form.markAsPristine();
           this.refreshSeznamToken$?.next(undefined);
         },
         error: error => {
-          //this.uiService.stopSpinner();
+          this.loadingService.hide();
           this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
         }
       });
@@ -390,6 +405,12 @@ export class PovoleniVjezduVozidlaComponent {
 
   showTypRzVozidlaCsvDetail() {
     this.detailPovoleniVjezduVozidlaTypRzCsvPage?.showNovyDetail();
+  }
+
+  showSouhlasOZpracovaniUdaju(event: MouseEvent) {
+    event.preventDefault()
+    event.stopPropagation();
+    this.detailZpracovaniOsobnichUdaju?.showNovyDetail();
   }
 
   onInputRZVozidla(event: any, index: number): void {

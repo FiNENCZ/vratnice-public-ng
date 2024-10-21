@@ -53,7 +53,8 @@
               {
                 "input": "src/styles-scheme/styles_turquoise.scss",
                 "inject": false
-              }
+              },
+              "./node_modules/ngx-spinner/animations/ball-clip-rotate.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",

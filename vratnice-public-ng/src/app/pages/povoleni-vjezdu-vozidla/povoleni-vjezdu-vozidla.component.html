@@ -293,9 +293,25 @@
           <label class="checkbox-label-group" for="opakovanyVjezd">{{ 'POVOLENI_VJEZDU_VOZIDLA.OPAKOVANY_VJEZD' | translate }}</label>
         </div>
       </div>
+
+      <div class="form-label-group ps-2">
+        <div class="p-field-checkbox">
+          <p-checkbox inputId="souhlasZadatele" name="souhlasZadatele"
+            [(ngModel)]="souhlasZadatele" [binary]="true"
+            class="{{ !souhlasZadateleValidation ? '' : 'ng-invalid ng-dirty' }}"></p-checkbox>
+            <label class="checkbox-label-group" for="souhlasZadatele">
+              {{ 'SOUHLAS_ZADATELE.CHECBOX_PART_1' | translate }} <span (click)="showSouhlasOZpracovaniUdaju($event)" style="cursor: pointer; text-decoration: underline;">{{ 'SOUHLAS_ZADATELE.CHECBOX_PART_2' | translate }}</span>
+            </label>
+            <br *ngIf="souhlasZadateleValidation">
+            <p-message class="validator-message" severity="danger" text="{{ 'SOUHLAS_ZADATELE.CHECKBOX_VALIDATOR' | translate }}"
+            *ngIf="souhlasZadateleValidation"></p-message>
+
+        </div>
+      </div>
   </form>
 </div>
 
 <p-toast></p-toast>
 <app-detail-povoleni-vjezdu-vozidla-csv></app-detail-povoleni-vjezdu-vozidla-csv>
 <app-detail-povoleni-vjezdu-vozidla-typ-rz-csv (rzTypVozidla)="importRzTypVozidlaFromDialog($event)"></app-detail-povoleni-vjezdu-vozidla-typ-rz-csv>
+<app-detail-zpracovani-osobnich-udaju></app-detail-zpracovani-osobnich-udaju>

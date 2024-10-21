@@ -9,6 +9,8 @@ import { AppComponent } from 'src/app/app.component';
 import { CommonModule } from '@angular/common';
 import { getErrorMessage } from 'src/app/functions/get-error-message.function';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { UiService } from 'src/app/shared/services/ui.service';
+import { LoadingService } from 'src/app/servis/loading.service';
 
 
 @Component({
@@ -31,6 +33,7 @@ export class DetailPovoleniVjezduVozidlaCsvPage extends DetailBaseClass {
     private readonly messageService: MessageService,
     //private readonly uiService: UiService,
     //private readonly authService: AuthService,
+    private readonly loadingService: LoadingService,
     private readonly povoleniVjezduVozidlaControllerService: PovoleniVjezduVozidlaControllerService,
     private readonly zavodControllerService: ZavodControllerService,
     private readonly recaptchaService: ReCaptchaV3Service,
@@ -56,20 +59,20 @@ export class DetailPovoleniVjezduVozidlaCsvPage extends DetailBaseClass {
 
 
   onCsvSelected(event: any): void {
-    //this.uiService.showSpinner();
+    this.loadingService.show() ;
     const file: File = event.target.files[0];
     if (file) {
       this.recaptchaService.execute('save').subscribe((token) => {
         this.povoleniVjezduVozidlaControllerService.povoleniCsvPovoleniVjezduVozidla(token!, file, this.translateService.currentLang)
         .subscribe(
             response => {
-              //this.uiService.stopSpinner();
+              this.loadingService.hide() ;
               this.messageService.add({ severity: 'success', detail: this.translateService.instant('POVOLENI_VJEZDU_VOZIDLA.ZADOSTI_PODANY'), closable: false });
               console.log(response);
-              //this.refreshSeznamToken$?.next(undefined);
+              this.refreshSeznamToken$?.next(undefined);
             },
             error => {
-              //this.uiService.stopSpinner();
+              this.loadingService.hide() ;
               this.messageService.add({ severity: 'error', detail: getErrorMessage(error), closable: false });
               console.log(error);
             }
