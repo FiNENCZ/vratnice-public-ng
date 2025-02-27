@@ -86,7 +86,6 @@ export class HeaderComponent implements OnInit, OnDestroy, IWebsocketMessageRece
         this.userMenuItems.push({ separator: true });
       }
 
-      //this.userMenuItems.push({ label: preklady["HEADER.ZMENA_HESLA"], icon: "fa-solid fa-key", target: "_blank", url: "https://sso.diamo.cz:8445/realms/diamo/account/#/security/signingin" });
       this.userMenuItems.push({ label: preklady["HEADER.ZMENA_HESLA"], icon: "fa-solid fa-key", target: "_blank", url: this.konfiguraceService.getKonfiguraceData()?.zmenaHeslaUrl });
       // }
 

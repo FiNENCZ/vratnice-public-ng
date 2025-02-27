@@ -12,7 +12,7 @@ import * as Sentry from "@sentry/angular-ivy";
 import { SpinnerComponent } from './app/shared/components/spinner.component';
 
 Sentry.init({
-  dsn: "https://91d076238ffedeb405c8293cc5a58882@sentry01.diamo.cz/43",
+  dsn: "your_sentry_dns_url",
   sendClientReports: false,
   tracesSampleRate: 0.2,
 });
